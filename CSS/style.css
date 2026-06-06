@@ -107,6 +107,7 @@ main {
   place-content: center;
   background: linear-gradient(135deg, #0f1f38, #1a3a5c);
   color: white;
+  border: none;
 }
 
 .eyebrow {
@@ -123,6 +124,8 @@ main {
 
 .hero .eyebrow {
   color: #c9a84c;
+  border:none;
+  
 }
 
 h1,
@@ -151,6 +154,8 @@ h3 {
 
 .category-section {
   margin-top: 1rem;
+  margin-bottom: 2rem;
+  padding: 1.5rem;
 }
 
 .category-section h2 {
@@ -186,6 +191,10 @@ h3 {
   background: linear-gradient(145deg, #eefcf4, #d9f5e5);
 }
 
+.black-tux { background: linear-gradient(145deg, #1a1a1a, #2d2d2d); color: white; }
+.navy-tux { background: linear-gradient(145deg, #0f1f38, #1a3a5c); color: white; }
+.white-tux { background: linear-gradient(145deg, #f8f8f8, #efefef); }
+
 .category-card h3 {
   margin-bottom: 0.35rem;
 }
@@ -193,6 +202,11 @@ h3 {
 .category-card p {
   color: var(--muted);
   margin-bottom: 0.75rem;
+}
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
 }
 
 .product-grid {
@@ -246,6 +260,32 @@ h3 {
 }
 .hero .btn {
   width: fit-content;
+}
+
+why-section {
+  margin-top: 1rem;
+}
+
+.why-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  margin-top: 0.75rem;
+}
+
+.why-card {
+  padding: 1.25rem;
+  background: var(--panel);
+  border: 3px solid var(--text);
+  border-radius: 18px;
+  text-align: center;
+  box-shadow: 0 16px 28px rgba(15, 23, 42, 0.12);
+}
+
+.why-icon {
+  font-size: 2rem;
+  display: block;
+  margin-bottom: 0.5rem;
 }
 .site-footer {
   padding: 0 0 1.5rem;
