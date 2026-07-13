@@ -57,40 +57,65 @@ const renderProductDetail = () => {
   if (!detailContainer) return;
 
   const params = new URLSearchParams(window.location.search);
-  const productId = params.get('id');
-  const product = getProductById(productId);
-
-  if (!product) {
+  const id = parseInt(params.get('id'), 10);
+  if (!id) {
     detailContainer.innerHTML = `
       <div class="product-detail-empty card">
         <h1>Product not found</h1>
-        <p>We couldn't find the item you're looking for. Please return to the shop and choose another style.</p>
+        <p>Please choose a product from the shop and try again.</p>
         <a href="products.html" class="btn">Back to Products</a>
       </div>
     `;
     return;
   }
 
-  detailContainer.innerHTML = `
-    <article class="product-detail card">
-      <div class="product-detail-visual ${product.color}"></div>
-      <div class="product-detail-copy">
-        <h1>${product.name}</h1>
-        <p class="price">$${product.price}</p>
-        <p>${product.fit.join(' & ')} fit available</p>
-        <p>${
-          product.type === 'tuxedo'
-            ? 'Our tuxedos are made with polished details and premium lining for formal events.'
-            : 'Our suits are crafted from premium fabrics for a tailored everyday and special occasion look.'
-        }</p>
-        <div class="product-detail-meta">
-          <span>Type: ${product.type}</span>
-          <span>Fits: ${product.fit.join(', ')}</span>
-        </div>
-        <a href="cart.html" class="btn secondary">Add to Cart</a>
+  const product = getProductById(id);
+  if (!product) {
+    detailContainer.innerHTML = `
+      <div class="product-detail-empty card">
+        <h1>Product not found</h1>
+        <p>The product you requested is not available.</p>
+        <a href="products.html" class="btn">Back to Products</a>
       </div>
-    </article>
-  `;
+    `;
+    return;
+  }
+
+  const productVisual = document.getElementById('productVisual');
+  if (productVisual) {
+    productVisual.className = `product-visual-large ${product.color}`;
+    productVisual.textContent = product.name;
+  }
+
+  const productName = document.getElementById('productName');
+  if (productName) productName.textContent = product.name;
+
+  const productType = document.getElementById('productType');
+  if (productType) productType.textContent = product.type === 'suit' ? 'Suit' : 'Tuxedo';
+
+  const productPrice = document.getElementById('productPrice');
+  if (productPrice) productPrice.textContent = `$${product.price}`;
+
+  const productDescription = document.getElementById('productDescription');
+  if (productDescription) {
+    productDescription.textContent = `The ${product.name} is available in both slim and regular fit. Mix and match your jacket and pant size independently for a perfect fit. In stock and ready to ship.`;
+  }
+
+  const jacketSizes = ['36S', '36R', '36L', '38S', '38R', '38L', '40S', '40R', '40L', '42S', '42R', '42L', '44S', '44R', '44L', '46R', '46L'];
+  const jacketSizesContainer = document.getElementById('jacketSizes');
+  if (jacketSizesContainer) {
+    jacketSizesContainer.innerHTML = jacketSizes
+      .map((size) => `<button class="size-btn" onclick="selectSize(this, 'jacket')">${size}</button>`) .join('');
+  }
+
+  const pantSizes = ['28x28', '28x30', '30x28', '30x30', '30x32', '32x28', '32x30', '32x32', '34x28', '34x30', '34x32', '36x30', '36x32', '38x30', '38x32', '40x30', '40x32'];
+  const pantSizesContainer = document.getElementById('pantSizes');
+  if (pantSizesContainer) {
+    pantSizesContainer.innerHTML = pantSizes
+      .map((size) => `<button class="size-btn" onclick="selectSize(this, 'pant')">${size}</button>`) .join('');
+  }
+
+  updateSummary();
 };
 
 // ─────────────────────────────────────────
@@ -123,45 +148,6 @@ if (measurementForm) {
     formSuccess.style.display = 'block';
   });
 }
-
-// ─────────────────────────────────────────
-// Product Detail
-// ─────────────────────────────────────────
-
-const renderProductDetail = () => {
-  const params = new URLSearchParams(window.location.search);
-  const id = parseInt(params.get('id'));
-  if (!id) return;
-
-  const product = products.find(p => p.id === id);
-  if (!product) return;
-
-  // Set visual
-  const visual = document.getElementById('productVisual');
-  if (visual) {
-    visual.classList.add(product.color);
-    visual.textContent = product.name;
-  }
-
-  // Set text content
-  document.getElementById('productName').textContent = product.name;
-  document.getElementById('productType').textContent = product.type === 'suit' ? 'Suit' : 'Tuxedo';
-  document.getElementById('productPrice').textContent = `$${product.price}`;
-  document.getElementById('productDescription').textContent =
-    `The ${product.name} is available in both slim and regular fit. Mix and match your jacket and pant size independently for a perfect fit. In stock and ready to ship.`;
-
-  // Jacket sizes
-  const jacketSizes = ['36S','36R','36L','38S','38R','38L','40S','40R','40L','42S','42R','42L','44S','44R','44L','46R','46L'];
-  document.getElementById('jacketSizes').innerHTML = jacketSizes.map(size =>
-    `<button class="size-btn" onclick="selectSize(this, 'jacket')">${size}</button>`
-  ).join('');
-
-  // Pant sizes
-  const pantSizes = ['28x28','28x30','30x28','30x30','30x32','32x28','32x30','32x32','34x28','34x30','34x32','36x30','36x32','38x30','38x32','40x30','40x32'];
-  document.getElementById('pantSizes').innerHTML = pantSizes.map(size =>
-    `<button class="size-btn" onclick="selectSize(this, 'pant')">${size}</button>`
-  ).join('');
-};
 
 let selectedJacket = null;
 let selectedPant = null;

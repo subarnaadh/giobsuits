@@ -1,22 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Product — GioB Suits</title>
-    <link rel="stylesheet" href="CSS/style.css">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cart — GioB Suits</title>
+    <link rel="stylesheet" href="CSS/style.css" />
   </head>
   <body>
     <header class="site-header">
       <a class="brand" href="index.html">
-        <img src="images/Logo.png" alt="GioB Suits" height="50">
+        <img src="images/Logo.png" alt="GioB Suits" height="50" />
       </a>
       <nav class="primary-navigation">
         <ul>
           <li><a href="index.html">Home</a></li>
           <li><a href="suits.html">Suits</a></li>
           <li><a href="tuxedos.html">Tuxedos</a></li>
-          <li><a href="shirtsaccessories.html">Shirts &amp; Accessories</a></li>
+          <li><a href="shirtsaccessories.html">Shirts & Accessories</a></li>
           <li><a href="why.html">Why GioB Suits</a></li>
           <li><a href="wedding.html">Weddings</a></li>
           <li><a href="cart.html" class="cart-icon">🛒 <span class="cart-count">0</span></a></li>
@@ -25,57 +25,23 @@
     </header>
 
     <main>
-      <div class="product-detail" id="productDetail">
-        
-        <div class="product-visual-large" id="productVisual"></div>
+      <section class="hero card">
+        <h1>Your Cart</h1>
+        <p>Review your selected items before checkout.</p>
+      </section>
 
-        <div class="product-info">
-          <p class="product-type" id="productType"></p>
-          <h1 id="productName"></h1>
-          <p class="product-price" id="productPrice"></p>
-          <p class="product-description" id="productDescription"></p>
-
-          <div class="product-options">
-            
-            <div class="option-group">
-              <label>Jacket Size</label>
-              <div class="size-grid" id="jacketSizes"></div>
-            </div>
-
-            <div class="option-group">
-              <label>Pant Size</label>
-              <div class="size-grid" id="pantSizes"></div>
-            </div>
-
-            <div class="option-group">
-              <label>Fit</label>
-              <div class="fit-options">
-                <button class="fit-btn active" onclick="selectFit(this, 'slim')">Slim Fit</button>
-                <button class="fit-btn" onclick="selectFit(this, 'regular')">Regular Fit</button>
-              </div>
-            </div>
-
-          </div>
-
-          <div class="selected-summary" id="selectedSummary"></div>
-
-          <button class="btn secondary add-to-cart" id="addToCart" onclick="addToCart()">
-            Add to Cart →
-          </button>
-
-          <a href="wedding.html" class="btn wedding-link">
-            Ordering for a Wedding Party? →
-          </a>
-
-        </div>
-      </div>
+      <section class="featured-products card">
+        <h2>Cart Summary</h2>
+        <p>Your cart is currently empty. Browse our suits and tuxedos to add premium tailoring options.</p>
+        <a href="products.html" class="btn secondary">Browse Products</a>
+      </section>
     </main>
 
     <footer class="site-footer">
       <div class="footer-inner">
         <div class="footer-brand">
           <a href="index.html">
-            <img src="images/Logo.png" alt="GioB Suits" height="60">
+            <img src="images/Logo.png" alt="GioB Suits" height="60" />
           </a>
           <div class="footer-social">
             <a href="#">📘</a>
@@ -87,7 +53,7 @@
         <div class="footer-col">
           <h4>Customer Service</h4>
           <ul>
-            <li><a href="#">Returns &amp; Exchanges</a></li>
+            <li><a href="#">Returns & Exchanges</a></li>
             <li><a href="#">My Account</a></li>
             <li><a href="#">Help Center</a></li>
           </ul>
@@ -123,7 +89,7 @@
           <h4>Stay Updated</h4>
           <p>Exclusive news, deals, and more.</p>
           <div class="email-input-row">
-            <input type="email" placeholder="Enter email address">
+            <input type="email" placeholder="Enter email address" />
             <button class="btn secondary">Submit</button>
           </div>
         </div>
