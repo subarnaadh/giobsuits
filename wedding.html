@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wedding Package</title>
+    <link rel="stylesheet" href="CSS/style.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="index.html">
+      <img src="images/Logo.png" alt="GioB Suits" height="50">
+      </a>
+      <nav class="primary-navigation">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="suits.html">Suits</a></li>
+          <li><a href="tuxedos.html">Tuxedos</a></li>
+          <li><a href="shirtsaccessories.html">Shirts &amp; Accessories</a></li>
+          <li><a href="why.html">Why GioB Suits</a></li>
+          <li><a href="fitguide.html">Fit Guide &amp; Finder</a></li>
+          <li><a href="cart.html" class="cart-icon">🛒 <span class="cart-count">0</span></a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+
+      <section class="wedding-section">
+        <h1>Plan Your Wedding Party</h1>
+        <p>One color. Every size. Mix and match sizing so every groomsman gets a perfect fit.</p>
+        <div class="wedding-steps">
+          <div class="step">
+            <span class="step-number">1</span>
+            <h3>Pick Your Color</h3>
+            <p>Choose from 8 signature colors to match your wedding theme.</p>
+          </div>
+          <div class="step">
+            <span class="step-number">2</span>
+            <h3>Share With Your Party</h3>
+            <p>Send your groomsmen to our site to submit their measurements.</p>
+          </div>
+          <div class="step">
+            <span class="step-number">3</span>
+            <h3>We Handle the Rest</h3>
+            <p>Each suit ships directly. Every groomsman gets the perfect fit.</p>
+          </div>
+        </div>
+        <a href="products.html" class="btn">Shop Now →</a>
+      </section>
+
+      <div class="wedding-main">
+
+        <section class="measurement-section">
+          <h2>Submit Your Measurements</h2>
+          <p class="section-sub">Fill out the form below and we'll make sure your suit fits perfectly.</p>
+
+          <form class="measurement-form" id="measurementForm">
+
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="firstName">First Name</label>
+                <input type="text" id="firstName" placeholder="James" required>
+              </div>
+              <div class="form-group">
+                <label for="lastName">Last Name</label>
+                <input type="text" id="lastName" placeholder="Miller" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="email">Email Address</label>
+              <input type="email" id="email" placeholder="james@email.com" required>
+            </div>
+
+            <div class="form-group">
+              <label for="weddingDate">Wedding Date</label>
+              <input type="date" id="weddingDate" required>
+            </div>
+
+            <div class="form-group">
+              <label for="suitColor">Suit Color</label>
+              <select id="suitColor" required>
+                <option value="">Select a color</option>
+                <option value="navy">Navy</option>
+                <option value="black">Black</option>
+                <option value="charcoal">Charcoal</option>
+                <option value="grey">Grey</option>
+                <option value="brown">Brown</option>
+                <option value="burgundy">Burgundy</option>
+                <option value="tan">Tan</option>
+                <option value="royal-blue">Royal Blue</option>
+              </select>
+            </div>
+
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="jacketSize">Jacket Size</label>
+                <select id="jacketSize" required>
+                  <option value="">Select size</option>
+                  <option>36S</option>
+                  <option>36R</option>
+                  <option>36L</option>
+                  <option>38S</option>
+                  <option>38R</option>
+                  <option>38L</option>
+                  <option>40S</option>
+                  <option>40R</option>
+                  <option>40L</option>
+                  <option>42S</option>
+                  <option>42R</option>
+                  <option>42L</option>
+                  <option>44S</option>
+                  <option>44R</option>
+                  <option>44L</option>
+                  <option>46R</option>
+                  <option>46L</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="pantSize">Pant Size (Waist x Inseam)</label>
+                <select id="pantSize" required>
+                  <option value="">Select size</option>
+                  <option>28x28</option>
+                  <option>28x30</option>
+                  <option>30x28</option>
+                  <option>30x30</option>
+                  <option>30x32</option>
+                  <option>32x28</option>
+                  <option>32x30</option>
+                  <option>32x32</option>
+                  <option>34x28</option>
+                  <option>34x30</option>
+                  <option>34x32</option>
+                  <option>36x30</option>
+                  <option>36x32</option>
+                  <option>38x30</option>
+                  <option>38x32</option>
+                  <option>40x30</option>
+                  <option>40x32</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="fitPreference">Fit Preference</label>
+              <select id="fitPreference" required>
+                <option value="">Select fit</option>
+                <option value="slim">Slim Fit</option>
+                <option value="regular">Regular Fit</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="role">Role in Wedding</label>
+              <select id="role">
+                <option value="">Select role</option>
+                <option value="groom">Groom</option>
+                <option value="best-man">Best Man</option>
+                <option value="groomsman">Groomsman</option>
+                <option value="father">Father of the Bride/Groom</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="notes">Additional Notes</label>
+              <textarea id="notes" rows="3" placeholder="Any special requests or fit concerns..."></textarea>
+            </div>
+
+            <button type="submit" class="btn secondary">Submit Measurements →</button>
+
+          </form>
+
+          <div class="form-success" id="formSuccess">
+            <h3>Thank you! 🎉</h3>
+            <p>Your measurements have been submitted. We'll be in touch before the wedding date.</p>
+          </div>
+
+        </section>
+
+        <aside class="fit-guide-sidebar">
+          <h3>Fit Guide</h3>
+          <p>Not sure about your size? Here's a quick reference.</p>
+
+          <div class="guide-item">
+            <h4>Jacket Size</h4>
+            <p>The number is your chest measurement in inches. S = Short, R = Regular, L = Long torso.</p>
+            <p>Example: 40R = 40" chest, regular length.</p>
+          </div>
+
+          <div class="guide-item">
+            <h4>Pant Size</h4>
+            <p>Waist x Inseam in inches.</p>
+            <p>Example: 32x30 = 32" waist, 30" inseam.</p>
+          </div>
+
+          <div class="guide-item">
+            <h4>Slim vs Regular</h4>
+            <p>Slim fits closer to the body through chest, waist and thighs. Regular has more room throughout.</p>
+          </div>
+
+          <a href="fitguide.html" class="btn" style="margin-top: 1rem; display: block; text-align: center;">Full Fit Guide →</a>
+        </aside>
+
+      </div>
+
+    </main>
+
+    <footer class="site-footer">
+  <div class="footer-inner">
+    
+    <div class="footer-brand">
+      <a href="index.html">
+        <img src="images/Logo.png" alt="GioB Suits" height="60">
+      </a>
+      <div class="footer-social">
+        <a href="#">📘</a>
+        <a href="#">📸</a>
+        <a href="#">🐦</a>
+      </div>
+    </div>
+
+    <div class="footer-col">
+      <h4>Customer Service</h4>
+      <ul>
+        <li><a href="#">Returns &amp; Exchanges</a></li>
+        <li><a href="#">My Account</a></li>
+        <li><a href="#">Help Center</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="why.html">About Us</a></li>
+        <li><a href="#">How It Works</a></li>
+        <li><a href="#">Reviews</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4>Contact Us</h4>
+      <ul>
+        <li><a href="#">Get In Touch</a></li>
+        <li><a href="#">Corporate Services</a></li>
+        <li><a href="mailto:info@giobsuits.com">info@giobsuits.com</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4>Legal</h4>
+      <ul>
+        <li><a href="#">Terms of Service</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-email">
+      <h4>Stay Updated</h4>
+      <p>Exclusive news, deals, and more.</p>
+      <div class="email-input-row">
+        <input type="email" placeholder="Enter email address">
+        <button class="btn secondary">Submit</button>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer-bottom">
+    <p>&copy; 2026 GioB Suits. All rights reserved.</p>
+  </div>
+</footer>
+
+    <script src="script.js"></script>
+
+  </body>
+</html>

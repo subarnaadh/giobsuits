@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product — GioB Suits</title>
+    <link rel="stylesheet" href="CSS/style.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="index.html">
+        <img src="images/GIOBlogo.png" alt="GioB Suits" height="35">
+      </a>
+      <nav class="primary-navigation">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="suits.html">Suits</a></li>
+          <li><a href="tuxedos.html">Tuxedos</a></li>
+          <li><a href="shirtsaccessories.html">Shirts &amp; Accessories</a></li>
+          <li><a href="why.html">Why GioB Suits</a></li>
+          <li><a href="wedding.html">Weddings</a></li>
+          <li><a href="cart.html" class="cart-icon">🛒 <span class="cart-count">0</span></a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <div class="product-detail" id="productDetail">
+        
+        <div class="product-visual-large" id="productVisual"></div>
+
+        <div class="product-info">
+          <p class="product-type" id="productType"></p>
+          <h1 id="productName"></h1>
+          <p class="product-price" id="productPrice"></p>
+          <p class="product-description" id="productDescription"></p>
+
+          <div class="product-options">
+            
+            <div class="option-group">
+              <label>Jacket Size</label>
+              <div class="size-grid" id="jacketSizes"></div>
+            </div>
+
+            <div class="option-group">
+              <label>Pant Size</label>
+              <div class="size-grid" id="pantSizes"></div>
+            </div>
+
+            <div class="option-group">
+              <label>Fit</label>
+              <div class="fit-options">
+                <button class="fit-btn active" onclick="selectFit(this, 'slim')">Slim Fit</button>
+                <button class="fit-btn" onclick="selectFit(this, 'regular')">Regular Fit</button>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="selected-summary" id="selectedSummary"></div>
+
+          <button class="btn secondary add-to-cart" id="addToCart" onclick="addToCart()">
+            Add to Cart →
+          </button>
+
+          <a href="wedding.html" class="btn wedding-link">
+            Ordering for a Wedding Party? →
+          </a>
+
+        </div>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-bottom">
+        <p>&copy; 2026 GioB Suits. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>

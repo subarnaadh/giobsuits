@@ -8,13 +8,15 @@
   </head>
   <body>
     <header class="site-header">
-      <a class="brand" href="index.html">GioB Suits</a>
+      <a class="brand" href="index.html">
+      <img src="images/Logo.png" alt="GioB Suits" height="50">
+      </a>
       <nav class="primary-navigation">
         <ul>
           <li><a href="index.html">Home</a></li>
           <li><a href="suits.html">Suits</a></li>
           <li><a href="tuxedos.html">Tuxedos</a></li>
-          <li><a href="shirtsaccessories.html">Shirts & Accessories</a></li>
+          <li><a href="shirtsaccessories.html">Shirts &amp; Accessories</a></li>
           <li><a href="why.html">Why GioB Suits</a></li>
           <li><a href="cart.html" class="cart-icon">🛒 <span class="cart-count">0</span></a></li>
         </ul>
@@ -22,81 +24,79 @@
     </header>
 
     <main>
-      <section class="featured-products card">
-        <h2>All Products</h2>
-        <div class="product-grid">
-          <article class="product-card">
-            <div class="product-visual navy">Navy</div>
-            <h3>Navy Suit</h3>
-            <p class="price">$299.00</p>
-            <a href="suits.html" class="btn secondary">View</a>
-          </article>
-          <article class="product-card">
-            <div class="product-visual black">Black</div>
-            <h3>Black Suit</h3>
-            <p class="price">$299.00</p>
-            <a href="suits.html" class="btn secondary">View</a>
-          </article>
-          <article class="product-card">
-            <div class="product-visual charcoal">Charcoal</div>
-            <h3>Charcoal Suit</h3>
-            <p class="price">$299.00</p>
-            <a href="suits.html" class="btn secondary">View</a>
-          </article>
-          <article class="product-card">
-            <div class="product-visual grey">Grey</div>
-            <h3>Grey Suit</h3>
-            <p class="price">$299.00</p>
-            <a href="suits.html" class="btn secondary">View</a>
-          </article>
-          <article class="product-card">
-            <div class="product-visual brown">Brown</div>
-            <h3>Brown Suit</h3>
-            <p class="price">$299.00</p>
-            <a href="suits.html" class="btn secondary">View</a>
-          </article>
-          <article class="product-card">
-            <div class="product-visual burgundy">Burgundy</div>
-            <h3>Burgundy Suit</h3>
-            <p class="price">$299.00</p>
-            <a href="suits.html" class="btn secondary">View</a>
-          </article>
-          <article class="product-card">
-            <div class="product-visual tan">Tan</div>
-            <h3>Tan Suit</h3>
-            <p class="price">$299.00</p>
-            <a href="suits.html" class="btn secondary">View</a>
-          </article>
-          <article class="product-card">
-            <div class="product-visual royal-blue">Royal Blue</div>
-            <h3>Royal Blue Suit</h3>
-            <p class="price">$299.00</p>
-            <a href="suits.html" class="btn secondary">View</a>
-          </article>
-          <article class="product-card">
-            <div class="product-visual black-tux">Black Tuxedo</div>
-            <h3>Black Tuxedo</h3>
-            <p class="price">$349.00</p>
-            <a href="tuxedos.html" class="btn secondary">View</a>
-          </article>
-          <article class="product-card">
-            <div class="product-visual navy-tux">Navy Tuxedo</div>
-            <h3>Navy Tuxedo</h3>
-            <p class="price">$349.00</p>
-            <a href="tuxedos.html" class="btn secondary">View</a>
-          </article>
-          <article class="product-card">
-            <div class="product-visual white-tux">White Tuxedo</div>
-            <h3>White Tuxedo</h3>
-            <p class="price">$349.00</p>
-            <a href="tuxedos.html" class="btn secondary">View</a>
-          </article>
-        </div>
-      </section>
+        <div class="filter-buttons">
+      <button class="filter-btn active" data-filter="all" onclick="filterProducts(event, 'all')">All</button>
+      <button class="filter-btn" data-filter="suit" onclick="filterProducts(event, 'suit')">Suits</button>
+      <button class="filter-btn" data-filter="tuxedo" onclick="filterProducts(event, 'tuxedo')">Tuxedos</button>
+      </div>
+
+      <div class="product-grid" id="productGrid"></div>
     </main>
 
     <footer class="site-footer">
-      <p>&copy; 2026 GioB Suits. All rights reserved.</p>
-    </footer>
-  </body>
+  <div class="footer-inner">
+    
+    <div class="footer-brand">
+      <a href="index.html">
+        <img src="images/Logo.png" alt="GioB Suits" height="60">
+      </a>
+      <div class="footer-social">
+        <a href="#">📘</a>
+        <a href="#">📸</a>
+        <a href="#">🐦</a>
+      </div>
+    </div>
+
+    <div class="footer-col">
+      <h4>Customer Service</h4>
+      <ul>
+        <li><a href="#">Returns &amp; Exchanges</a></li>
+        <li><a href="#">My Account</a></li>
+        <li><a href="#">Help Center</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="why.html">About Us</a></li>
+        <li><a href="#">How It Works</a></li>
+        <li><a href="#">Reviews</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4>Contact Us</h4>
+      <ul>
+        <li><a href="#">Get In Touch</a></li>
+        <li><a href="#">Corporate Services</a></li>
+        <li><a href="mailto:info@giobsuits.com">info@giobsuits.com</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4>Legal</h4>
+      <ul>
+        <li><a href="#">Terms of Service</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-email">
+      <h4>Stay Updated</h4>
+      <p>Exclusive news, deals, and more.</p>
+      <div class="email-input-row">
+        <input type="email" placeholder="Enter email address">
+        <button class="btn secondary">Submit</button>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer-bottom">
+    <p>&copy; 2026 GioB Suits. All rights reserved.</p>
+  </div>
+</footer>
+  <script src="script.js"></script>
+</body>
 </html>
