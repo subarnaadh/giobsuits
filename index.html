@@ -16,20 +16,52 @@
           <li><a href="tuxedos.html">Tuxedos</a></li>
           <li><a href="shirtsaccessories.html">Shirts & Accessories</a></li>
           <li><a href="why.html">Why GioB Suits</a></li>
+          <li><a href="cart.html" class="cart-icon">🛒 <span class="cart-count">0</span></a></li>
           
         </ul>
       </nav>
     </header>
 
-    <main>
-      <section class="hero card">
+<main>
+
+  <div class="slider-container">
+    <div class="slide active">
+      <section class="hero">
         <p class="eyebrow">Premium Quality Suits</p>
         <h1>Welcome to GioB Suits</h1>
         <p class="lede">8 signature colors. Slim and regular fit. Mix and match sizing nationwide.</p>
-        <a href="tuxedos.html" class="btn">Shop Now</a>
+        <a href="products.html" class="btn">Shop Now</a>
       </section>
+    </div>
 
-      <section class="category-section card" aria-label="Shop by category">
+    <div class="slide">
+      <section class="wedding-section">
+        <p class="eyebrow">Perfect for Wedding Parties</p>
+        <h2>Dress Your Entire Wedding Party</h2>
+        <p class="lede">One color. Every size. Mix and match sizing so every groomsman gets a perfect fit.</p>
+        <div class="wedding-steps">
+          <div class="step">
+            <span class="step-number">1</span>
+            <h3>Pick Your Color</h3>
+            <p>Choose from 8 signature colors to match your wedding theme.</p>
+          </div>
+          <div class="step">
+            <span class="step-number">2</span>
+            <h3>Share With Your Party</h3>
+            <p>Send your groomsmen to our site to submit their measurements.</p>
+          </div>
+          <div class="step">
+            <span class="step-number">3</span>
+            <h3>We Handle the Rest</h3>
+            <p>Each suit ships directly. Every groomsman gets the perfect fit.</p>
+          </div>
+        </div>
+        <a href="wedding.html" class="btn">Plan Your Wedding Party →</a>
+      </section>
+    </div>
+
+    <div class="slide">
+      <section class="category-section">
         <h2>Shop by Category</h2>
         <div class="category-grid">
           <article class="category-card suits-card">
@@ -44,11 +76,45 @@
           </article>
           <article class="category-card accessories-card">
             <h3>Shirts &amp; Accessories</h3>
-            <p>Complete the look with crisp shirts, ties, and accessories that elevate every outfit.</p>
+            <p>Complete the look with crisp shirts, ties, and accessories.</p>
             <a href="shirtsaccessories.html" class="btn">Shop Now</a>
           </article>
         </div>
       </section>
+    </div>
+
+  
+    <div class="slider-dots">
+      <span class="dot active" onclick="goToSlide(0)"></span>
+      <span class="dot" onclick="goToSlide(1)"></span>
+      <span class="dot" onclick="goToSlide(2)"></span>
+    </div>
+
+  
+    <button class="slider-arrow prev" onclick="changeSlide(-1)">&#8592;</button>
+    <button class="slider-arrow next" onclick="changeSlide(1)">&#8594;</button>
+  </div>
+          <section class="category-section card" aria-label="Shop by category">
+            <h2>Shop by Category</h2>
+            <div class="category-grid">
+              <article class="category-card suits-card">
+                <h3>Suits</h3>
+                <p>Classic tailoring with sharp cuts and premium fabrics for every occasion.</p>
+                <a href="suits.html" class="btn">Shop Now</a>
+              </article>
+              <article class="category-card tux-card">
+                <h3>Tuxedos</h3>
+                <p>Elegant black-tie essentials with polished details and a confident finish.</p>
+                <a href="tuxedos.html" class="btn">Shop Now</a>
+              </article>
+              <article class="category-card accessories-card">
+                <h3>Shirts &amp; Accessories</h3>
+                <p>Complete the look with crisp shirts, ties, and accessories that elevate every outfit.</p>
+                <a href="shirtsaccessories.html" class="btn">Shop Now</a>
+              </article>
+            </div>
+          </section>
+
 
      
 
@@ -57,5 +123,6 @@
     <footer class="site-footer">
       <p>&copy; 2026 GioB Suits. All rights reserved.</p>
     </footer>
+    <script src="script.js"></script>
   </body>
 </html>
