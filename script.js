@@ -107,6 +107,59 @@ const renderProductDetail = () => {
 };
 
 
+const renderSuits = (colorFilter = 'all') => {
+  const grid = document.getElementById('suitGrid');
+  if (!grid) return;
+
+  const suits = products.filter(p => p.type === 'suit');
+  const filtered = colorFilter === 'all'
+    ? suits
+    : suits.filter(p => p.color === colorFilter);
+
+  grid.innerHTML = filtered.map(product => `
+    <article class="product-card">
+      <div class="product-visual ${product.color}"></div>
+      <h3>${product.name}</h3>
+      <p class="price">$${product.price}</p>
+      <p>${product.fit.join(' & ')} fit available</p>
+      <a href="product-detail.html?id=${product.id}" class="btn secondary">View Product</a>
+    </article>
+  `).join('');
+};
+
+const filterByColor = (color) => {
+  document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+  event.target.classList.add('active');
+  renderSuits(color);
+};
+
+const renderTuxedos = (colorFilter = 'all') => {
+  const grid = document.getElementById('tuxedoGrid');
+  if (!grid) return;
+
+  const tuxedos = products.filter(p => p.type === 'tuxedo');
+  const filtered = colorFilter === 'all'
+    ? tuxedos
+    : tuxedos.filter(p => p.color === colorFilter);
+
+  grid.innerHTML = filtered.map(product => `
+    <article class="product-card">
+      <div class="product-visual ${product.color}"></div>
+      <h3>${product.name}</h3>
+      <p class="price">$${product.price}</p>
+      <p>${product.fit.join(' & ')} fit available</p>
+      <a href="product-detail.html?id=${product.id}" class="btn secondary">View Product</a>
+    </article>
+  `).join('');
+};
+
+const filterTuxedos = (color) => {
+  document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+  event.target.classList.add('active');
+  renderTuxedos(color);
+};
+
+
 // ─────────────────────────────────────────
 // 3. MEASUREMENT FORM
 // ─────────────────────────────────────────
@@ -234,6 +287,8 @@ const initializeNavigation = () => {
 // ─────────────────────────────────────────
 
 window.filterProducts = filterProducts;
+window.filterByColor = filterByColor;
+window.filterTuxedos = filterTuxedos;
 window.goToSlide = goToSlide;
 window.changeSlide = changeSlide;
 window.selectSize = selectSize;
@@ -248,6 +303,8 @@ window.addToCart = addToCart;
 const initializePage = () => {
   renderProducts();
   renderProductDetail();
+  renderSuits();
+  renderTuxedos();
   initializeNavigation();
   initMeasurementForm();
 

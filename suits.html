@@ -7,9 +7,9 @@
     <link rel="stylesheet" href="CSS/style.css">
   </head>
   <body>
-    <header class="site-header">
+     <header class="site-header">
       <a class="brand" href="index.html">
-        <img src="images/Logo.png" alt="GioB Suits" height="50">
+      <img src="images/Logo.png" alt="GioB Suits" height="50">
       </a>
       <nav class="primary-navigation">
         <ul>
@@ -18,80 +18,33 @@
           <li><a href="tuxedos.html">Tuxedos</a></li>
           <li><a href="shirtsaccessories.html">Shirts &amp; Accessories</a></li>
           <li><a href="why.html">Why GioB Suits</a></li>
+          <li><a href="fitguide.html">Fit Guide & Finder</a></li>
+          <li><a href="wedding.html">Become an Affiliate</a></li>
           <li><a href="cart.html" class="cart-icon">🛒 <span class="cart-count">0</span></a></li>
-          
         </ul>
       </nav>
     </header>
 
-    <main>
-      <section class="hero card">
-        <h1>Premium Quality Suits</h1>
-        <p>Browse our selection of premium suits.</p>
-      </section>
-      <section class="featured-products card">
-        <h2>Featured Products</h2>
-        <div class="product-grid">
-          <article class="product-card">
-            <div class="product-visual navy"></div>
-            <h3>Navy Suit</h3>
-            <p class="price">$299.00</p>
-            <p>Available in slim and regular fit. Mix and match jacket and pant sizing.</p>
-            <a href="product-detail.html?id=1" class="btn secondary">View Product</a>
-          </article>
-          <article class="product-card">
-            <div class="product-visual black"></div>
-            <h3>Black Suit</h3>
-            <p class="price">$299.00</p>
-            <p>Available in slim and regular fit. Mix and match jacket and pant sizing.</p>
-            <a href="product-detail.html?id=2" class="btn secondary">View Product</a>
-          </article>
-          <article class="product-card">
-            <div class="product-visual charcoal"></div>
-            <h3>Charcoal Suit</h3>
-            <p class="price">$299.00</p>
-            <p>Available in slim and regular fit. Mix and match jacket and pant sizing.</p>
-            <a href="product-detail.html?id=3" class="btn secondary">View Product</a>
-          </article>
-          <article class="product-card">
-            <div class="product-visual grey"></div>
-            <h3>Grey Suit</h3>
-            <p class="price">$299.00</p>
-            <p>Available in slim and regular fit. Mix and match jacket and pant sizing.</p>
-            <a href="product-detail.html?id=4" class="btn secondary">View Product</a>
-          </article>
-          <article class="product-card">
-            <div class="product-visual brown"></div>
-            <h3>Brown Suit</h3>
-            <p class="price">$299.00</p>
-            <p>Available in slim and regular fit. Mix and match jacket and pant sizing.</p>
-            <a href="product-detail.html?id=5" class="btn secondary">View Product</a>
-          </article>
-          <article class="product-card">
-            <div class="product-visual burgundy"></div>
-            <h3>Burgundy Suit</h3>
-            <p class="price">$299.00</p>
-            <p>Available in slim and regular fit. Mix and match jacket and pant sizing.</p>
-            <a href="product-detail.html?id=6" class="btn secondary">View Product</a>
-          </article>
-          <article class="product-card">
-            <div class="product-visual tan"></div>
-            <h3>Tan Suit</h3>
-            <p class="price">$299.00</p>
-            <p>Available in slim and regular fit. Mix and match jacket and pant sizing.</p>
-            <a href="product-detail.html?id=7" class="btn secondary">View Product</a>
-          </article>
-          <article class="product-card">
-            <div class="product-visual royal-blue"></div>
-            <h3>Royal Blue Suit</h3>
-            <p class="price">$299.00</p>
-            <p>Available in slim and regular fit. Mix and match jacket and pant sizing.</p>
-            <a href="product-detail.html?id=8" class="btn secondary">View Product</a>
-          </article>
-        </div>
+   <main>
+  <section class="hero card">
+    <h1>Premium Quality Suits</h1>
+    <p>Browse our selection of 8 signature colors. Mix and match jacket and pant sizing for a perfect fit.</p>
+  </section>
 
-      </section>
-    </main>
+  <div class="filter-buttons">
+    <button class="filter-btn active" onclick="filterByColor('all')">All Colors</button>
+    <button class="filter-btn" onclick="filterByColor('navy')">Navy</button>
+    <button class="filter-btn" onclick="filterByColor('black')">Black</button>
+    <button class="filter-btn" onclick="filterByColor('charcoal')">Charcoal</button>
+    <button class="filter-btn" onclick="filterByColor('grey')">Grey</button>
+    <button class="filter-btn" onclick="filterByColor('brown')">Brown</button>
+    <button class="filter-btn" onclick="filterByColor('burgundy')">Burgundy</button>
+    <button class="filter-btn" onclick="filterByColor('tan')">Tan</button>
+    <button class="filter-btn" onclick="filterByColor('royal-blue')">Royal Blue</button>
+  </div>
+
+  <div class="product-grid" id="suitGrid"></div>
+</main>
 
     <footer class="site-footer">
   <div class="footer-inner">
