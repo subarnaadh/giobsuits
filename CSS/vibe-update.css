@@ -10,7 +10,7 @@
   letter-spacing: -0.01em;
 }
 
-/* Wrap one word in <em> in your HTML to get the 
+/* Wrap one word in <em> in your HTML to get the
    italic-accent-word treatment, e.g. "Welcome to <em>GioB</em>" */
 .slide h1 em,
 .slide h2 em,
@@ -33,7 +33,7 @@
 /* 3. Kill the slider chrome. Pair this with index-static.html
       (stacked sections instead of one-slide-at-a-time) so the
       whole homepage flows in one continuous scroll, like the
-       → about → journal → contact rhythm. */
+     hero → about → journal → contact rhythm. */
 .slider-container {
   border-radius: 0;
   margin-top: 0;
@@ -80,7 +80,7 @@
   background: linear-gradient(var(--accent), transparent);
 }
 
-/* 4. Value pillars — the nu-cosmetics "Clean / Pure / Confident"
+/* 4. Value pillars — the "Clean / Pure / Confident"
       pattern, translated to GioB. Uses your existing navy/gold
       palette (not an unrelated cream tone) and breaks out of
       <main>'s 1100px constraint so it's genuinely full-bleed —
@@ -146,5 +146,87 @@
   .pillars-grid {
     grid-template-columns: 1fr;
     gap: 2.5rem;
+  }
+}
+
+/* 5. Shirts & Accessories — categorized list layout */
+.accessories-section {
+  padding: 3rem 0 4rem;
+}
+.accessories-head {
+  text-align: center;
+  max-width: 46ch;
+  margin: 0 auto 3rem;
+}
+.accessories-head h2 {
+  font-family: 'Fraunces', serif;
+  font-weight: 500;
+  font-size: clamp(1.8rem, 3.4vw, 2.6rem);
+  color: var(--text);
+  margin-top: 0.6rem;
+}
+.accessories-head h2 em {
+  font-style: italic;
+  color: var(--accent);
+}
+
+.category-columns {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.category-column {
+  padding: 0 2.5rem;
+  border-left: 1px solid var(--border);
+}
+.category-column:first-child {
+  border-left: none;
+  padding-left: 0;
+}
+
+.category-column h3 {
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text);
+  margin-bottom: 1.5rem;
+}
+
+.category-column ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+
+.category-column ul a {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 1rem;
+  transition: color .2s;
+}
+
+.category-column ul a:hover {
+  color: var(--accent);
+}
+
+@media (max-width: 720px) {
+  .category-columns {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+  .category-column {
+    border-left: none;
+    padding-left: 0;
+    border-top: 1px solid var(--border);
+    padding-top: 2rem;
+  }
+  .category-column:first-child {
+    border-top: none;
+    padding-top: 0;
   }
 }
