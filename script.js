@@ -20,6 +20,15 @@ const products = [
 
 const getProductById = (id) => products.find((p) => p.id === Number(id));
 
+// Suits have real photos (images/suit-{color}.png). Tuxedos don't have
+// photos yet, so they keep falling back to the plain color block.
+const productVisualHTML = (product) => {
+  if (product.type === 'suit') {
+    return `<img src="images/suit-${product.color}.png" alt="${product.name}" loading="lazy">`;
+  }
+  return '';
+};
+
 
 // ─────────────────────────────────────────
 // 2. PRODUCT FUNCTIONS
@@ -35,7 +44,7 @@ const renderProducts = (filter = 'all') => {
 
   grid.innerHTML = filtered.map((product) => `
     <article class="product-card">
-      <div class="product-visual ${product.color}"></div>
+      <div class="product-visual ${product.color}">${productVisualHTML(product)}</div>
       <h3>${product.name}</h3>
       <p class="price">$${product.price}</p>
       <p>${product.fit.join(' & ')} fit available</p>
@@ -72,7 +81,9 @@ const renderProductDetail = () => {
   const visual = document.getElementById('productVisual');
   if (visual) {
     visual.className = `product-visual-large ${product.color}`;
-    visual.textContent = product.name;
+    visual.innerHTML = product.type === 'suit'
+      ? `<img src="images/suit-${product.color}.png" alt="${product.name}" loading="lazy">`
+      : product.name;
   }
 
   const name = document.getElementById('productName');
@@ -118,7 +129,7 @@ const renderSuits = (colorFilter = 'all') => {
 
   grid.innerHTML = filtered.map(product => `
     <article class="product-card">
-      <div class="product-visual ${product.color}"></div>
+      <div class="product-visual ${product.color}">${productVisualHTML(product)}</div>
       <h3>${product.name}</h3>
       <p class="price">$${product.price}</p>
       <p>${product.fit.join(' & ')} fit available</p>
@@ -144,7 +155,7 @@ const renderTuxedos = (colorFilter = 'all') => {
 
   grid.innerHTML = filtered.map(product => `
     <article class="product-card">
-      <div class="product-visual ${product.color}"></div>
+      <div class="product-visual ${product.color}">${productVisualHTML(product)}</div>
       <h3>${product.name}</h3>
       <p class="price">$${product.price}</p>
       <p>${product.fit.join(' & ')} fit available</p>
