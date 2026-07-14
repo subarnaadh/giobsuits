@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GioB Suits</title>
     <link rel="stylesheet" href="CSS/style.css">
+    <link rel="stylesheet" href="CSS/vibe-update.css">
   </head>
   <body>
     <header class="site-header">
@@ -27,77 +28,95 @@
 
     <main>
 
+      <!-- HERO — permanent full-width section, no slider -->
       <div class="slider-container">
-    <div class="slide active">
-      <section class="hero">
-        <p class="eyebrow">Premium Quality Suits</p>
-        <h1>Welcome to GioB Suits</h1>
-        <p class="lede">8 signature colors. Slim and regular fit. Mix and match sizing nationwide.</p>
-        <a href="products.html" class="btn">Shop Now</a>
-      </section>
-    </div>
+        <div class="slide active">
+          <section class="hero">
+            <p class="eyebrow">Premium Quality Suits</p>
+            <h1>Welcome to <em>GioB</em> Suits</h1>
+            <p class="lede">8 signature colors. Slim and regular fit. Mix and match sizing nationwide.</p>
+            <a href="products.html" class="btn">Shop Now</a>
+            <a href="#pillars" class="scroll-cue">Explore</a>
+          </section>
+        </div>
+      </div>
 
-    <div class="slide">
-      <section class="wedding-section">
-        <p class="eyebrow">Perfect for Wedding Parties</p>
-        <h2>Dress Your Entire Wedding Party</h2>
-        <p class="lede">One color. Every size. Mix and match sizing so every groomsman gets a perfect fit.</p>
-        <div class="wedding-steps">
-          <div class="step">
-            <span class="step-number">1</span>
-            <h3>Pick Your Color</h3>
-            <p>Choose from 8 signature colors to match your wedding theme.</p>
+      <!-- VALUE PILLARS — new section, nu-cosmetics-style intro block -->
+      <section class="pillars-section" id="pillars">
+        <div class="pillars-head">
+          <p class="eyebrow">Our Approach</p>
+          <h2>Every stitch is <em>intentional</em></h2>
+        </div>
+        <div class="pillars-grid">
+          <div class="pillar">
+            <h3>Tailored</h3>
+            <p>Cut and fitted to the person wearing it, not a rack size.</p>
           </div>
-          <div class="step">
-            <span class="step-number">2</span>
-            <h3>Share With Your Party</h3>
-            <p>Send your groomsmen to our site to submit their measurements.</p>
+          <div class="pillar">
+            <h3>Trusted</h3>
+            <p>Quality tailoring at a price that respects your budget.</p>
           </div>
-          <div class="step">
-            <span class="step-number">3</span>
-            <h3>We Handle the Rest</h3>
-            <p>Each suit ships directly. Every groomsman gets the perfect fit.</p>
+          <div class="pillar">
+            <h3>Timeless</h3>
+            <p>Styles built to outlast a single season or trend cycle.</p>
           </div>
         </div>
-        <a href="wedding.html" class="btn">Plan Your Wedding Party →</a>
       </section>
-    </div>
 
-    <div class="slide">
-      <section class="category-section">
-        <h2>Shop by Category</h2>
-        <div class="category-grid">
-          <article class="category-card suits-card">
-            <h3>Suits</h3>
-            <p>Classic tailoring with sharp cuts and premium fabrics for every occasion.</p>
-            <a href="suits.html" class="btn">Shop Now</a>
-          </article>
-          <article class="category-card tux-card">
-            <h3>Tuxedos</h3>
-            <p>Elegant black-tie essentials with polished details and a confident finish.</p>
-            <a href="tuxedos.html" class="btn">Shop Now</a>
-          </article>
-          <article class="category-card accessories-card">
-            <h3>Shirts &amp; Accessories</h3>
-            <p>Complete the look with crisp shirts, ties, and accessories.</p>
-            <a href="shirtsaccessories.html" class="btn">Shop Now</a>
-            
-          </article>
+      <!-- WEDDING — permanent stacked section -->
+      <div class="slider-container">
+        <div class="slide active">
+          <section class="wedding-section">
+            <p class="eyebrow">Perfect for Wedding Parties</p>
+            <h2>Dress Your Entire <em>Wedding Party</em></h2>
+            <p class="lede">One color. Every size. Mix and match sizing so every groomsman gets a perfect fit.</p>
+            <div class="wedding-steps">
+              <div class="step">
+                <span class="step-number">1</span>
+                <h3>Pick Your Color</h3>
+                <p>Choose from 8 signature colors to match your wedding theme.</p>
+              </div>
+              <div class="step">
+                <span class="step-number">2</span>
+                <h3>Share With Your Party</h3>
+                <p>Send your groomsmen to our site to submit their measurements.</p>
+              </div>
+              <div class="step">
+                <span class="step-number">3</span>
+                <h3>We Handle the Rest</h3>
+                <p>Each suit ships directly. Every groomsman gets the perfect fit.</p>
+              </div>
+            </div>
+            <a href="wedding.html" class="btn">Plan Your Wedding Party →</a>
+          </section>
         </div>
-      </section>
-    </div>
+      </div>
 
-  
-    <div class="slider-dots">
-      <span class="dot active" onclick="goToSlide(0)"></span>
-      <span class="dot" onclick="goToSlide(1)"></span>
-      <span class="dot" onclick="goToSlide(2)"></span>
-    </div>
-
-  
-    <button class="slider-arrow prev" onclick="changeSlide(-1)">&#8592;</button>
-    <button class="slider-arrow next" onclick="changeSlide(1)">&#8594;</button>
-  </div>
+      <!-- CATEGORY GRID — permanent stacked section -->
+      <div class="slider-container">
+        <div class="slide active">
+          <section class="category-section">
+            <h2>Shop by <em>Category</em></h2>
+            <div class="category-grid">
+              <article class="category-card suits-card">
+                <h3>Suits</h3>
+                <p>Classic tailoring with sharp cuts and premium fabrics for every occasion.</p>
+                <a href="suits.html" class="btn">Shop Now</a>
+              </article>
+              <article class="category-card tux-card">
+                <h3>Tuxedos</h3>
+                <p>Elegant black-tie essentials with polished details and a confident finish.</p>
+                <a href="tuxedos.html" class="btn">Shop Now</a>
+              </article>
+              <article class="category-card accessories-card">
+                <h3>Shirts &amp; Accessories</h3>
+                <p>Complete the look with crisp shirts, ties, and accessories.</p>
+                <a href="shirtsaccessories.html" class="btn">Shop Now</a>
+              </article>
+            </div>
+          </section>
+        </div>
+      </div>
 
     </main>
 
@@ -172,8 +191,8 @@
       <div class="chat-panel-header">
         <button class="chat-panel-close" onclick="closeChatWidget()" aria-label="Close chat">✕</button>
         <div class="chat-brand">Suzy<span>.</span></div>
-        <h4>How can we help?</h4>
-        <p>This chat is AI-powered for faster assistance.</p>
+        <h4>Talk to Suzy</h4>
+        <p>Our resident suit expert</p>
       </div>
       <div class="chat-quick-replies">
         <button class="chat-quick-reply">↳ How does mix &amp; match sizing work?</button>
