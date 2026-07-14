@@ -3,30 +3,29 @@
 // ─────────────────────────────────────────
 
 const products = [
-  { id: 1, name: "Navy Suit", color: "navy", price: 299, type: "suit", fit: ["Slim", "Regular"] },
-  { id: 2, name: "Black Suit", color: "black", price: 299, type: "suit", fit: ["Slim", "Regular"] },
-  { id: 3, name: "Charcoal Suit", color: "charcoal", price: 299, type: "suit", fit: ["Slim", "Regular"] },
-  { id: 4, name: "Grey Suit", color: "grey", price: 299, type: "suit", fit: ["Slim", "Regular"] },
-  { id: 5, name: "Brown Suit", color: "brown", price: 299, type: "suit", fit: ["Slim", "Regular"] },
-  { id: 6, name: "Burgundy Suit", color: "burgundy", price: 299, type: "suit", fit: ["Slim", "Regular"] },
-  { id: 7, name: "Tan Suit", color: "tan", price: 299, type: "suit", fit: ["Slim", "Regular"] },
-  { id: 8, name: "Royal Blue Suit", color: "royal-blue", price: 299, type: "suit", fit: ["Slim", "Regular"] },
-  { id: 9, name: "Black Tuxedo — Shawl Lapel", color: "black", price: 349, type: "tuxedo", fit: ["Slim", "Regular"] },
-  { id: 10, name: "Black Tuxedo — Peak Lapel", color: "black", price: 349, type: "tuxedo", fit: ["Slim", "Regular"] },
-  { id: 11, name: "Black Tuxedo — Notch Lapel", color: "black", price: 349, type: "tuxedo", fit: ["Slim", "Regular"] },
-  { id: 12, name: "Navy Tuxedo", color: "navy", price: 349, type: "tuxedo", fit: ["Slim", "Regular"] },
-  { id: 13, name: "White Tuxedo", color: "white", price: 349, type: "tuxedo", fit: ["Slim", "Regular"] },
+  { id: 1, name: "Navy Suit", color: "navy", price: 299, type: "suit", fit: ["Slim", "Regular"], image: "suit-navy.png" },
+  { id: 2, name: "Black Suit", color: "black", price: 299, type: "suit", fit: ["Slim", "Regular"], image: "suit-black.png" },
+  { id: 3, name: "Charcoal Suit", color: "charcoal", price: 299, type: "suit", fit: ["Slim", "Regular"], image: "suit-charcoal.png" },
+  { id: 4, name: "Grey Suit", color: "grey", price: 299, type: "suit", fit: ["Slim", "Regular"], image: "suit-grey.png" },
+  { id: 5, name: "Brown Suit", color: "brown", price: 299, type: "suit", fit: ["Slim", "Regular"], image: "suit-brown.png" },
+  { id: 6, name: "Burgundy Suit", color: "burgundy", price: 299, type: "suit", fit: ["Slim", "Regular"], image: "suit-burgundy.png" },
+  { id: 7, name: "Tan Suit", color: "tan", price: 299, type: "suit", fit: ["Slim", "Regular"], image: "suit-tan.png" },
+  { id: 8, name: "Royal Blue Suit", color: "royal-blue", price: 299, type: "suit", fit: ["Slim", "Regular"], image: "suit-royal-blue.png" },
+  { id: 9, name: "Black Tuxedo — Shawl Lapel", color: "black", price: 349, type: "tuxedo", fit: ["Slim", "Regular"], image: "tuxedo-black-shawl.png" },
+  { id: 10, name: "Black Tuxedo — Peak Lapel", color: "black", price: 349, type: "tuxedo", fit: ["Slim", "Regular"], image: "tuxedo-black-peak.png" },
+  { id: 11, name: "Black Tuxedo — Notch Lapel", color: "black", price: 349, type: "tuxedo", fit: ["Slim", "Regular"], image: "tuxedo-black-notch.png" },
+  { id: 12, name: "Navy Tuxedo", color: "navy", price: 349, type: "tuxedo", fit: ["Slim", "Regular"], image: "tuxedo-navy.png" },
+  { id: 13, name: "White Tuxedo", color: "white", price: 349, type: "tuxedo", fit: ["Slim", "Regular"], image: "tuxedo-white.png" },
 ];
 
 const getProductById = (id) => products.find((p) => p.id === Number(id));
 
-// Suits have real photos (images/suit-{color}.png). Tuxedos don't have
-// photos yet, so they keep falling back to the plain color block.
+// Every product now carries its own photo filename, so this works
+// for both suits and tuxedos even where multiple products share
+// the same color (e.g. the 3 black tuxedo lapel styles).
 const productVisualHTML = (product) => {
-  if (product.type === 'suit') {
-    return `<img src="images/suit-${product.color}.png" alt="${product.name}" loading="lazy">`;
-  }
-  return '';
+  if (!product.image) return '';
+  return `<img src="images/${product.image}" alt="${product.name}" loading="lazy">`;
 };
 
 
@@ -81,8 +80,8 @@ const renderProductDetail = () => {
   const visual = document.getElementById('productVisual');
   if (visual) {
     visual.className = `product-visual-large ${product.color}`;
-    visual.innerHTML = product.type === 'suit'
-      ? `<img src="images/suit-${product.color}.png" alt="${product.name}" loading="lazy">`
+    visual.innerHTML = product.image
+      ? `<img src="images/${product.image}" alt="${product.name}" loading="lazy">`
       : product.name;
   }
 
