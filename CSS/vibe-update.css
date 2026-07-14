@@ -10,7 +10,7 @@
   letter-spacing: -0.01em;
 }
 
-/* Wrap one word in <em> in your HTML to get the
+/* Wrap one word in <em> in your HTML to get the nu-cosmetics
    italic-accent-word treatment, e.g. "Welcome to <em>GioB</em>" */
 .slide h1 em,
 .slide h2 em,
@@ -33,7 +33,7 @@
 /* 3. Kill the slider chrome. Pair this with index-static.html
       (stacked sections instead of one-slide-at-a-time) so the
       whole homepage flows in one continuous scroll, like the
-     hero → about → journal → contact rhythm. */
+      nu-cosmetics hero → about → journal → contact rhythm. */
 .slider-container {
   border-radius: 0;
   margin-top: 0;
@@ -55,7 +55,7 @@
   background: linear-gradient(135deg, #080f1a, #0f1f38);
 }
 
-/* Subtle scroll cue under the hero CTA, like 
+/* Subtle scroll cue under the hero CTA, like nu-cosmetics'
    "Explore ↓" link beneath their hero copy. Block-level so it
    drops to its own line below the button instead of sitting
    inline next to it. */
@@ -80,7 +80,7 @@
   background: linear-gradient(var(--accent), transparent);
 }
 
-/* 4. Value pillars — the "Clean / Pure / Confident"
+/* 4. Value pillars — the nu-cosmetics "Clean / Pure / Confident"
       pattern, translated to GioB. Uses your existing navy/gold
       palette (not an unrelated cream tone) and breaks out of
       <main>'s 1100px constraint so it's genuinely full-bleed —
@@ -228,5 +228,145 @@
   .category-column:first-child {
     border-top: none;
     padding-top: 0;
+  }
+}
+
+/* 6. Suzy chat widget — UI only, not wired to a real backend yet */
+.chat-launcher {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #080f1a;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.35);
+  z-index: 999;
+  transition: transform .2s, background .2s;
+}
+.chat-launcher:hover {
+  background: var(--accent-hover);
+  transform: translateY(-2px);
+}
+
+.chat-panel {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  width: min(360px, calc(100vw - 2rem));
+  max-height: min(560px, calc(100vh - 3rem));
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.45);
+  z-index: 1000;
+  display: none;
+  flex-direction: column;
+  overflow: hidden;
+}
+.chat-panel.open {
+  display: flex;
+}
+
+.chat-panel-header {
+  padding: 1.5rem 1.5rem 1.25rem;
+  text-align: center;
+  position: relative;
+  border-bottom: 1px solid var(--border);
+}
+
+.chat-panel-close {
+  position: absolute;
+  top: 0.9rem;
+  right: 0.9rem;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255,255,255,0.06);
+  color: var(--muted);
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background .2s, color .2s;
+}
+.chat-panel-close:hover {
+  background: rgba(255,255,255,0.12);
+  color: var(--text);
+}
+
+.chat-brand {
+  font-family: 'Fraunces', serif;
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: var(--text);
+  letter-spacing: 0.01em;
+}
+.chat-brand span {
+  color: var(--accent);
+  font-style: italic;
+  font-weight: 500;
+}
+
+.chat-panel-header h4 {
+  font-size: 1.05rem;
+  color: var(--text);
+  margin-top: 0.75rem;
+  font-weight: 600;
+}
+
+.chat-panel-header p {
+  font-size: 0.8rem;
+  color: var(--muted);
+  margin-top: 0.25rem;
+}
+
+.chat-quick-replies {
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  overflow-y: auto;
+}
+
+.chat-quick-reply {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.85rem 1rem;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  color: var(--text);
+  font-size: 0.88rem;
+  font-family: inherit;
+  cursor: pointer;
+  text-align: left;
+  transition: border-color .2s, background .2s;
+}
+.chat-quick-reply:hover {
+  border-color: var(--accent);
+  background: rgba(201,168,76,0.08);
+}
+
+@media (max-width: 480px) {
+  .chat-panel {
+    right: 1rem;
+    bottom: 1rem;
+    left: 1rem;
+    width: auto;
+  }
+  .chat-launcher {
+    right: 1rem;
+    bottom: 1rem;
   }
 }

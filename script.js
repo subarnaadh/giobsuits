@@ -311,6 +311,21 @@ const initializeNavigation = () => {
 
 
 // ─────────────────────────────────────────
+// 6b. SUZY CHAT WIDGET (UI only — not wired to a real backend yet)
+// ─────────────────────────────────────────
+
+const openChatWidget = () => {
+  const panel = document.getElementById('chatPanel');
+  if (panel) panel.classList.add('open');
+};
+
+const closeChatWidget = () => {
+  const panel = document.getElementById('chatPanel');
+  if (panel) panel.classList.remove('open');
+};
+
+
+// ─────────────────────────────────────────
 // 7. EXPOSE GLOBAL FUNCTIONS
 // ─────────────────────────────────────────
 
@@ -325,6 +340,8 @@ window.addToCart = addToCart;
 window.openGroupModal = openGroupModal;
 window.closeGroupModal = closeGroupModal;
 window.submitGroup = submitGroup;
+window.openChatWidget = openChatWidget;
+window.closeChatWidget = closeChatWidget;
 
 
 // ─────────────────────────────────────────
