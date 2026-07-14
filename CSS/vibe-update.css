@@ -10,7 +10,7 @@
   letter-spacing: -0.01em;
 }
 
-/* Wrap one word in <em> in your HTML to get the nu-cosmetics
+/* Wrap one word in <em> in your HTML to get the 
    italic-accent-word treatment, e.g. "Welcome to <em>GioB</em>" */
 .slide h1 em,
 .slide h2 em,
@@ -33,15 +33,15 @@
 /* 3. Kill the slider chrome. Pair this with index-static.html
       (stacked sections instead of one-slide-at-a-time) so the
       whole homepage flows in one continuous scroll, like the
-      nu-cosmetics hero → about → journal → contact rhythm. */
+       → about → journal → contact rhythm. */
 .slider-container {
   border-radius: 0;
   margin-top: 0;
 }
 .slide {
   display: flex !important;
-  min-height: auto;
-  padding: 6rem 2rem;
+  min-height: auto !important;
+  padding: 3rem 2rem !important;
 }
 .slider-dots,
 .slider-arrow {
@@ -55,20 +55,23 @@
   background: linear-gradient(135deg, #080f1a, #0f1f38);
 }
 
-/* Subtle scroll cue under the hero CTA, like nu-cosmetics'
-   "Explore ↓" link beneath their hero copy. */
+/* Subtle scroll cue under the hero CTA, like 
+   "Explore ↓" link beneath their hero copy. Block-level so it
+   drops to its own line below the button instead of sitting
+   inline next to it. */
 .scroll-cue {
-  margin-top: 2.5rem;
+  margin-top: 2rem;
   font-family: inherit;
   font-size: 0.75rem;
   letter-spacing: 0.15em;
   text-transform: uppercase;
   color: var(--muted);
   text-decoration: none;
-  display: inline-flex;
+  display: flex;
   flex-direction: column;
   align-items: center;
   gap: 0.5rem;
+  width: fit-content;
 }
 .scroll-cue::after {
   content: '';
@@ -78,32 +81,40 @@
 }
 
 /* 4. Value pillars — the nu-cosmetics "Clean / Pure / Confident"
-      pattern, translated to GioB. Alternates to a light panel so
-      the page isn't one long dark wall, and it slots in right
-      after the hero. */
+      pattern, translated to GioB. Uses your existing navy/gold
+      palette (not an unrelated cream tone) and breaks out of
+      <main>'s 1100px constraint so it's genuinely full-bleed —
+      no dark gaps on either side. */
 .pillars-section {
-  background: #f4f0e7;
+  background: var(--panel);
   padding: 5rem 1.5rem;
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
 }
 .pillars-head {
   text-align: center;
   max-width: 46ch;
   margin: 0 auto 3rem;
-  color: #1c1b19;
 }
 .pillars-head .eyebrow {
-  color: #a8823c;
+  color: var(--accent);
 }
 .pillars-head h2 {
   font-family: 'Fraunces', serif;
   font-weight: 500;
   font-size: clamp(1.7rem, 3.2vw, 2.4rem);
-  color: #1c1b19;
+  color: var(--text);
   margin-top: 0.6rem;
 }
 .pillars-head h2 em {
   font-style: italic;
-  color: #6d2a37;
+  color: var(--accent);
 }
 .pillars-grid {
   display: grid;
@@ -115,18 +126,18 @@
 .pillar {
   text-align: center;
   padding: 1.5rem 1rem;
-  border-top: 1px solid rgba(28,27,25,0.14);
+  border-top: 1px solid var(--border);
 }
 .pillar h3 {
   font-family: 'Fraunces', serif;
   font-weight: 600;
   font-size: 1.1rem;
-  color: #1c1b19;
+  color: var(--text);
   margin-bottom: 0.5rem;
 }
 .pillar p {
   font-size: 0.9rem;
-  color: #55524a;
+  color: var(--muted);
   max-width: 26ch;
   margin: 0 auto;
 }
