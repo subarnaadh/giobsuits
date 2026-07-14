@@ -159,6 +159,24 @@ const filterTuxedos = (color) => {
   renderTuxedos(color);
 };
 
+const openGroupModal = () => {
+  document.getElementById('groupModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+};
+
+const closeGroupModal = (e) => {
+  if (!e || e.target.id === 'groupModal' || e.target.classList.contains('modal-close')) {
+    document.getElementById('groupModal').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+};
+
+const submitGroup = (e) => {
+  e.preventDefault();
+  document.getElementById('groupForm').style.display = 'none';
+  document.getElementById('groupSuccess').style.display = 'block';
+};
+
 
 // ─────────────────────────────────────────
 // 3. MEASUREMENT FORM
@@ -294,6 +312,9 @@ window.changeSlide = changeSlide;
 window.selectSize = selectSize;
 window.selectFit = selectFit;
 window.addToCart = addToCart;
+window.openGroupModal = openGroupModal;
+window.closeGroupModal = closeGroupModal;
+window.submitGroup = submitGroup;
 
 
 // ─────────────────────────────────────────

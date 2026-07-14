@@ -27,186 +27,250 @@
 
     <main>
 
-      <section class="wedding-section">
-        <h1>Plan Your Wedding Party</h1>
-        <p>One color. Every size. Mix and match sizing so every groomsman gets a perfect fit.</p>
-        <div class="wedding-steps">
-          <div class="step">
-            <span class="step-number">1</span>
-            <h3>Pick Your Color</h3>
-            <p>Choose from 8 signature colors to match your wedding theme.</p>
+  <!-- HERO -->
+  <section class="wedding-hero">
+    <h1>Dress Your Entire Wedding Party</h1>
+    <p class="lede">One color. Every size. Mix and match sizing so every groomsman gets a perfect fit — no compromises.</p>
+    
+    <div class="wedding-cta-row">
+      <button class="btn secondary" onclick="openGroupModal()">Create Your Group →</button>
+      <a href="#individual" class="btn">Individual Order →</a>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="wedding-steps-section">
+    <div class="wedding-steps">
+      <div class="step">
+        <span class="step-number">1</span>
+        <h3>Create Your Group</h3>
+        <p>Set up your wedding event and invite your party members via a shareable link.</p>
+      </div>
+      <div class="step">
+        <span class="step-number">2</span>
+        <h3>Each Person Orders</h3>
+        <p>Every groomsman selects their own jacket and pant size independently.</p>
+      </div>
+      <div class="step">
+        <span class="step-number">3</span>
+        <h3>We Handle the Rest</h3>
+        <p>Each suit ships directly. Everyone gets the perfect fit before the big day.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- TWO OPTIONS -->
+  <section class="wedding-options">
+    <div class="wedding-option-card" onclick="openGroupModal()">
+      <span class="option-icon">👥</span>
+      <h2>Group Order</h2>
+      <p>Perfect for wedding parties. Create a group, share the link, and coordinate everyone's suits in one place. Groom's suit is on us for parties of 5 or more.</p>
+      <button class="btn secondary">Create Your Group →</button>
+    </div>
+
+    <div class="wedding-option-card">
+      <span class="option-icon">👤</span>
+      <h2>Individual Order</h2>
+      <p>Ordering just for yourself? Submit your measurements and we'll get your suit ready to ship.</p>
+      <a href="#individual" class="btn">Order Individually →</a>
+    </div>
+  </section>
+
+  <!-- GROUP MODAL -->
+  <div class="modal-overlay" id="groupModal" onclick="closeGroupModal(event)">
+    <div class="modal-box">
+      <button class="modal-close" onclick="closeGroupModal()">✕</button>
+      <h2>Create Your Group</h2>
+      <p class="section-sub">Tell us about your event and we'll get everyone suited up.</p>
+
+      <form id="groupForm" onsubmit="submitGroup(event)">
+        <div class="form-group">
+          <label>Event Name</label>
+          <input type="text" placeholder="Smith Wedding" required>
+        </div>
+
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Location</label>
+            <input type="text" placeholder="Chicago, IL">
           </div>
-          <div class="step">
-            <span class="step-number">2</span>
-            <h3>Share With Your Party</h3>
-            <p>Send your groomsmen to our site to submit their measurements.</p>
-          </div>
-          <div class="step">
-            <span class="step-number">3</span>
-            <h3>We Handle the Rest</h3>
-            <p>Each suit ships directly. Every groomsman gets the perfect fit.</p>
+          <div class="form-group">
+            <label>Wedding Date</label>
+            <input type="date" required>
           </div>
         </div>
-        <a href="products.html" class="btn">Shop Now →</a>
+
+        <h3 style="color: var(--text); margin-bottom: 1rem;">About You</h3>
+
+        <div class="form-grid">
+          <div class="form-group">
+            <label>First Name</label>
+            <input type="text" placeholder="First" required>
+          </div>
+          <div class="form-group">
+            <label>Last Name</label>
+            <input type="text" placeholder="Last" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" placeholder="groom@email.com" required>
+        </div>
+
+        <div class="form-group">
+          <label>Your Role</label>
+          <select>
+            <option value="groom">Groom</option>
+            <option value="best-man">Best Man</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+
+        <button type="submit" class="btn secondary" style="width: 100%; padding: 1rem; font-size: 1rem;">
+          Create My Group →
+        </button>
+      </form>
+
+      <div id="groupSuccess" style="display:none; text-align:center; padding: 2rem 0;">
+        <h3 style="color: var(--accent);">Group Created! 🎉</h3>
+        <p style="color: var(--muted); margin-top: 0.5rem;">We'll be in touch with your shareable link shortly.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- INDIVIDUAL ORDER FORM -->
+  <div id="individual">
+    <div class="wedding-main">
+
+      <section class="measurement-section">
+        <h2>Submit Your Measurements</h2>
+        <p class="section-sub">Fill out the form below and we'll make sure your suit fits perfectly.</p>
+
+        <form class="measurement-form" id="measurementForm">
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="firstName">First Name</label>
+              <input type="text" id="firstName" placeholder="James" required>
+            </div>
+            <div class="form-group">
+              <label for="lastName">Last Name</label>
+              <input type="text" id="lastName" placeholder="Miller" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" placeholder="james@email.com" required>
+          </div>
+
+          <div class="form-group">
+            <label for="weddingDate">Wedding Date</label>
+            <input type="date" id="weddingDate" required>
+          </div>
+
+          <div class="form-group">
+            <label for="suitColor">Suit Color</label>
+            <select id="suitColor" required>
+              <option value="">Select a color</option>
+              <option value="navy">Navy</option>
+              <option value="black">Black</option>
+              <option value="charcoal">Charcoal</option>
+              <option value="grey">Grey</option>
+              <option value="brown">Brown</option>
+              <option value="burgundy">Burgundy</option>
+              <option value="tan">Tan</option>
+              <option value="royal-blue">Royal Blue</option>
+            </select>
+          </div>
+
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="jacketSize">Jacket Size</label>
+              <select id="jacketSize" required>
+                <option value="">Select size</option>
+                <option>36S</option><option>36R</option><option>36L</option>
+                <option>38S</option><option>38R</option><option>38L</option>
+                <option>40S</option><option>40R</option><option>40L</option>
+                <option>42S</option><option>42R</option><option>42L</option>
+                <option>44S</option><option>44R</option><option>44L</option>
+                <option>46R</option><option>46L</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="pantSize">Pant Size (Waist x Inseam)</label>
+              <select id="pantSize" required>
+                <option value="">Select size</option>
+                <option>28x28</option><option>28x30</option>
+                <option>30x28</option><option>30x30</option><option>30x32</option>
+                <option>32x28</option><option>32x30</option><option>32x32</option>
+                <option>34x28</option><option>34x30</option><option>34x32</option>
+                <option>36x30</option><option>36x32</option>
+                <option>38x30</option><option>38x32</option>
+                <option>40x30</option><option>40x32</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="fitPreference">Fit Preference</label>
+            <select id="fitPreference" required>
+              <option value="">Select fit</option>
+              <option value="slim">Slim Fit</option>
+              <option value="regular">Regular Fit</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="role">Role in Wedding</label>
+            <select id="role">
+              <option value="">Select role</option>
+              <option value="groom">Groom</option>
+              <option value="best-man">Best Man</option>
+              <option value="groomsman">Groomsman</option>
+              <option value="father">Father of the Bride/Groom</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="notes">Additional Notes</label>
+            <textarea id="notes" rows="3" placeholder="Any special requests or fit concerns..."></textarea>
+          </div>
+
+          <button type="submit" class="btn secondary">Submit Measurements →</button>
+        </form>
+
+        <div class="form-success" id="formSuccess">
+          <h3>Thank you! 🎉</h3>
+          <p>Your measurements have been submitted. We'll be in touch before the wedding date.</p>
+        </div>
       </section>
 
-      <div class="wedding-main">
+      <aside class="fit-guide-sidebar">
+        <h3>Fit Guide</h3>
+        <p>Not sure about your size? Here's a quick reference.</p>
+        <div class="guide-item">
+          <h4>Jacket Size</h4>
+          <p>The number is your chest measurement in inches. S = Short, R = Regular, L = Long torso.</p>
+          <p>Example: 40R = 40" chest, regular length.</p>
+        </div>
+        <div class="guide-item">
+          <h4>Pant Size</h4>
+          <p>Waist x Inseam in inches.</p>
+          <p>Example: 32x30 = 32" waist, 30" inseam.</p>
+        </div>
+        <div class="guide-item">
+          <h4>Slim vs Regular</h4>
+          <p>Slim fits closer to the body. Regular has more room throughout.</p>
+        </div>
+        <a href="fitguide.html" class="btn" style="margin-top: 1rem; display: block; text-align: center;">Full Fit Guide →</a>
+      </aside>
 
-        <section class="measurement-section">
-          <h2>Submit Your Measurements</h2>
-          <p class="section-sub">Fill out the form below and we'll make sure your suit fits perfectly.</p>
+    </div>
+  </div>
 
-          <form class="measurement-form" id="measurementForm">
-
-            <div class="form-grid">
-              <div class="form-group">
-                <label for="firstName">First Name</label>
-                <input type="text" id="firstName" placeholder="James" required>
-              </div>
-              <div class="form-group">
-                <label for="lastName">Last Name</label>
-                <input type="text" id="lastName" placeholder="Miller" required>
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label for="email">Email Address</label>
-              <input type="email" id="email" placeholder="james@email.com" required>
-            </div>
-
-            <div class="form-group">
-              <label for="weddingDate">Wedding Date</label>
-              <input type="date" id="weddingDate" required>
-            </div>
-
-            <div class="form-group">
-              <label for="suitColor">Suit Color</label>
-              <select id="suitColor" required>
-                <option value="">Select a color</option>
-                <option value="navy">Navy</option>
-                <option value="black">Black</option>
-                <option value="charcoal">Charcoal</option>
-                <option value="grey">Grey</option>
-                <option value="brown">Brown</option>
-                <option value="burgundy">Burgundy</option>
-                <option value="tan">Tan</option>
-                <option value="royal-blue">Royal Blue</option>
-              </select>
-            </div>
-
-            <div class="form-grid">
-              <div class="form-group">
-                <label for="jacketSize">Jacket Size</label>
-                <select id="jacketSize" required>
-                  <option value="">Select size</option>
-                  <option>36S</option>
-                  <option>36R</option>
-                  <option>36L</option>
-                  <option>38S</option>
-                  <option>38R</option>
-                  <option>38L</option>
-                  <option>40S</option>
-                  <option>40R</option>
-                  <option>40L</option>
-                  <option>42S</option>
-                  <option>42R</option>
-                  <option>42L</option>
-                  <option>44S</option>
-                  <option>44R</option>
-                  <option>44L</option>
-                  <option>46R</option>
-                  <option>46L</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label for="pantSize">Pant Size (Waist x Inseam)</label>
-                <select id="pantSize" required>
-                  <option value="">Select size</option>
-                  <option>28x28</option>
-                  <option>28x30</option>
-                  <option>30x28</option>
-                  <option>30x30</option>
-                  <option>30x32</option>
-                  <option>32x28</option>
-                  <option>32x30</option>
-                  <option>32x32</option>
-                  <option>34x28</option>
-                  <option>34x30</option>
-                  <option>34x32</option>
-                  <option>36x30</option>
-                  <option>36x32</option>
-                  <option>38x30</option>
-                  <option>38x32</option>
-                  <option>40x30</option>
-                  <option>40x32</option>
-                </select>
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label for="fitPreference">Fit Preference</label>
-              <select id="fitPreference" required>
-                <option value="">Select fit</option>
-                <option value="slim">Slim Fit</option>
-                <option value="regular">Regular Fit</option>
-              </select>
-            </div>
-
-            <div class="form-group">
-              <label for="role">Role in Wedding</label>
-              <select id="role">
-                <option value="">Select role</option>
-                <option value="groom">Groom</option>
-                <option value="best-man">Best Man</option>
-                <option value="groomsman">Groomsman</option>
-                <option value="father">Father of the Bride/Groom</option>
-                <option value="other">Other</option>
-              </select>
-            </div>
-
-            <div class="form-group">
-              <label for="notes">Additional Notes</label>
-              <textarea id="notes" rows="3" placeholder="Any special requests or fit concerns..."></textarea>
-            </div>
-
-            <button type="submit" class="btn secondary">Submit Measurements →</button>
-
-          </form>
-
-          <div class="form-success" id="formSuccess">
-            <h3>Thank you! 🎉</h3>
-            <p>Your measurements have been submitted. We'll be in touch before the wedding date.</p>
-          </div>
-
-        </section>
-
-        <aside class="fit-guide-sidebar">
-          <h3>Fit Guide</h3>
-          <p>Not sure about your size? Here's a quick reference.</p>
-
-          <div class="guide-item">
-            <h4>Jacket Size</h4>
-            <p>The number is your chest measurement in inches. S = Short, R = Regular, L = Long torso.</p>
-            <p>Example: 40R = 40" chest, regular length.</p>
-          </div>
-
-          <div class="guide-item">
-            <h4>Pant Size</h4>
-            <p>Waist x Inseam in inches.</p>
-            <p>Example: 32x30 = 32" waist, 30" inseam.</p>
-          </div>
-
-          <div class="guide-item">
-            <h4>Slim vs Regular</h4>
-            <p>Slim fits closer to the body through chest, waist and thighs. Regular has more room throughout.</p>
-          </div>
-
-          <a href="fitguide.html" class="btn" style="margin-top: 1rem; display: block; text-align: center;">Full Fit Guide →</a>
-        </aside>
-
-      </div>
-
-    </main>
+</main>
 
     <footer class="site-footer">
             <div class="footer-inner">
