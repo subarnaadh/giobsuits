@@ -1,4 +1,3 @@
-
 @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,500&display=swap');
 
 .slide h1,
@@ -10,7 +9,7 @@
   letter-spacing: -0.01em;
 }
 
-/* Wrap one word in <em> in your HTML to get the
+/* Wrap one word in <em> in your HTML to get the nu-cosmetics
    italic-accent-word treatment, e.g. "Welcome to <em>GioB</em>" */
 .slide h1 em,
 .slide h2 em,
@@ -33,7 +32,7 @@
 /* 3. Kill the slider chrome. Pair this with index-static.html
       (stacked sections instead of one-slide-at-a-time) so the
       whole homepage flows in one continuous scroll, like the
-      hero → about → journal → contact rhythm. */
+      nu-cosmetics hero → about → journal → contact rhythm. */
 .slider-container {
   border-radius: 0;
   margin-top: 0;
@@ -55,7 +54,7 @@
   background: linear-gradient(135deg, #080f1a, #0f1f38);
 }
 
-/* Subtle scroll cue under the hero CTA, like '
+/* Subtle scroll cue under the hero CTA, like nu-cosmetics'
    "Explore ↓" link beneath their hero copy. Block-level so it
    drops to its own line below the button instead of sitting
    inline next to it. */
@@ -80,19 +79,18 @@
   background: linear-gradient(var(--accent), transparent);
 }
 
-/* 4. Value pillars — the "Clean / Pure / Confident"
+/* 4. Value pillars — the nu-cosmetics "Clean / Pure / Confident"
       pattern, translated to GioB. Uses your existing navy/gold
       palette (not an unrelated cream tone) and breaks out of
       <main>'s 1100px constraint so it's genuinely full-bleed —
       no dark gaps on either side. */
 .pillars-section {
   background: var(--panel);
-  padding: 5rem 1.5rem;
+  padding: 3.5rem 1.5rem;
   border-radius: 20px;
   margin-top: 1.5rem;
   border: 1px solid var(--border);
 }
-
 .pillars-head {
   text-align: center;
   max-width: 46ch;
