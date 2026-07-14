@@ -361,7 +361,7 @@ main,
 
 .product-visual {
   border-radius: 10px;
-  min-height: 120px;
+  aspect-ratio: 3 / 4;
   display: grid;
   place-items: center;
   margin-bottom: 0.75rem;
@@ -828,7 +828,7 @@ label {
 
 .product-visual-large {
   border-radius: 20px;
-  min-height: 500px;
+  aspect-ratio: 3 / 4;
   display: flex;
   align-items: center;
   justify-content: center;
