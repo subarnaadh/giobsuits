@@ -1,0 +1,112 @@
+/* ============================================================
+   GioB Suits — Sitewide White / Monochrome Theme
+   Link this on EVERY page, after style.css and vibe-update.css.
+   Since the whole site was built on CSS variables, redefining
+   them here cascades through buttons, cards, and borders on
+   every page automatically. A handful of colors were hardcoded
+   (not var()-based) and get direct overrides below.
+   ============================================================ */
+
+body {
+  --bg: #ffffff;
+  --panel: #f7f5f0;
+  --card: #ffffff;
+  --text: #171614;
+  --muted: #5c5a54;
+  --border: rgba(0, 0, 0, 0.08);
+  --accent: #171614;
+  --accent-hover: #3a3833;
+  background: var(--bg);
+}
+
+/* ---- Hero / wedding / category slide sections ---- */
+.slide {
+  background: #ffffff;
+}
+.slide:first-child {
+  background-image: none;
+  background-color: #ffffff;
+}
+.slide .hero,
+.slide .wedding-section,
+.slide .category-section {
+  color: var(--text);
+}
+.slide h1, .slide h2, .slide h3 {
+  color: var(--text);
+}
+.slide p, .slide .lede {
+  color: var(--muted);
+}
+.slide .category-card h3,
+.slide .category-card p {
+  color: var(--text);
+}
+
+/* ---- Wedding step cards (also used standalone on wedding.html) ---- */
+.step {
+  background: #f7f5f0;
+  border: 1px solid var(--border);
+}
+.step h3 { color: var(--text); }
+.step p { color: var(--muted); }
+
+/* ---- Category cards (homepage) ---- */
+.category-card {
+  border: 1px solid var(--border);
+}
+.suits-card { background: #f4f7fb; }
+.tux-card { background: #faf6f2; }
+.accessories-card { background: #f3faf5; }
+
+/* ---- Pillars section (homepage) ---- */
+.pillars-section {
+  background: #ffffff;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+.pillars-head h2,
+.pillar h3 {
+  color: var(--text);
+}
+.pillar p {
+  color: var(--muted);
+}
+
+/* ---- Footer (every page) ---- */
+.site-footer {
+  border-top: 1px solid var(--border);
+}
+.footer-col h4,
+.footer-brand,
+.footer-bottom p {
+  color: var(--text);
+}
+.footer-col ul a,
+.footer-email p {
+  color: var(--muted);
+}
+.email-input-row input {
+  background: #f7f5f0;
+  border: 1px solid var(--border);
+  color: var(--text);
+}
+
+/* ---- Product grid + detail pages (suits/tuxedos/product-detail) ---- */
+.product-visual,
+.product-visual-large {
+  color: var(--text);
+}
+
+/* ---- These pair dark text with what used to be a gold
+   background. Now that the background is black, text needs
+   to flip to white or it becomes unreadable. ---- */
+.btn:hover,
+.btn.secondary,
+.slide .btn,
+.step-number,
+.size-btn.selected,
+.fit-btn.active,
+.cart-count {
+  color: #ffffff;
+}
