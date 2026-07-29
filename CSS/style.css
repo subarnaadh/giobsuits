@@ -391,6 +391,14 @@ main,
 .white-tux { background: #e8e8e8; color: #333; }
 .navy-tux { background: #0f2040; }
 .black-tux { background: #101010; }
+.medium-grey { background: #5c5c5c; }
+.light-grey { background: #9a9a9a; color: #222; }
+.beautiful-blue { background: #3a6ea8; }
+.beige { background: #d8c4a0; color: #333; }
+.white-shirt { background: #e8e8e8; color: #333; }
+.light-blue { background: #a8c8e0; color: #333; }
+.pink { background: #e8a9b8; color: #333; }
+.lavender { background: #b8a8d8; color: #333; }
 
 .product-card h3 { color: var(--text); font-size: 0.95rem; margin-bottom: 0.3rem; }
 .price { color: var(--accent); font-weight: 600; margin-bottom: 0.25rem; }

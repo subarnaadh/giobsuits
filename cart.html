@@ -35,9 +35,25 @@
       </section>
 
       <section class="featured-products card">
-        <h2>Cart Summary</h2>
-        <p>Your cart is currently empty. Browse our suits and tuxedos to add premium tailoring options.</p>
-        <a href="products.html" class="btn secondary">Browse Products</a>
+        <div id="cartEmpty">
+          <p>Your cart is currently empty. Browse our suits and tuxedos to add premium tailoring options.</p>
+          <a href="products.html" class="btn secondary">Browse Products</a>
+        </div>
+
+        <div id="cartItems"></div>
+
+        <div id="cartSummary" class="cart-summary-hidden">
+          <div class="cart-summary-row">
+            <span>Subtotal</span>
+            <span id="cartSubtotal">$0.00</span>
+          </div>
+          <p class="cart-summary-note">Shipping and tax are calculated at checkout.</p>
+          <div class="cart-summary-row cart-summary-total">
+            <span>Total</span>
+            <span id="cartTotal">$0.00</span>
+          </div>
+          <button class="btn secondary cart-checkout-btn" onclick="handleCheckout()">Proceed to Checkout →</button>
+        </div>
       </section>
     </main>
 
