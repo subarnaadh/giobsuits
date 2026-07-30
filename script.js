@@ -95,6 +95,7 @@ const sidebarFilters = { fits: [], priceMin: null, priceMax: null };
 let currentProductTypeFilter = 'all';
 let currentSuitColorFilter = 'all';
 let currentTuxedoColorFilter = 'all';
+let currentTuxedoLapelFilter = 'all';
 
 const applySidebarFilters = (items) => items.filter((p) => {
   if (sidebarFilters.fits.length > 0) {
@@ -356,7 +357,10 @@ const renderTuxedos = (colorFilter = 'all') => {
   const byColor = colorFilter === 'all'
     ? tuxedos
     : tuxedos.filter(p => p.color === colorFilter);
-  const filtered = applySidebarFilters(byColor);
+  const byLapel = currentTuxedoLapelFilter === 'all'
+    ? byColor
+    : byColor.filter(p => p.name.toLowerCase().includes(currentTuxedoLapelFilter));
+  const filtered = applySidebarFilters(byLapel);
 
   grid.innerHTML = filtered.map(product => `
     <article class="product-card">
@@ -369,10 +373,11 @@ const renderTuxedos = (colorFilter = 'all') => {
   `).join('');
 };
 
-const filterTuxedos = (color) => {
-  document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+const filterTuxedosByLapel = (lapel) => {
+  currentTuxedoLapelFilter = lapel;
+  document.querySelectorAll('.lapel-filter-btn').forEach(btn => btn.classList.remove('active'));
   event.target.classList.add('active');
-  renderTuxedos(color);
+  renderTuxedos(currentTuxedoColorFilter);
 };
 
 // Shared renderer for Shirts / Pants / Vests grids on the Shirts &
@@ -706,6 +711,7 @@ const closeChatWidget = () => {
 window.filterProducts = filterProducts;
 window.filterByColor = filterByColor;
 window.filterTuxedos = filterTuxedos;
+window.filterTuxedosByLapel = filterTuxedosByLapel;
 window.goToSlide = goToSlide;
 window.changeSlide = changeSlide;
 window.selectSize = selectSize;
