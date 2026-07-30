@@ -380,6 +380,12 @@ const filterTuxedosByLapel = (lapel) => {
   renderTuxedos(currentTuxedoColorFilter);
 };
 
+const filterTuxedos = (color) => {
+  document.querySelectorAll('.filter-btn:not(.lapel-filter-btn)').forEach(btn => btn.classList.remove('active'));
+  event.target.classList.add('active');
+  renderTuxedos(color);
+};
+
 // Shared renderer for Shirts / Pants / Vests grids on the Shirts &
 // Accessories page. No color filtering here (unlike suits/tuxedos) —
 // just show everything in that type.
