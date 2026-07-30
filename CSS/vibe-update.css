@@ -804,3 +804,24 @@
     width: 100px;
   }
 }
+
+/* ── PAGE HERO (Suits / Tuxedos / Products / etc.) —
+   was completely unstyled before, just raw bold body text ── */
+.hero.card {
+  padding: 0.5rem 0 2rem;
+  margin-top: 0.5rem;
+}
+.hero.card h1 {
+  font-family: 'Fraunces', serif;
+  font-weight: 500;
+  font-size: clamp(1.9rem, 3.5vw, 2.6rem);
+  color: var(--text);
+  letter-spacing: -0.01em;
+  margin-bottom: 0.6rem;
+}
+.hero.card p {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  color: var(--muted);
+  font-size: 1.02rem;
+  max-width: 60ch;
+}
