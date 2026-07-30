@@ -25,7 +25,7 @@ body {
 main,
 .site-header,
 .site-footer {
-  width: min(1100px, calc(100% - 2rem));
+  width: min(1600px, calc(100% - 2rem));
   margin: 0 auto;
 }
 
@@ -474,7 +474,7 @@ main,
 }
 
 .footer-inner {
-  width: min(1100px, calc(100% - 2rem));
+  width: min(1600px, calc(100% - 2rem));
   margin: 0 auto;
   display: grid;
   grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr 1.8fr;
