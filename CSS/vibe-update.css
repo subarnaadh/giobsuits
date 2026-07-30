@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600&display=swap');
 
 .slide h1,
 .slide h2,
@@ -756,6 +756,47 @@
   color: var(--muted);
   margin-bottom: 1rem;
   font-size: 0.9rem;
+}
+/* ── CART: modal-style boundary + refreshed typography ── */
+.cart-hero {
+  max-width: 900px;
+  margin: 2rem auto 0;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 0 1.5rem;
+}
+.cart-hero h1 {
+  font-family: 'Fraunces', serif;
+  font-weight: 500;
+  color: var(--text);
+}
+.cart-hero p {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  color: var(--muted);
+}
+
+.cart-panel {
+  max-width: 900px;
+  margin: 1.5rem auto 3rem;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
+  padding: 2.5rem;
+}
+
+.cart-item-info h3 {
+  font-family: 'Fraunces', serif;
+  font-weight: 500;
+}
+.cart-item-options,
+.cart-line-total,
+.cart-remove-btn,
+.cart-summary-row,
+.cart-summary-note,
+.cart-qty-stepper span {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 @media (max-width: 1100px) {
