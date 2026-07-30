@@ -95,7 +95,7 @@ const renderProducts = (filter = 'all') => {
       <div class="product-visual ${product.color}">${productVisualHTML(product)}</div>
       <h3>${product.name}</h3>
       <p class="price">$${product.price}</p>
-      <p>${product.fit.join(' & ')} fit available</p>
+      ${product.fit ? `<p>${product.fit.join(' & ')} fit available</p>` : ''}
       <a href="product-detail.html?id=${product.id}" class="btn secondary">View Product</a>
     </article>
   `).join('');
@@ -201,7 +201,7 @@ const renderSuits = (colorFilter = 'all') => {
       <div class="product-visual ${product.color}">${productVisualHTML(product)}</div>
       <h3>${product.name}</h3>
       <p class="price">$${product.price}</p>
-      <p>${product.fit.join(' & ')} fit available</p>
+      ${product.fit ? `<p>${product.fit.join(' & ')} fit available</p>` : ''}
       <a href="product-detail.html?id=${product.id}" class="btn secondary">View Product</a>
     </article>
   `).join('');
@@ -227,7 +227,7 @@ const renderTuxedos = (colorFilter = 'all') => {
       <div class="product-visual ${product.color}">${productVisualHTML(product)}</div>
       <h3>${product.name}</h3>
       <p class="price">$${product.price}</p>
-      <p>${product.fit.join(' & ')} fit available</p>
+      ${product.fit ? `<p>${product.fit.join(' & ')} fit available</p>` : ''}
       <a href="product-detail.html?id=${product.id}" class="btn secondary">View Product</a>
     </article>
   `).join('');
