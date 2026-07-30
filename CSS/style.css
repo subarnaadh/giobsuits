@@ -35,13 +35,16 @@ main,
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  padding: 1.25rem 1.5rem;
+  padding: 1.1rem 1.75rem;
   margin-top: 1rem;
   margin-bottom: 1.5rem;
   background: var(--panel);
   border-radius: 20px;
-  border: none;
-  box-shadow: none;
+  border: 1px solid var(--border);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+  position: sticky;
+  top: 1rem;
+  z-index: 950;
 }
 
 .brand {
@@ -58,13 +61,20 @@ main,
 .primary-navigation ul {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
+  align-items: center;
+  gap: 0.35rem;
   list-style: none;
+}
+
+.nav-search-item {
+  padding-left: 1rem;
+  margin-left: 0.25rem;
+  border-left: 1px solid var(--border);
 }
 
 .primary-navigation a {
   display: inline-block;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 0.85rem;
   border-radius: 999px;
   text-decoration: none;
   color: var(--muted);
