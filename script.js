@@ -82,13 +82,122 @@ const productVisualHTML = (product) => {
 // 2. PRODUCT FUNCTIONS
 // ─────────────────────────────────────────
 
+// ─────────────────────────────────────────
+// 1b. FILTER SIDEBAR — Gender/Fit/Price, shared across every
+// product-listing page. Works alongside the existing type/color
+// filter buttons rather than replacing them.
+// ─────────────────────────────────────────
+
+const sidebarFilters = { fits: [], priceMin: null, priceMax: null };
+
+// Track each page's current primary filter (type or color) so that
+// toggling a sidebar filter re-renders without losing that selection.
+let currentProductTypeFilter = 'all';
+let currentSuitColorFilter = 'all';
+let currentTuxedoColorFilter = 'all';
+
+const applySidebarFilters = (items) => items.filter((p) => {
+  if (sidebarFilters.fits.length > 0) {
+    if (!p.fit || !p.fit.some((f) => sidebarFilters.fits.includes(f))) return false;
+  }
+  if (sidebarFilters.priceMin !== null && p.price < sidebarFilters.priceMin) return false;
+  if (sidebarFilters.priceMax !== null && p.price > sidebarFilters.priceMax) return false;
+  return true;
+});
+
+const reapplyAllFilters = () => {
+  renderProducts(currentProductTypeFilter);
+  renderSuits(currentSuitColorFilter);
+  renderTuxedos(currentTuxedoColorFilter);
+  renderByType('shirtGrid', 'shirt');
+  renderByType('pantsGrid', 'pants');
+  renderByType('vestGrid', 'vest');
+};
+
+const updateFilterUI = () => {
+  const count = sidebarFilters.fits.length + ((sidebarFilters.priceMin !== null || sidebarFilters.priceMax !== null) ? 1 : 0);
+  document.querySelectorAll('.filter-count').forEach((el) => { el.textContent = count; });
+
+  const tags = [];
+  sidebarFilters.fits.forEach((f) => tags.push({ label: `Fit: ${f}`, action: `removeFitFilter('${f}')` }));
+  if (sidebarFilters.priceMin !== null || sidebarFilters.priceMax !== null) {
+    const min = sidebarFilters.priceMin !== null ? `$${sidebarFilters.priceMin}` : '$0';
+    const max = sidebarFilters.priceMax !== null ? `$${sidebarFilters.priceMax}` : '+';
+    tags.push({ label: `Price: ${min}-${max}`, action: 'removePriceFilter()' });
+  }
+  document.querySelectorAll('.active-filter-tags').forEach((container) => {
+    container.innerHTML = tags.map((t) => `<span class="filter-tag">${t.label} <button onclick="${t.action}">×</button></span>`).join('');
+  });
+};
+
+const toggleFitFilter = (fit, checked) => {
+  if (checked) {
+    if (!sidebarFilters.fits.includes(fit)) sidebarFilters.fits.push(fit);
+  } else {
+    sidebarFilters.fits = sidebarFilters.fits.filter((f) => f !== fit);
+  }
+  reapplyAllFilters();
+  updateFilterUI();
+};
+
+const setPricePreset = (min, max, btn) => {
+  sidebarFilters.priceMin = min;
+  sidebarFilters.priceMax = max;
+  document.querySelectorAll('.price-preset-btn').forEach((b) => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  document.querySelectorAll('.price-min-input').forEach((el) => { el.value = min ?? ''; });
+  document.querySelectorAll('.price-max-input').forEach((el) => { el.value = max ?? ''; });
+  reapplyAllFilters();
+  updateFilterUI();
+};
+
+const applyPriceRange = (scopeEl) => {
+  const container = scopeEl.closest('.filter-sidebar');
+  const minEl = container.querySelector('.price-min-input');
+  const maxEl = container.querySelector('.price-max-input');
+  sidebarFilters.priceMin = minEl.value !== '' ? parseFloat(minEl.value) : null;
+  sidebarFilters.priceMax = maxEl.value !== '' ? parseFloat(maxEl.value) : null;
+  document.querySelectorAll('.price-preset-btn').forEach((b) => b.classList.remove('active'));
+  reapplyAllFilters();
+  updateFilterUI();
+};
+
+const removeFitFilter = (fit) => {
+  sidebarFilters.fits = sidebarFilters.fits.filter((f) => f !== fit);
+  document.querySelectorAll(`.fit-filter-checkbox[data-fit="${fit}"]`).forEach((cb) => { cb.checked = false; });
+  reapplyAllFilters();
+  updateFilterUI();
+};
+
+const removePriceFilter = () => {
+  sidebarFilters.priceMin = null;
+  sidebarFilters.priceMax = null;
+  document.querySelectorAll('.price-preset-btn').forEach((b) => b.classList.remove('active'));
+  document.querySelectorAll('.price-min-input, .price-max-input').forEach((el) => { el.value = ''; });
+  reapplyAllFilters();
+  updateFilterUI();
+};
+
+const clearAllFilters = () => {
+  sidebarFilters.fits = [];
+  sidebarFilters.priceMin = null;
+  sidebarFilters.priceMax = null;
+  document.querySelectorAll('.fit-filter-checkbox').forEach((cb) => { cb.checked = false; });
+  document.querySelectorAll('.price-preset-btn').forEach((b) => b.classList.remove('active'));
+  document.querySelectorAll('.price-min-input, .price-max-input').forEach((el) => { el.value = ''; });
+  reapplyAllFilters();
+  updateFilterUI();
+};
+
 const renderProducts = (filter = 'all') => {
+  currentProductTypeFilter = filter;
   const grid = document.getElementById('productGrid');
   if (!grid) return;
 
-  const filtered = filter === 'all'
+  const byType = filter === 'all'
     ? products
     : products.filter((p) => p.type === filter);
+  const filtered = applySidebarFilters(byType);
 
   grid.innerHTML = filtered.map((product) => `
     <article class="product-card">
@@ -188,13 +297,15 @@ const renderProductDetail = () => {
 
 
 const renderSuits = (colorFilter = 'all') => {
+  currentSuitColorFilter = colorFilter;
   const grid = document.getElementById('suitGrid');
   if (!grid) return;
 
   const suits = products.filter(p => p.type === 'suit');
-  const filtered = colorFilter === 'all'
+  const byColor = colorFilter === 'all'
     ? suits
     : suits.filter(p => p.color === colorFilter);
+  const filtered = applySidebarFilters(byColor);
 
   grid.innerHTML = filtered.map(product => `
     <article class="product-card">
@@ -214,13 +325,15 @@ const filterByColor = (color) => {
 };
 
 const renderTuxedos = (colorFilter = 'all') => {
+  currentTuxedoColorFilter = colorFilter;
   const grid = document.getElementById('tuxedoGrid');
   if (!grid) return;
 
   const tuxedos = products.filter(p => p.type === 'tuxedo');
-  const filtered = colorFilter === 'all'
+  const byColor = colorFilter === 'all'
     ? tuxedos
     : tuxedos.filter(p => p.color === colorFilter);
+  const filtered = applySidebarFilters(byColor);
 
   grid.innerHTML = filtered.map(product => `
     <article class="product-card">
@@ -246,7 +359,8 @@ const renderByType = (gridId, type) => {
   const grid = document.getElementById(gridId);
   if (!grid) return;
 
-  const items = products.filter(p => p.type === type);
+  const byType = products.filter(p => p.type === type);
+  const items = applySidebarFilters(byType);
 
   grid.innerHTML = items.map(product => `
     <article class="product-card">
@@ -582,6 +696,12 @@ window.closeChatWidget = closeChatWidget;
 window.removeCartItem = removeCartItem;
 window.changeCartQty = changeCartQty;
 window.handleCheckout = handleCheckout;
+window.toggleFitFilter = toggleFitFilter;
+window.setPricePreset = setPricePreset;
+window.applyPriceRange = applyPriceRange;
+window.removeFitFilter = removeFitFilter;
+window.removePriceFilter = removePriceFilter;
+window.clearAllFilters = clearAllFilters;
 
 
 // ─────────────────────────────────────────

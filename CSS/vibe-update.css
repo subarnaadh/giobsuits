@@ -504,3 +504,159 @@
     margin-top: 0.5rem;
   }
 }
+
+/* ── FILTER SIDEBAR (Gender / Fit / Price) — shared across every
+   product-listing page ── */
+.shop-layout {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 2.5rem;
+  align-items: start;
+}
+
+.filter-sidebar {
+  position: sticky;
+  top: 1rem;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 1.5rem;
+  background: var(--card);
+}
+
+.filter-sidebar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+.filter-sidebar-header h3 {
+  font-size: 1rem;
+  color: var(--text);
+}
+.filter-clear-all {
+  background: none;
+  border: none;
+  color: var(--muted);
+  font-size: 0.8rem;
+  text-decoration: underline;
+  cursor: pointer;
+  padding: 0;
+}
+.filter-clear-all:hover {
+  color: var(--accent);
+}
+
+.active-filter-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+.filter-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 0.3rem 0.7rem;
+  font-size: 0.78rem;
+  color: var(--text);
+}
+.filter-tag button {
+  background: none;
+  border: none;
+  color: var(--muted);
+  cursor: pointer;
+  font-size: 0.85rem;
+  padding: 0;
+  line-height: 1;
+}
+
+.filter-section {
+  padding: 1rem 0;
+  border-top: 1px solid var(--border);
+}
+.filter-section:first-of-type {
+  border-top: none;
+}
+.filter-section h4 {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 0.75rem;
+}
+.filter-checkbox-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+  font-size: 0.88rem;
+  color: var(--text);
+}
+.filter-checkbox-row input {
+  margin: 0;
+  accent-color: var(--accent);
+}
+.filter-note {
+  font-size: 0.75rem;
+  color: var(--muted);
+  margin-top: 0.25rem;
+}
+
+.price-preset-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+.price-preset-btn {
+  border: 1px solid var(--border);
+  background: transparent;
+  border-radius: 8px;
+  padding: 0.5rem 0.4rem;
+  font-size: 0.78rem;
+  color: var(--text);
+  cursor: pointer;
+  transition: border-color .2s;
+}
+.price-preset-btn:hover,
+.price-preset-btn.active {
+  border-color: var(--accent);
+}
+
+.price-range-inputs {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.price-range-inputs input {
+  width: 100%;
+  min-width: 0;
+  padding: 0.5rem 0.6rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: transparent;
+  color: var(--text);
+  font-size: 0.85rem;
+  margin: 0;
+}
+.price-apply-btn {
+  border: none;
+  background: var(--accent);
+  color: #ffffff;
+  border-radius: 8px;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.78rem;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+@media (max-width: 900px) {
+  .shop-layout {
+    grid-template-columns: 1fr;
+  }
+  .filter-sidebar {
+    position: static;
+  }
+}
