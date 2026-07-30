@@ -197,7 +197,22 @@ const renderProducts = (filter = 'all') => {
   const byType = filter === 'all'
     ? products
     : products.filter((p) => p.type === filter);
-  const filtered = applySidebarFilters(byType);
+  let filtered = applySidebarFilters(byType);
+
+  // If the page was reached via a search (products.html?q=...), narrow
+  // results to matching product names and show a heads-up note.
+  const params = new URLSearchParams(window.location.search);
+  const query = params.get('q');
+  const note = document.getElementById('searchResultsNote');
+  if (query) {
+    filtered = filtered.filter((p) => p.name.toLowerCase().includes(query.toLowerCase()));
+    if (note) {
+      note.textContent = `Showing ${filtered.length} result${filtered.length === 1 ? '' : 's'} for "${query}"`;
+      note.style.display = 'block';
+    }
+  } else if (note) {
+    note.style.display = 'none';
+  }
 
   grid.innerHTML = filtered.map((product) => `
     <article class="product-card">
@@ -208,6 +223,14 @@ const renderProducts = (filter = 'all') => {
       <a href="product-detail.html?id=${product.id}" class="btn secondary">View Product</a>
     </article>
   `).join('');
+};
+
+// Any search box on the site (nav, overlay, sidebar) funnels here —
+// takes the user to the All Products page filtered by their query.
+const handleSiteSearch = (inputEl) => {
+  const query = inputEl.value.trim();
+  if (!query) return;
+  window.location.href = `products.html?q=${encodeURIComponent(query)}`;
 };
 
 const filterProducts = (type) => {
@@ -702,6 +725,7 @@ window.applyPriceRange = applyPriceRange;
 window.removeFitFilter = removeFitFilter;
 window.removePriceFilter = removePriceFilter;
 window.clearAllFilters = clearAllFilters;
+window.handleSiteSearch = handleSiteSearch;
 
 
 // ─────────────────────────────────────────

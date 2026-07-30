@@ -19,10 +19,16 @@
           <li><a href="index.html">Home</a></li>
           <li><a href="suits.html">Suits</a></li>
           <li><a href="tuxedos.html">Tuxedos</a></li>
-          <li><a href="shirtsaccessories.html">Shirts &amp; Accessories</a></li>
+          <li><a href="shirts.html">Shirts</a></li>
+          <li><a href="pants.html">Pants</a></li>
+          <li><a href="accessories.html">Accessories</a></li>
           <li><a href="why.html">Why GioB Suits</a></li>
           <li><a href="fitguide.html">Fit Guide & Finder</a></li>
           <li><a href="wedding.html">Wedding Suits</a></li>
+          <li class="nav-search-item">
+            <input type="search" class="nav-search-input" placeholder="Search..." onkeydown="if(event.key===&#39;Enter&#39;) handleSiteSearch(this)">
+            <button class="nav-search-btn" onclick="handleSiteSearch(this.previousElementSibling)" aria-label="Search">🔍</button>
+          </li>
           <li><a href="cart.html" class="cart-icon">🛒 <span class="cart-count">0</span></a></li>
         </ul>
       </nav>
@@ -31,6 +37,10 @@
     <main>
       <div class="shop-layout">
         <aside class="filter-sidebar">
+          <div class="sidebar-search-row">
+            <input type="search" class="sidebar-search-input" placeholder="Search products..." onkeydown="if(event.key==='Enter') handleSiteSearch(this)">
+            <button class="sidebar-search-btn" onclick="handleSiteSearch(this.previousElementSibling)">Go</button>
+          </div>
           <div class="filter-sidebar-header">
             <h3>Filters (<span class="filter-count">0</span>)</h3>
             <button class="filter-clear-all" onclick="clearAllFilters()">Clear All</button>
@@ -76,6 +86,7 @@
       <button class="filter-btn" data-filter="vest" onclick="filterProducts('vest')">Vests</button>
       </div>
 
+      <p class="search-results-note" id="searchResultsNote" style="display:none;"></p>
       <div class="product-grid" id="productGrid"></div>
         </div>
       </div>

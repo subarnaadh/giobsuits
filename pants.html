@@ -3,14 +3,14 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GioB Suits</title>
+    <title>Pants - GioB Suits</title>
     <link rel="stylesheet" href="CSS/style.css">
     <link rel="stylesheet" href="CSS/vibe-update.css">
     <link rel="stylesheet" href="CSS/white-theme.css">
     <link rel="stylesheet" href="CSS/interactive-hero.css">
   </head>
   <body>
-     <header class="site-header">
+ <header class="site-header">
       <a class="brand" href="index.html">
       <img src="images/Logo.png" alt="GioB Suits" height="50">
       </a>
@@ -23,10 +23,10 @@
           <li><a href="pants.html">Pants</a></li>
           <li><a href="accessories.html">Accessories</a></li>
           <li><a href="why.html">Why GioB Suits</a></li>
-          <li><a href="fitguide.html">Fit Guide & Finder</a></li>
-          <li><a href="affiliate.html">Become an Affiliate</a></li>
+          <li><a href="fitguide.html">Fit Guide &amp; Finder</a></li>
+          <li><a href="wedding.html">Wedding Suits</a></li>
           <li class="nav-search-item">
-            <input type="search" class="nav-search-input" placeholder="Search..." onkeydown="if(event.key===&#39;Enter&#39;) handleSiteSearch(this)">
+            <input type="search" class="nav-search-input" placeholder="Search..." onkeydown="if(event.key==='Enter') handleSiteSearch(this)">
             <button class="nav-search-btn" onclick="handleSiteSearch(this.previousElementSibling)" aria-label="Search">🔍</button>
           </li>
           <li><a href="cart.html" class="cart-icon">🛒 <span class="cart-count">0</span></a></li>
@@ -35,28 +35,60 @@
     </header>
 
     <main>
-      <section class="why-section card">
-        <h2>Why GioB Suits</h2>
-        <div class="why-grid">
-          <div class="why-card">
-            <span class="why-icon">📏</span>
-            <h3>Mix &amp; Match Sizing</h3>
-            <p>Select your jacket and pant size independently for a fit that works for your body.</p>
-          </div>
-          <div class="why-card">
-            <span class="why-icon">🎨</span>
-            <h3>8 Colors In Stock</h3>
-            <p>Our core colors are always available and replenished quickly so you never miss out.</p>
-          </div>
-          <div class="why-card">
-            <span class="why-icon">📦</span>
-            <h3>Fast Nationwide Shipping</h3>
-            <p>We ship directly to your door across the country quickly and reliably.</p>
-          </div>
-          <div class="why-card">
-            <span class="why-icon">✅</span>
-            <h3>Always Replenished</h3>
-            <p>Our in-stock program means your size and color are ready when you need them.</p>
+      <section class="accessories-section">
+        <div class="accessories-head">
+          <p class="eyebrow">Suit Separates</p>
+          <h2>Pants &amp; <em>Vests</em></h2>
+        </div>
+
+        <div class="shop-layout">
+          <aside class="filter-sidebar">
+            <div class="sidebar-search-row">
+              <input type="search" class="sidebar-search-input" placeholder="Search products..." onkeydown="if(event.key==='Enter') handleSiteSearch(this)">
+              <button class="sidebar-search-btn" onclick="handleSiteSearch(this.previousElementSibling)">Go</button>
+            </div>
+            <div class="filter-sidebar-header">
+              <h3>Filters (<span class="filter-count">0</span>)</h3>
+              <button class="filter-clear-all" onclick="clearAllFilters()">Clear All</button>
+            </div>
+            <div class="active-filter-tags"></div>
+
+            <div class="filter-section">
+              <h4>Gender</h4>
+              <label class="filter-checkbox-row"><input type="checkbox" checked disabled> Men's</label>
+              <p class="filter-note">All GioB Suits products are currently menswear.</p>
+            </div>
+
+            <div class="filter-section">
+              <h4>Fit</h4>
+              <label class="filter-checkbox-row"><input type="checkbox" class="fit-filter-checkbox" data-fit="Slim" onchange="toggleFitFilter('Slim', this.checked)"> Slim</label>
+              <label class="filter-checkbox-row"><input type="checkbox" class="fit-filter-checkbox" data-fit="Modern" onchange="toggleFitFilter('Modern', this.checked)"> Modern</label>
+              <p class="filter-note">Vests have no Fit option — this only narrows Pants.</p>
+            </div>
+
+            <div class="filter-section">
+              <h4>Price</h4>
+              <div class="price-preset-grid">
+                <button class="price-preset-btn" onclick="setPricePreset(0, 100, this)">Under $100</button>
+                <button class="price-preset-btn" onclick="setPricePreset(100, 300, this)">$100–$300</button>
+                <button class="price-preset-btn" onclick="setPricePreset(300, 600, this)">$300–$600</button>
+                <button class="price-preset-btn" onclick="setPricePreset(600, 1000, this)">$600–$1,000</button>
+              </div>
+              <div class="price-range-inputs">
+                <input type="number" class="price-min-input" placeholder="Min">
+                <span>–</span>
+                <input type="number" class="price-max-input" placeholder="Max">
+                <button class="price-apply-btn" onclick="applyPriceRange(this)">Apply</button>
+              </div>
+            </div>
+          </aside>
+
+          <div class="shop-main">
+            <h3 class="section-sub-heading">Pants</h3>
+            <div class="product-grid" id="pantsGrid"></div>
+
+            <h3 class="section-sub-heading">Vests</h3>
+            <div class="product-grid" id="vestGrid"></div>
           </div>
         </div>
       </section>
@@ -133,8 +165,8 @@
       <div class="chat-panel-header">
         <button class="chat-panel-close" onclick="closeChatWidget()" aria-label="Close chat">✕</button>
         <div class="chat-brand">Suzy<span>.</span></div>
-        <h4>How can we help?</h4>
-        <p>This chat is AI-powered for faster assistance.</p>
+        <h4>Talk to Suzy</h4>
+        <p>Our resident suit expert</p>
       </div>
       <div class="chat-quick-replies">
         <button class="chat-quick-reply">↳ How does mix &amp; match sizing work?</button>

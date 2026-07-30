@@ -306,7 +306,7 @@ main,
 /* ── CATEGORY CARDS ── */
 .category-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 1rem;
   margin-top: 1rem;
 }
@@ -330,6 +330,7 @@ main,
 .suits-card { background: rgba(31, 78, 121, 0.3); }
 .tux-card { background: rgba(60, 30, 10, 0.4); }
 .accessories-card { background: rgba(20, 80, 50, 0.3); }
+.pants-card { background: rgba(70, 50, 90, 0.3); }
 
 .category-card h3 { color: white; margin-bottom: 0.5rem; }
 .category-card p { color: var(--muted); margin-bottom: 1rem; font-size: 0.9rem; flex: 1; }

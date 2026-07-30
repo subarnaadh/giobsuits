@@ -36,11 +36,17 @@
         </div>
         <button class="nav-overlay-close" id="navClose" aria-label="Close menu">✕</button>
       </div>
+      <div class="overlay-search-row">
+        <input type="search" class="overlay-search-input" placeholder="Search products..." onkeydown="if(event.key==='Enter') handleSiteSearch(this)">
+        <button class="overlay-search-btn" onclick="handleSiteSearch(this.previousElementSibling)" aria-label="Search">🔍</button>
+      </div>
       <nav class="nav-overlay-links">
         <a href="index.html">Home</a>
         <a href="suits.html">Suits</a>
         <a href="tuxedos.html">Tuxedos</a>
-        <a href="shirtsaccessories.html">Shirts &amp; Accessories</a>
+        <a href="shirts.html">Shirts</a>
+        <a href="pants.html">Pants</a>
+        <a href="accessories.html">Accessories</a>
         <a href="wedding.html">Weddings and Events</a>
         <a href="fitguide.html">Fit Guide &amp; Finder</a>
         <a href="affiliate.html">Become an Affiliate</a>
@@ -118,9 +124,19 @@
                 <a href="tuxedos.html" class="btn">Shop Now</a>
               </article>
               <article class="category-card accessories-card">
-                <h3>Shirts &amp; Accessories</h3>
-                <p>Complete the look with crisp shirts, ties, and accessories.</p>
-                <a href="shirtsaccessories.html" class="btn">Shop Now</a>
+                <h3>Shirts</h3>
+                <p>Crisp, tailored shirts to complete every look.</p>
+                <a href="shirts.html" class="btn">Shop Now</a>
+              </article>
+              <article class="category-card pants-card">
+                <h3>Pants</h3>
+                <p>Sharp separates and vests to mix, match, and layer.</p>
+                <a href="pants.html" class="btn">Shop Now</a>
+              </article>
+              <article class="category-card accessories-card">
+                <h3>Accessories</h3>
+                <p>Ties, cufflinks, and finishing touches — coming soon.</p>
+                <a href="accessories.html" class="btn">Shop Now</a>
               </article>
             </div>
           </section>
