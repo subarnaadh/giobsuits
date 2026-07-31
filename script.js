@@ -699,9 +699,103 @@ const initializeNavigation = () => {
 // 6b. SUZY CHAT WIDGET (UI only — not wired to a real backend yet)
 // ─────────────────────────────────────────
 
+// ─────────────────────────────────────────
+// 6b. SUZY CHAT WIDGET — a real rule-based FAQ assistant, not a
+// UI shell. No AI/API involved (that needs a backend to keep an
+// API key safe) — this matches typed/clicked questions to real,
+// accurate answers about how the site actually works.
+// ─────────────────────────────────────────
+
+const SUZY_TOPICS = {
+  sizing: {
+    label: "How does mix & match sizing work?",
+    answer: "Every suit and tuxedo lets you pick your jacket size and pant size independently — so if you're a 40R jacket and a 32x30 pant, you're never stuck with a matched off-the-rack set. Just choose both sizes on the product page before adding to cart.",
+    keywords: ["mix", "match", "jacket size", "pant size", "sizing", "independent"],
+  },
+  fit: {
+    label: "How do I find my fit?",
+    answer: "Head to our Fit Guide & Finder page — it walks through taking your own measurements, and includes a size calculator that recommends a starting jacket and pant size based on your height, weight, and build.",
+    keywords: ["fit", "measurement", "measure", "body type", "size calculator", "which size"],
+  },
+  wedding: {
+    label: "Plan a wedding party order",
+    answer: "Visit our Weddings page to get started. You can create a group, pick one color for the whole party, and each groomsman fills in their own measurements — every suit ships directly to that person.",
+    keywords: ["wedding", "groomsmen", "group", "party", "bulk"],
+  },
+  shipping: {
+    label: "What's your shipping time?",
+    answer: "We ship nationwide. Most orders ship within 5-7 business days of being placed — exact delivery windows will be confirmed at checkout once our full ordering system is live.",
+    keywords: ["ship", "shipping", "delivery", "arrive", "how long"],
+  },
+  returns: {
+    label: "I need to return or exchange",
+    answer: "We offer returns and exchanges. For now, email us directly at info@giobsuits.com with your order details and our team will help sort it out.",
+    keywords: ["return", "exchange", "refund", "send back"],
+  },
+  stylist: {
+    label: "Talk to a stylist",
+    answer: "Our styling team is happy to help. Email info@giobsuits.com and mention what you're shopping for — a wedding, an interview, everyday wear — and someone will follow up personally.",
+    keywords: ["stylist", "talk to", "human", "agent", "real person", "contact"],
+  },
+};
+
+const SUZY_FALLBACK = "I don't have an answer for that one yet, but you can reach our team directly at info@giobsuits.com and we'll get back to you.";
+
+const appendChatMessage = (sender, text) => {
+  const container = document.getElementById('chatMessages');
+  if (!container) return;
+  const bubble = document.createElement('div');
+  bubble.className = `chat-message chat-message-${sender}`;
+  bubble.textContent = text;
+  container.appendChild(bubble);
+  container.scrollTop = container.scrollHeight;
+};
+
+const askSuzy = (topicKey) => {
+  const topic = SUZY_TOPICS[topicKey];
+  if (!topic) return;
+  appendChatMessage('user', topic.label);
+  appendChatMessage('bot', topic.answer);
+};
+
+// Free-text matching: find the topic whose keywords best match the
+// user's typed question. Falls back honestly if nothing matches
+// well, rather than guessing at an answer.
+const matchSuzyTopic = (text) => {
+  const lower = text.toLowerCase();
+  let bestKey = null;
+  let bestScore = 0;
+  Object.entries(SUZY_TOPICS).forEach(([key, topic]) => {
+    const score = topic.keywords.filter((kw) => lower.includes(kw)).length;
+    if (score > bestScore) {
+      bestScore = score;
+      bestKey = key;
+    }
+  });
+  return bestScore > 0 ? bestKey : null;
+};
+
+const handleChatInput = () => {
+  const input = document.getElementById('chatInput');
+  if (!input) return;
+  const text = input.value.trim();
+  if (!text) return;
+
+  appendChatMessage('user', text);
+  const matchedKey = matchSuzyTopic(text);
+  appendChatMessage('bot', matchedKey ? SUZY_TOPICS[matchedKey].answer : SUZY_FALLBACK);
+
+  input.value = '';
+};
+
 const openChatWidget = () => {
   const panel = document.getElementById('chatPanel');
   if (panel) panel.classList.add('open');
+
+  const container = document.getElementById('chatMessages');
+  if (container && container.children.length === 0) {
+    appendChatMessage('bot', "Hi, I'm Suzy! Ask me a question below, or tap one of the quick options to get started.");
+  }
 };
 
 const closeChatWidget = () => {
@@ -727,6 +821,97 @@ window.openGroupModal = openGroupModal;
 window.closeGroupModal = closeGroupModal;
 window.submitGroup = submitGroup;
 window.openChatWidget = openChatWidget;
+window.askSuzy = askSuzy;
+// ─────────────────────────────────────────
+// 6c. FIT PREDICTOR — a real height/weight/build/waist based size
+// calculator, using the same kind of off-the-rack sizing logic
+// real menswear retailers use for a "starting point" recommendation.
+// No photo/AI analysis — that needs a backend, this doesn't.
+// ─────────────────────────────────────────
+
+// Jacket sizes actually available across the real catalog.
+const AVAILABLE_JACKET_SIZES = [36, 38, 40, 42, 44, 46, 48, 50, 52, 54, 56, 58, 60];
+// Waist sizes actually available for suit/tuxedo pants specifically
+// (standalone Pants product sizing goes wider — see SIZE_SCHEMES.pants).
+const AVAILABLE_SUIT_WAISTS = [28, 30, 32, 34, 36, 38, 40];
+const AVAILABLE_INSEAMS = [28, 30, 32];
+
+const nearestFrom = (value, list) => list.reduce((closest, cur) =>
+  Math.abs(cur - value) < Math.abs(closest - value) ? cur : closest
+);
+
+const calculateFitPrediction = () => {
+  const ft = parseFloat(document.getElementById('fpHeightFt').value);
+  const inches = parseFloat(document.getElementById('fpHeightIn').value);
+  const weight = parseFloat(document.getElementById('fpWeight').value);
+  const waist = parseFloat(document.getElementById('fpWaist').value);
+  const build = document.getElementById('fpBuild').value;
+  const fit = document.getElementById('fpFit').value;
+
+  if (!ft || isNaN(inches) || !weight || !waist || !build || !fit) {
+    alert('Please fill in every field so we can calculate an accurate estimate.');
+    return;
+  }
+
+  const heightIn = (ft * 12) + inches;
+
+  // Length code from height.
+  const lengthCode = heightIn < 67 ? 'S' : heightIn < 73 ? 'R' : 'L';
+
+  // Base jacket number from weight bracket.
+  let baseJacket;
+  if (weight < 140) baseJacket = 36;
+  else if (weight < 155) baseJacket = 38;
+  else if (weight < 170) baseJacket = 40;
+  else if (weight < 185) baseJacket = 42;
+  else if (weight < 200) baseJacket = 44;
+  else if (weight < 215) baseJacket = 46;
+  else if (weight < 230) baseJacket = 48;
+  else if (weight < 245) baseJacket = 50;
+  else if (weight < 260) baseJacket = 52;
+  else if (weight < 275) baseJacket = 54;
+  else if (weight < 290) baseJacket = 56;
+  else baseJacket = 58;
+
+  // Build adjusts the base estimate — a broader build needs more
+  // room through the chest/shoulders even at the same weight.
+  const buildAdjustment = { slim: -2, average: 0, athletic: 2, broad: 4 };
+  const adjustedJacket = baseJacket + (buildAdjustment[build] || 0);
+  const jacketNumber = nearestFrom(adjustedJacket, AVAILABLE_JACKET_SIZES);
+  const jacketSize = `${jacketNumber}${lengthCode}`;
+
+  // Suit pant waist — clamped to what's actually available for
+  // suit/tuxedo pants specifically (28-40).
+  const minWaist = Math.min(...AVAILABLE_SUIT_WAISTS);
+  const maxWaist = Math.max(...AVAILABLE_SUIT_WAISTS);
+  const clampedWaist = nearestFrom(waist, AVAILABLE_SUIT_WAISTS);
+  const waistNeedsAlteration = waist < minWaist || waist > maxWaist;
+
+  // Inseam estimate from height.
+  const inseam = heightIn < 66 ? 28 : heightIn < 70 ? 30 : 32;
+  const suitPantSize = `${clampedWaist}x${inseam}`;
+
+  const headline = document.getElementById('fitPredictorHeadline');
+  const detail = document.getElementById('fitPredictorDetail');
+  const resultBox = document.getElementById('fitPredictorResult');
+
+  if (headline) headline.textContent = `Your starting size: Jacket ${jacketSize}, Pant ${suitPantSize}, ${fit} fit`;
+  if (detail) {
+    let text = `Based on what you entered, we'd start you at a ${jacketSize} jacket paired with a ${suitPantSize} pant in our ${fit} fit. `;
+    if (waistNeedsAlteration) {
+      text += `Your waist measurement is outside our standard suit-pant range — we recommend the closest size shown and having the waist tailored, or contacting our styling team for a custom option. `;
+    }
+    text += 'This is a real starting estimate, not a guarantee — for a perfect fit, we always recommend confirming with your own measurements before ordering, especially for wedding party orders.';
+    detail.textContent = text;
+  }
+  if (resultBox) {
+    resultBox.style.display = 'block';
+    resultBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+};
+
+window.handleChatInput = handleChatInput;
+window.calculateFitPrediction = calculateFitPrediction;
 window.closeChatWidget = closeChatWidget;
 window.removeCartItem = removeCartItem;
 window.changeCartQty = changeCartQty;

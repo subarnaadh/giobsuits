@@ -853,6 +853,9 @@ label {
 .form-success p {
   color: var(--muted);
 }
+.fit-predictor-section {
+  margin-top: 2rem;
+}
 
 /*product detail page*/
 .product-detail {

@@ -29,10 +29,6 @@
             <input type="search" class="nav-search-input" placeholder="Search..." onkeydown="if(event.key==='Enter') handleSiteSearch(this)">
             <button class="nav-search-btn" onclick="handleSiteSearch(this.previousElementSibling)" aria-label="Search">🔍</button>
           </li>
-          <li class="nav-search-item">
-            <input type="search" class="nav-search-input" placeholder="Search..." onkeydown="if(event.key==='Enter') handleSiteSearch(this)">
-            <button class="nav-search-btn" onclick="handleSiteSearch(this.previousElementSibling)" aria-label="Search">🔍</button>
-          </li>
           <li><a href="cart.html" class="cart-icon">🛒 <span class="cart-count">0</span></a></li>
         </ul>
       </nav>
@@ -63,6 +59,58 @@
             <h3>4. Ask for Help</h3>
             <p>If you need support, contact us and our styling team will guide you through every step.</p>
           </article>
+        </div>
+      </section>
+
+      <section class="measurement-section fit-predictor-section">
+        <h2>Fit Predictor</h2>
+        <p class="section-sub">Answer a few quick questions and we'll suggest a starting jacket and pant size. This is a real estimate based on your inputs — not a substitute for a proper measurement, but a solid place to start.</p>
+
+        <form id="fitPredictorForm">
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="fpHeightFt">Height — feet</label>
+              <input type="number" id="fpHeightFt" min="4" max="7" placeholder="e.g. 5" required>
+            </div>
+            <div class="form-group">
+              <label for="fpHeightIn">Height — inches</label>
+              <input type="number" id="fpHeightIn" min="0" max="11" placeholder="e.g. 10" required>
+            </div>
+            <div class="form-group">
+              <label for="fpWeight">Weight (lbs)</label>
+              <input type="number" id="fpWeight" min="90" max="400" placeholder="e.g. 175" required>
+            </div>
+            <div class="form-group">
+              <label for="fpWaist">Waist (inches)</label>
+              <input type="number" id="fpWaist" min="26" max="52" placeholder="e.g. 32" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="fpBuild">Build</label>
+            <select id="fpBuild" required>
+              <option value="">Select your build</option>
+              <option value="slim">Slim — narrow shoulders and frame</option>
+              <option value="average">Average — balanced, most common build</option>
+              <option value="athletic">Athletic — broader shoulders/chest relative to waist</option>
+              <option value="broad">Broad — fuller through the chest and midsection</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="fpFit">Fit Preference</label>
+            <select id="fpFit" required>
+              <option value="Slim">Slim — tailored, closer to the body</option>
+              <option value="Modern">Modern — classic, more relaxed through the chest</option>
+            </select>
+          </div>
+
+          <button type="button" class="btn secondary" onclick="calculateFitPrediction()">Calculate My Fit</button>
+        </form>
+
+        <div class="form-success" id="fitPredictorResult" style="display: none;">
+          <h3 id="fitPredictorHeadline"></h3>
+          <p id="fitPredictorDetail"></p>
         </div>
       </section>
     </main>
@@ -130,23 +178,28 @@
     </footer>
 
     <script src="script.js"></script>
-      <!-- SUZY CHAT WIDGET (UI only — not wired to a real chatbot yet) -->
+    <!-- SUZY CHAT WIDGET — functional rule-based FAQ assistant -->
     <button class="chat-launcher" onclick="openChatWidget()" aria-label="Open chat">💬</button>
     <div class="chat-panel" id="chatPanel">
       <div class="chat-panel-header">
         <button class="chat-panel-close" onclick="closeChatWidget()" aria-label="Close chat">✕</button>
         <div class="chat-brand">Suzy<span>.</span></div>
-        <h4>How can we help?</h4>
-        <p>This chat is AI-powered for faster assistance.</p>
+        <h4>Talk to Suzy</h4>
+        <p>Our resident suit expert</p>
       </div>
+      <div class="chat-messages" id="chatMessages"></div>
       <div class="chat-quick-replies">
-        <button class="chat-quick-reply">↳ How does mix &amp; match sizing work?</button>
-        <button class="chat-quick-reply">✂ How do I find my fit?</button>
-        <button class="chat-quick-reply">🎉 Plan a wedding party order</button>
-        <button class="chat-quick-reply">🚚 What's your shipping time?</button>
-        <button class="chat-quick-reply">↩ I need to return or exchange</button>
-        <button class="chat-quick-reply">Ⓢ Talk to a stylist</button>
+        <button class="chat-quick-reply" onclick="askSuzy('sizing')">↳ Sizing</button>
+        <button class="chat-quick-reply" onclick="askSuzy('fit')">✂ Find my fit</button>
+        <button class="chat-quick-reply" onclick="askSuzy('wedding')">🎉 Wedding party</button>
+        <button class="chat-quick-reply" onclick="askSuzy('shipping')">🚚 Shipping</button>
+        <button class="chat-quick-reply" onclick="askSuzy('returns')">↩ Returns</button>
+        <button class="chat-quick-reply" onclick="askSuzy('stylist')">Ⓢ Talk to a stylist</button>
+      </div>
+      <div class="chat-input-row">
+        <input type="text" id="chatInput" class="chat-input" placeholder="Ask a question..." onkeydown="if(event.key==='Enter') handleChatInput()">
+        <button class="chat-send-btn" onclick="handleChatInput()">Send</button>
       </div>
     </div>
-  </body>
+</body>
 </html>

@@ -341,24 +341,55 @@
   margin-top: 0.25rem;
 }
 
-.chat-quick-replies {
-  padding: 1.25rem;
+.chat-messages {
+  flex: 1;
+  min-height: 60px;
+  overflow-y: auto;
+  padding: 1rem 1.25rem;
   display: flex;
   flex-direction: column;
-  gap: 0.65rem;
-  overflow-y: auto;
+  gap: 0.6rem;
+}
+
+.chat-message {
+  max-width: 85%;
+  padding: 0.65rem 0.9rem;
+  border-radius: 14px;
+  font-size: 0.85rem;
+  line-height: 1.45;
+}
+.chat-message-bot {
+  align-self: flex-start;
+  background: var(--card);
+  border: 1px solid var(--border);
+  color: var(--text);
+  border-bottom-left-radius: 4px;
+}
+.chat-message-user {
+  align-self: flex-end;
+  background: var(--accent);
+  color: #ffffff;
+  border-bottom-right-radius: 4px;
+}
+
+.chat-quick-replies {
+  padding: 0.75rem 1.25rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  border-top: 1px solid var(--border);
 }
 
 .chat-quick-reply {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 0.6rem;
-  padding: 0.85rem 1rem;
+  gap: 0.4rem;
+  padding: 0.5rem 0.8rem;
   background: var(--card);
   border: 1px solid var(--border);
   border-radius: 999px;
   color: var(--text);
-  font-size: 0.88rem;
+  font-size: 0.76rem;
   font-family: inherit;
   cursor: pointer;
   text-align: left;
@@ -367,6 +398,39 @@
 .chat-quick-reply:hover {
   border-color: var(--accent);
   background: rgba(201,168,76,0.08);
+}
+
+.chat-input-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  border-top: 1px solid var(--border);
+}
+.chat-input {
+  flex: 1;
+  padding: 0.6rem 0.9rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--card);
+  color: var(--text);
+  font-size: 0.85rem;
+  font-family: inherit;
+}
+.chat-input:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+.chat-send-btn {
+  background: var(--accent);
+  color: #ffffff;
+  border: none;
+  border-radius: 999px;
+  padding: 0.6rem 1.1rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
 }
 
 @media (max-width: 480px) {

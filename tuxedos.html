@@ -163,23 +163,28 @@
   </div>
 </footer>
     <script src="script.js"></script>
-      <!-- SUZY CHAT WIDGET (UI only — not wired to a real chatbot yet) -->
+    <!-- SUZY CHAT WIDGET — functional rule-based FAQ assistant -->
     <button class="chat-launcher" onclick="openChatWidget()" aria-label="Open chat">💬</button>
     <div class="chat-panel" id="chatPanel">
       <div class="chat-panel-header">
         <button class="chat-panel-close" onclick="closeChatWidget()" aria-label="Close chat">✕</button>
         <div class="chat-brand">Suzy<span>.</span></div>
-        <h4>How can we help?</h4>
-        <p>This chat is AI-powered for faster assistance.</p>
+        <h4>Talk to Suzy</h4>
+        <p>Our resident suit expert</p>
       </div>
+      <div class="chat-messages" id="chatMessages"></div>
       <div class="chat-quick-replies">
-        <button class="chat-quick-reply">↳ How does mix &amp; match sizing work?</button>
-        <button class="chat-quick-reply">✂ How do I find my fit?</button>
-        <button class="chat-quick-reply">🎉 Plan a wedding party order</button>
-        <button class="chat-quick-reply">🚚 What's your shipping time?</button>
-        <button class="chat-quick-reply">↩ I need to return or exchange</button>
-        <button class="chat-quick-reply">Ⓢ Talk to a stylist</button>
+        <button class="chat-quick-reply" onclick="askSuzy('sizing')">↳ Sizing</button>
+        <button class="chat-quick-reply" onclick="askSuzy('fit')">✂ Find my fit</button>
+        <button class="chat-quick-reply" onclick="askSuzy('wedding')">🎉 Wedding party</button>
+        <button class="chat-quick-reply" onclick="askSuzy('shipping')">🚚 Shipping</button>
+        <button class="chat-quick-reply" onclick="askSuzy('returns')">↩ Returns</button>
+        <button class="chat-quick-reply" onclick="askSuzy('stylist')">Ⓢ Talk to a stylist</button>
+      </div>
+      <div class="chat-input-row">
+        <input type="text" id="chatInput" class="chat-input" placeholder="Ask a question..." onkeydown="if(event.key==='Enter') handleChatInput()">
+        <button class="chat-send-btn" onclick="handleChatInput()">Send</button>
       </div>
     </div>
-  </body>
+</body>
 </html>
