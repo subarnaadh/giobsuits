@@ -825,3 +825,55 @@
   font-size: 1.02rem;
   max-width: 60ch;
 }
+
+/* ── PRODUCT CARD BUTTON — understated text link instead of a
+   solid pill on every single card, which reads as "catalog" ── */
+.product-card .btn.secondary {
+  display: block;
+  background: transparent;
+  color: var(--text);
+  border: none;
+  border-top: 1px solid var(--border);
+  border-radius: 0;
+  padding: 0.9rem 1.25rem;
+  margin: 0;
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-align: left;
+  font-weight: 600;
+  transition: color .2s, background .2s;
+}
+.product-card .btn.secondary::after {
+  content: ' →';
+}
+.product-card .btn.secondary:hover {
+  background: var(--panel);
+  color: var(--accent);
+}
+
+/* ── FILTER SIDEBAR — lighter, more open, less like a boxed
+   admin panel sitting next to the products ── */
+.filter-sidebar {
+  border: none;
+  background: transparent;
+  padding: 0 1.5rem 0 0;
+}
+.filter-sidebar-header h3 {
+  font-family: 'Fraunces', serif;
+  font-weight: 500;
+  font-size: 1.1rem;
+}
+.filter-section {
+  border-top: 1px solid var(--border);
+  padding: 1.25rem 0;
+}
+.filter-section h4 {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+.product-card .product-visual {
+  border-radius: 0;
+}
