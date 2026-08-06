@@ -77,6 +77,79 @@ const productVisualHTML = (product) => {
   return `<img src="images/${product.image}" alt="${product.name}" loading="lazy">`;
 };
 
+// ─────────────────────────────────────────
+// 1c. DISPLAY NAME — one naming convention, applied everywhere.
+// The raw `name` field stays untouched (it mirrors the Shopify
+// export, and Gio manages that data), but every listing/detail view
+// renders through this so labeling is consistent site-wide and the
+// wool story is baked into the product name itself.
+//
+// Convention: "100% Australian Wool [Color] [Style descriptor] [Type]"
+//   e.g. "100% Australian Wool Navy Suit"
+//        "100% Australian Wool Black Shawl Lapel Tuxedo"
+// Cotton items (shirts) and un-confirmed-fabric items (vests) are
+// left as-is rather than guessed at.
+// ─────────────────────────────────────────
+
+const COLOR_LABELS = {
+  navy: 'Navy', black: 'Black', charcoal: 'Charcoal Grey', grey: 'Grey',
+  'medium-grey': 'Medium Grey', 'light-grey': 'Light Grey', brown: 'Brown',
+  burgundy: 'Burgundy', tan: 'Tan', 'royal-blue': 'Royal Blue',
+  'beautiful-blue': 'Beautiful Blue', beige: 'Beige', 'white-tux': 'White',
+  'navy-tux': 'Navy', 'black-tux': 'Black', 'white-shirt': 'White',
+  'light-blue': 'Light Blue', pink: 'Pink', lavender: 'Lavender',
+};
+
+const TYPE_LABELS = { suit: 'Suit', tuxedo: 'Tuxedo', shirt: 'Shirt', pants: 'Pants', vest: 'Vest' };
+
+// Words stripped out of the raw name before rebuilding it — fabric
+// references (we state fabric via the "100% Australian Wool" prefix
+// instead), the color itself (re-added from COLOR_LABELS), and
+// generic type words (re-added from TYPE_LABELS).
+const NAME_STOPWORDS = [
+  "100%", "super 150's", "super 150s", "premium", "wool", "cotton",
+  "pant", "pants", "suit", "tuxedo", "shirt", "vest",
+];
+
+const formatProductName = (product) => {
+  // Only suits, tuxedos, and wool pants get the wool-forward rename —
+  // shirts (cotton) and vests (fabric unconfirmed) keep their given name.
+  if (!['suit', 'tuxedo', 'pants'].includes(product.type)) return product.name;
+
+  const colorLabel = COLOR_LABELS[product.color] || product.color;
+  const typeLabel = product.type === 'pants' ? 'Pants' : TYPE_LABELS[product.type];
+
+  // Strip fabric/type/color words out of the raw name, keep whatever
+  // distinguishing style words are left (e.g. "Shawl Lapel", "Peak Lapel").
+  let leftover = product.name;
+  const colorWords = colorLabel.split(' ');
+  [...NAME_STOPWORDS, ...colorWords].forEach((word) => {
+    leftover = leftover.replace(new RegExp(`\\b${word.replace(/'/g, "\\'")}\\b`, 'gi'), ' ');
+  });
+  leftover = leftover.replace(/\s+/g, ' ').trim();
+
+  const styleWords = leftover ? ` ${leftover}` : '';
+  return `100% Australian Wool ${colorLabel}${styleWords} ${typeLabel}`.replace(/\s+/g, ' ').trim();
+};
+
+// ─────────────────────────────────────────
+// 1d. PRODUCT CARD — single source of truth for every listing grid
+// (All Products, Suits, Tuxedos, Shirts, Pants, Accessories). The
+// WHOLE card is one <a> — image, name, price, everything — so a
+// customer can click anywhere on it, not just a "View Product" link.
+// Hover-lift is handled by .product-card:hover in CSS.
+// ─────────────────────────────────────────
+
+const productCardHTML = (product) => `
+  <a href="product-detail.html?id=${product.id}" class="product-card">
+    <div class="product-visual ${product.color}">${productVisualHTML(product)}</div>
+    <h3>${formatProductName(product)}</h3>
+    <p class="price">$${product.price}</p>
+    ${product.fit ? `<p>${product.fit.join(' & ')} fit available</p>` : ''}
+    <span class="btn secondary">View Product</span>
+  </a>
+`;
+
 
 // ─────────────────────────────────────────
 // 2. PRODUCT FUNCTIONS
@@ -215,15 +288,7 @@ const renderProducts = (filter = 'all') => {
     note.style.display = 'none';
   }
 
-  grid.innerHTML = filtered.map((product) => `
-    <article class="product-card">
-      <div class="product-visual ${product.color}">${productVisualHTML(product)}</div>
-      <h3>${product.name}</h3>
-      <p class="price">$${product.price}</p>
-      ${product.fit ? `<p>${product.fit.join(' & ')} fit available</p>` : ''}
-      <a href="product-detail.html?id=${product.id}" class="btn secondary">View Product</a>
-    </article>
-  `).join('');
+  grid.innerHTML = filtered.map(productCardHTML).join('');
 };
 
 // Any search box on the site (nav, overlay, sidebar) funnels here —
@@ -265,14 +330,45 @@ const renderProductDetail = () => {
 
   const visual = document.getElementById('productVisual');
   if (visual) {
-    visual.className = `product-visual-large ${product.color}`;
+    visual.className = `gallery-frame gallery-hero ${product.color}`;
     visual.innerHTML = product.image
       ? `<img src="images/${product.image}" alt="${product.name}" loading="lazy">`
       : product.name;
   }
 
+  // Wool fabric info block — wool-forward copy for suits/tuxedos/pants
+  // (their actual fabric), honest cotton copy for shirts, and a
+  // neutral quality note for vests where fabric isn't confirmed yet.
+  const woolBlock = document.getElementById('productWoolBlock');
+  if (woolBlock) {
+    const isWool = ['suit', 'tuxedo', 'pants'].includes(product.type);
+    if (isWool) {
+      woolBlock.innerHTML = `
+        <div class="wool-block-visual">🐑</div>
+        <div class="wool-block-copy">
+          <span class="eyebrow">The Fabric</span>
+          <h3>Cut From 100% Australian Wool</h3>
+          <p>Never polyester. Wool breathes, regulates temperature, and holds its shape wear after wear — it's why this ${TYPE_LABELS[product.type] || product.type} feels as good at hour 12 as it does at hour one.</p>
+          <a href="why.html">Why wool, not polyester? →</a>
+        </div>
+      `;
+    } else if (product.type === 'shirt') {
+      woolBlock.innerHTML = `
+        <div class="wool-block-visual">🧵</div>
+        <div class="wool-block-copy">
+          <span class="eyebrow">The Fabric</span>
+          <h3>100% Cotton, Built to Pair With Wool</h3>
+          <p>Our shirts are 100% cotton — breathable and easy-care, made to sit right under a 100% Australian wool suit or tuxedo.</p>
+          <a href="why.html">Why wool, not polyester? →</a>
+        </div>
+      `;
+    } else {
+      woolBlock.style.display = 'none';
+    }
+  }
+
   const name = document.getElementById('productName');
-  if (name) name.textContent = product.name;
+  if (name) name.textContent = formatProductName(product);
 
   const typeLabels = { suit: 'Suit', tuxedo: 'Tuxedo', shirt: 'Shirt', pants: 'Pants', vest: 'Vest' };
   const type = document.getElementById('productType');
@@ -283,9 +379,10 @@ const renderProductDetail = () => {
 
   const desc = document.getElementById('productDescription');
   if (desc) {
+    const displayName = formatProductName(product);
     desc.textContent = product.type === 'vest'
-      ? `The ${product.name} is available in a full range of chest sizes. In stock and ready to ship.`
-      : `The ${product.name} is available in both Slim and Modern fit. In stock and ready to ship.`;
+      ? `The ${displayName} is available in a full range of chest sizes. In stock and ready to ship.`
+      : `The ${displayName} is available in both Slim and Modern fit. In stock and ready to ship.`;
   }
 
   // Build the size selector(s) for this product's type. A suit/tuxedo
@@ -331,15 +428,7 @@ const renderSuits = (colorFilter = 'all') => {
     : suits.filter(p => p.color === colorFilter);
   const filtered = applySidebarFilters(byColor);
 
-  grid.innerHTML = filtered.map(product => `
-    <article class="product-card">
-      <div class="product-visual ${product.color}">${productVisualHTML(product)}</div>
-      <h3>${product.name}</h3>
-      <p class="price">$${product.price}</p>
-      ${product.fit ? `<p>${product.fit.join(' & ')} fit available</p>` : ''}
-      <a href="product-detail.html?id=${product.id}" class="btn secondary">View Product</a>
-    </article>
-  `).join('');
+  grid.innerHTML = filtered.map(productCardHTML).join('');
 };
 
 const filterByColor = (color) => {
@@ -362,15 +451,7 @@ const renderTuxedos = (colorFilter = 'all') => {
     : byColor.filter(p => p.name.toLowerCase().includes(currentTuxedoLapelFilter));
   const filtered = applySidebarFilters(byLapel);
 
-  grid.innerHTML = filtered.map(product => `
-    <article class="product-card">
-      <div class="product-visual ${product.color}">${productVisualHTML(product)}</div>
-      <h3>${product.name}</h3>
-      <p class="price">$${product.price}</p>
-      ${product.fit ? `<p>${product.fit.join(' & ')} fit available</p>` : ''}
-      <a href="product-detail.html?id=${product.id}" class="btn secondary">View Product</a>
-    </article>
-  `).join('');
+  grid.innerHTML = filtered.map(productCardHTML).join('');
 };
 
 const filterTuxedosByLapel = (lapel) => {
@@ -396,15 +477,7 @@ const renderByType = (gridId, type) => {
   const byType = products.filter(p => p.type === type);
   const items = applySidebarFilters(byType);
 
-  grid.innerHTML = items.map(product => `
-    <article class="product-card">
-      <div class="product-visual ${product.color}">${productVisualHTML(product)}</div>
-      <h3>${product.name}</h3>
-      <p class="price">$${product.price}</p>
-      ${product.fit ? `<p>${product.fit.join(' & ')} fit available</p>` : ''}
-      <a href="product-detail.html?id=${product.id}" class="btn secondary">View Product</a>
-    </article>
-  `).join('');
+  grid.innerHTML = filtered.map(productCardHTML).join('');
 };
 
 const openGroupModal = () => {
@@ -419,10 +492,218 @@ const closeGroupModal = (e) => {
   }
 };
 
+// ─────────────────────────────────────────
+// 2b. WEDDING PARTY BUILDER
+//
+// KNOWN LIMITATION (flag for Gio): this is stored in localStorage on
+// the organizer's own browser — same-browser round-trips (organizer
+// building the party, previewing their own member links) work fully,
+// but a link opened on a groomsman's own phone/computer won't see
+// this data until party records live on a real backend. The full
+// front-end flow below is built and ready to swap onto real API
+// calls once the backend exists — that's exactly today's Phase 2
+// discussion with the seller dashboard.
+// ─────────────────────────────────────────
+
+const WEDDING_PARTY_KEY = 'giobWeddingParties';
+const PARTY_COLORS = [
+  { key: 'navy', label: 'Navy' }, { key: 'black', label: 'Black' },
+  { key: 'charcoal', label: 'Charcoal Grey' }, { key: 'medium-grey', label: 'Medium Grey' },
+  { key: 'light-grey', label: 'Light Grey' }, { key: 'beautiful-blue', label: 'Beautiful Blue' },
+  { key: 'royal-blue', label: 'Royal Blue' }, { key: 'beige', label: 'Beige' },
+];
+
+let currentParty = null;
+
+const getAllParties = () => {
+  try {
+    return JSON.parse(localStorage.getItem(WEDDING_PARTY_KEY)) || {};
+  } catch (e) {
+    return {};
+  }
+};
+
+const saveParty = (party) => {
+  const all = getAllParties();
+  all[party.id] = party;
+  localStorage.setItem(WEDDING_PARTY_KEY, JSON.stringify(all));
+  currentParty = party;
+};
+
+const getPartyById = (id) => getAllParties()[id] || null;
+
 const submitGroup = (e) => {
   e.preventDefault();
+
+  const party = {
+    id: 'party_' + Date.now().toString(36),
+    eventName: document.getElementById('groupEventName').value.trim(),
+    location: document.getElementById('groupLocation').value.trim(),
+    weddingDate: document.getElementById('groupWeddingDate').value,
+    organizer: {
+      firstName: document.getElementById('groupFirstName').value.trim(),
+      lastName: document.getElementById('groupLastName').value.trim(),
+      email: document.getElementById('groupEmail').value.trim(),
+      role: document.getElementById('groupRole').value,
+    },
+    color: null,
+    members: [],
+  };
+  saveParty(party);
+
   document.getElementById('groupForm').style.display = 'none';
   document.getElementById('groupSuccess').style.display = 'block';
+  renderPartyBuilder();
+};
+
+const partyShareUrl = (party) =>
+  `${window.location.origin}${window.location.pathname.replace('wedding.html', '')}wedding.html?party=${party.id}`;
+
+const partyMemberUrl = (party, memberId) =>
+  `${partyShareUrl(party)}&member=${memberId}#individual`;
+
+const renderPartyBuilder = () => {
+  if (!currentParty) return;
+
+  const intro = document.getElementById('partyShareIntro');
+  if (intro) {
+    intro.textContent = `${currentParty.eventName || 'Your event'} is set up. Pick a color, then add your party so everyone gets their own link to submit measurements.`;
+  }
+
+  const shareLink = document.getElementById('partyShareLink');
+  if (shareLink) shareLink.value = partyShareUrl(currentParty);
+
+  const swatchWrap = document.getElementById('partyColorSwatches');
+  if (swatchWrap) {
+    swatchWrap.innerHTML = PARTY_COLORS.map(({ key, label }) => `
+      <button type="button" class="party-color-swatch ${key} ${currentParty.color === key ? 'selected' : ''}"
+        title="${label}" aria-label="${label}" onclick="selectPartyColor('${key}')"></button>
+    `).join('');
+  }
+
+  renderPartyMembers();
+};
+
+const selectPartyColor = (colorKey) => {
+  if (!currentParty) return;
+  currentParty.color = colorKey;
+  saveParty(currentParty);
+  renderPartyBuilder();
+};
+
+const addPartyMember = (e) => {
+  e.preventDefault();
+  if (!currentParty) return;
+
+  const nameInput = document.getElementById('partyMemberName');
+  const roleSelect = document.getElementById('partyMemberRole');
+  const name = nameInput.value.trim();
+  if (!name) return;
+
+  currentParty.members.push({
+    id: 'member_' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
+    name,
+    role: roleSelect.value,
+    status: 'pending',
+  });
+  saveParty(currentParty);
+  nameInput.value = '';
+  renderPartyMembers();
+};
+
+const removePartyMember = (memberId) => {
+  if (!currentParty) return;
+  currentParty.members = currentParty.members.filter((m) => m.id !== memberId);
+  saveParty(currentParty);
+  renderPartyMembers();
+};
+
+const copyMemberLink = (memberId) => {
+  const url = partyMemberUrl(currentParty, memberId);
+  navigator.clipboard?.writeText(url);
+  alert(`Link copied for this groomsman:\n${url}`);
+};
+
+const copyPartyLink = () => {
+  const input = document.getElementById('partyShareLink');
+  if (!input) return;
+  navigator.clipboard?.writeText(input.value);
+  alert('Event link copied to clipboard.');
+};
+
+const renderPartyMembers = () => {
+  const list = document.getElementById('partyMembersList');
+  if (!list || !currentParty) return;
+
+  if (!currentParty.members.length) {
+    list.innerHTML = `<p class="section-sub">No party members added yet — add your groomsmen below.</p>`;
+    return;
+  }
+
+  list.innerHTML = currentParty.members.map((m) => `
+    <div class="party-member-row">
+      <div class="party-member-info">
+        <span class="party-member-name">${m.name}</span>
+        <span class="party-member-role">${m.role.replace('-', ' ')}</span>
+      </div>
+      <span class="party-member-status ${m.status}">${m.status}</span>
+      <div class="party-member-actions">
+        <button type="button" onclick="copyMemberLink('${m.id}')">Copy Link</button>
+        <button type="button" onclick="removePartyMember('${m.id}')">Remove</button>
+      </div>
+    </div>
+  `).join('');
+};
+
+// If this page was opened via a party/member link, pick up right
+// where the organizer or groomsman left off instead of showing the
+// generic wedding page from scratch.
+const initWeddingParty = () => {
+  const params = new URLSearchParams(window.location.search);
+  const partyId = params.get('party');
+  const memberId = params.get('member');
+  if (!partyId) return;
+
+  const party = getPartyById(partyId);
+  if (!party) return;
+  currentParty = party;
+
+  if (memberId) {
+    // A groomsman opened their personal link — show the party context,
+    // lock the color to the party's chosen color, and jump to the form.
+    const banner = document.getElementById('partyContextBanner');
+    const member = party.members.find((m) => m.id === memberId);
+    if (banner) {
+      banner.style.display = 'block';
+      banner.innerHTML = `You're ordering for <strong>${party.eventName}</strong>${member ? ` as the ${member.role.replace('-', ' ')}` : ''}. Your suit color is set to match the party.`;
+    }
+    const colorSelect = document.getElementById('suitColor');
+    if (colorSelect && party.color) {
+      colorSelect.value = party.color;
+      colorSelect.disabled = true;
+    }
+    const roleSelect = document.getElementById('role');
+    if (roleSelect && member) roleSelect.value = member.role;
+
+    const measurementForm = document.getElementById('measurementForm');
+    if (measurementForm) {
+      measurementForm.addEventListener('submit', () => {
+        if (member) {
+          member.status = 'submitted';
+          saveParty(party);
+        }
+      });
+    }
+
+    document.getElementById('individual')?.scrollIntoView({ behavior: 'smooth' });
+  } else {
+    // The organizer returning to their own party link — open straight
+    // to the builder instead of the empty "create a group" form.
+    openGroupModal();
+    document.getElementById('groupForm').style.display = 'none';
+    document.getElementById('groupSuccess').style.display = 'block';
+    renderPartyBuilder();
+  }
 };
 
 
@@ -694,6 +975,29 @@ const initializeNavigation = () => {
   }
 };
 
+// ─────────────────────────────────────────
+// 6c. STICKY CATEGORY BAR — measures the real height of the sticky
+// site-header and pins the category bar directly beneath it, so it
+// sticks to the top as the user scrolls (Suitsupply-style) without
+// ever overlapping the nav above it.
+// ─────────────────────────────────────────
+
+const initStickyCategoryBar = () => {
+  const header = document.querySelector('.site-header');
+  const bar = document.getElementById('categoryBar');
+  if (!header || !bar) return;
+
+  const setOffset = () => {
+    const headerRect = header.getBoundingClientRect();
+    // header's own sticky offset (top: 1rem ≈ 16px) + its height + a small gap
+    const offset = 16 + headerRect.height + 12;
+    document.documentElement.style.setProperty('--category-bar-top', `${offset}px`);
+  };
+
+  setOffset();
+  window.addEventListener('resize', setOffset);
+};
+
 
 // ─────────────────────────────────────────
 // 6b. SUZY CHAT WIDGET (UI only — not wired to a real backend yet)
@@ -923,6 +1227,11 @@ window.removeFitFilter = removeFitFilter;
 window.removePriceFilter = removePriceFilter;
 window.clearAllFilters = clearAllFilters;
 window.handleSiteSearch = handleSiteSearch;
+window.selectPartyColor = selectPartyColor;
+window.addPartyMember = addPartyMember;
+window.removePartyMember = removePartyMember;
+window.copyMemberLink = copyMemberLink;
+window.copyPartyLink = copyPartyLink;
 
 
 // ─────────────────────────────────────────
@@ -941,6 +1250,8 @@ const initializePage = () => {
   updateCartBadge();
   initializeNavigation();
   initMeasurementForm();
+  initStickyCategoryBar();
+  initWeddingParty();
 
   slides = Array.from(document.querySelectorAll('.slide'));
   dots = Array.from(document.querySelectorAll('.dot'));

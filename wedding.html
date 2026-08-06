@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="CSS/interactive-hero.css">
   </head>
   <body>
+  <div class="wool-topbar">100% Australian Wool. Every Suit &amp; Tuxedo. Never Polyester. <a href="why.html">Why Wool →</a></div>
     <header class="site-header">
       <a class="brand" href="index.html">
       <img src="images/Logo.png" alt="GioB Suits" height="50">
@@ -22,7 +23,7 @@
           <li><a href="shirts.html">Shirts</a></li>
           <li><a href="pants.html">Pants</a></li>
           <li><a href="accessories.html">Accessories</a></li>
-          <li><a href="why.html">Why GioB Suits</a></li>
+          <li><a href="why.html">Why Wool</a></li>
           <li><a href="fitguide.html">Fit Guide & Finder</a></li>
           <li><a href="wedding.html">Wedding Suits</a></li>
           <li class="nav-search-item">
@@ -38,8 +39,9 @@
 
   <!-- HERO -->
   <section class="wedding-hero">
+    <p class="eyebrow">Wedding Party Discounts</p>
     <h1>Dress Your Entire Wedding Party</h1>
-    <p class="lede">One color. Every size. Mix and match sizing so every groomsman gets a perfect fit — no compromises.</p>
+    <p class="lede">Sizes 34S–60R available. Mix-and-match sizing so every groomsman gets a proper fit — no compromises.</p>
     
     <div class="wedding-cta-row">
       <button class="btn secondary" onclick="openGroupModal()">Create Your Group →</button>
@@ -73,7 +75,7 @@
     <div class="wedding-option-card" onclick="openGroupModal()">
       <span class="option-icon">👥</span>
       <h2>Group Order</h2>
-      <p>Perfect for wedding parties. Create a group, share the link, and coordinate everyone's suits in one place. Groom's suit is on us for parties of 5 or more.</p>
+      <p>Create a group, share the link, and coordinate everyone's suits in one place. Groom's suit is on us for parties of 5 or more.</p>
       <button class="btn secondary">Create Your Group →</button>
     </div>
 
@@ -95,17 +97,17 @@
       <form id="groupForm" onsubmit="submitGroup(event)">
         <div class="form-group">
           <label>Event Name</label>
-          <input type="text" placeholder="Smith Wedding" required>
+          <input type="text" id="groupEventName" placeholder="Smith Wedding" required>
         </div>
 
         <div class="form-grid">
           <div class="form-group">
             <label>Location</label>
-            <input type="text" placeholder="Chicago, IL">
+            <input type="text" id="groupLocation" placeholder="Chicago, IL">
           </div>
           <div class="form-group">
             <label>Wedding Date</label>
-            <input type="date" required>
+            <input type="date" id="groupWeddingDate" required>
           </div>
         </div>
 
@@ -114,22 +116,22 @@
         <div class="form-grid">
           <div class="form-group">
             <label>First Name</label>
-            <input type="text" placeholder="First" required>
+            <input type="text" id="groupFirstName" placeholder="First" required>
           </div>
           <div class="form-group">
             <label>Last Name</label>
-            <input type="text" placeholder="Last" required>
+            <input type="text" id="groupLastName" placeholder="Last" required>
           </div>
         </div>
 
         <div class="form-group">
           <label>Email Address</label>
-          <input type="email" placeholder="groom@email.com" required>
+          <input type="email" id="groupEmail" placeholder="groom@email.com" required>
         </div>
 
         <div class="form-group">
           <label>Your Role</label>
-          <select>
+          <select id="groupRole">
             <option value="groom">Groom</option>
             <option value="best-man">Best Man</option>
             <option value="other">Other</option>
@@ -141,9 +143,43 @@
         </button>
       </form>
 
-      <div id="groupSuccess" style="display:none; text-align:center; padding: 2rem 0;">
-        <h3 style="color: var(--accent);">Group Created! 🎉</h3>
-        <p style="color: var(--muted); margin-top: 0.5rem;">We'll be in touch with your shareable link shortly.</p>
+      <div id="groupSuccess" style="display:none;">
+        <div class="party-builder" id="partyBuilder">
+          <h3 style="color: var(--accent);">Group Created! 🎉</h3>
+          <p class="section-sub" id="partyShareIntro">Now build out your party's look — pick a color, then add your groomsmen so each one gets their own link to submit measurements.</p>
+
+          <div class="party-share-row">
+            <label>Your shareable event link</label>
+            <div class="party-link-row">
+              <input type="text" id="partyShareLink" readonly>
+              <button type="button" class="btn secondary" onclick="copyPartyLink()">Copy</button>
+            </div>
+          </div>
+
+          <div class="party-color-picker">
+            <label>Party Color</label>
+            <p class="section-sub" style="margin-bottom:0.75rem;">Every suit in the party ships in this color.</p>
+            <div class="party-color-swatches" id="partyColorSwatches"></div>
+          </div>
+
+          <div class="party-members-section">
+            <label>Party Members</label>
+            <div class="party-members-list" id="partyMembersList"></div>
+
+            <form class="party-add-member-form" id="partyAddMemberForm" onsubmit="addPartyMember(event)">
+              <input type="text" id="partyMemberName" placeholder="Name" required>
+              <select id="partyMemberRole">
+                <option value="groomsman">Groomsman</option>
+                <option value="best-man">Best Man</option>
+                <option value="father">Father of the Bride/Groom</option>
+                <option value="other">Other</option>
+              </select>
+              <button type="submit" class="btn secondary">+ Add</button>
+            </form>
+          </div>
+
+          <button type="button" class="btn" style="width:100%; margin-top:1.5rem;" onclick="closeGroupModal()">Done For Now →</button>
+        </div>
       </div>
     </div>
   </div>
@@ -153,6 +189,7 @@
     <div class="wedding-main">
 
       <section class="measurement-section">
+        <div class="party-context-banner" id="partyContextBanner" style="display:none;"></div>
         <h2>Submit Your Measurements</h2>
         <p class="section-sub">Fill out the form below and we'll make sure your suit fits perfectly.</p>
 

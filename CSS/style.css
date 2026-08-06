@@ -29,6 +29,24 @@ main,
   margin: 0 auto;
 }
 
+/* ── WOOL MESSAGING (sitewide) ── */
+.wool-topbar {
+  background: #171614;
+  color: #f0ede6;
+  text-align: center;
+  font-family: 'Space Mono', monospace, Arial, sans-serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.55rem 1rem;
+}
+.wool-topbar a {
+  color: #c9a84c;
+  text-decoration: underline;
+  margin-left: 0.4rem;
+}
+.wool-topbar a:hover { color: #e0c070; }
+
 /* ── NAV ── */
 .site-header {
   display: flex;
@@ -45,6 +63,46 @@ main,
   position: sticky;
   top: 1rem;
   z-index: 950;
+}
+
+/* ── STICKY CATEGORY BAR (Suitsupply-style: sticks under the main
+   nav once you scroll past it, JS sets --category-bar-top to the
+   measured header height so it never overlaps) ── */
+.category-bar {
+  position: sticky;
+  top: var(--category-bar-top, 6rem);
+  z-index: 940;
+  background: rgba(15, 26, 46, 0.92);
+  backdrop-filter: blur(6px);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  margin-bottom: 1.75rem;
+  padding: 0.6rem 1rem;
+}
+.category-bar-inner {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  justify-content: center;
+}
+.category-bar a {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border-radius: 999px;
+  text-decoration: none;
+  color: var(--muted);
+  font-size: 0.85rem;
+  letter-spacing: 0.02em;
+  transition: all .2s;
+}
+.category-bar a:hover {
+  color: var(--text);
+  background: var(--card);
+}
+.category-bar a.active {
+  color: #0f1a2e;
+  background: var(--accent);
+  font-weight: 600;
 }
 
 .brand {
@@ -350,11 +408,12 @@ main,
   color: var(--text);
 }
 
-/* ── PRODUCT GRID ── */
+/* ── PRODUCT GRID — 2 per row so images are larger and detail
+   actually reads before a customer clicks in (Suitsupply-style) ── */
 .product-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2.25rem;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2.5rem;
   margin-top: 1rem;
 }
 
@@ -365,6 +424,10 @@ main,
   border: 1px solid var(--border);
   transition: border-color .25s, transform .25s, box-shadow .25s;
   overflow: hidden;
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
 }
 
 .product-card:hover {
@@ -461,6 +524,86 @@ main,
 /* ── WHY SECTION ── */
 .why-section { margin-top: 2rem; }
 .why-section h2 { color: var(--text); margin-bottom: 1rem; }
+
+/* ── WHY WOOL PAGE ── */
+.wool-hero {
+  padding: 1rem 0 2rem;
+  max-width: 780px;
+}
+.wool-hero .eyebrow { color: var(--accent); }
+.wool-hero h1 {
+  color: var(--text);
+  font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+  margin: 0.5rem 0 1rem;
+}
+.wool-hero p {
+  color: var(--muted);
+  font-size: 1.05rem;
+  line-height: 1.7;
+}
+
+.wool-points-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.25rem;
+  margin: 2rem 0 3rem;
+}
+.wool-point {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 1.5rem;
+}
+.wool-point .why-icon { font-size: 1.75rem; }
+.wool-point h3 { color: var(--text); margin: 0.5rem 0 0.4rem; font-size: 1rem; }
+.wool-point p { color: var(--muted); font-size: 0.85rem; line-height: 1.55; }
+
+.wool-compare-section { margin: 3rem 0; }
+.wool-compare-section h2 { color: var(--text); margin-bottom: 0.5rem; }
+.wool-compare-section > p { color: var(--muted); margin-bottom: 1.5rem; max-width: 65ch; }
+
+.wool-compare-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+}
+.wool-compare-table th,
+.wool-compare-table td {
+  padding: 0.9rem 1.25rem;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+.wool-compare-table th {
+  color: var(--text);
+  font-weight: 700;
+  background: var(--panel);
+}
+.wool-compare-table td:first-child {
+  color: var(--text);
+  font-weight: 600;
+  width: 26%;
+}
+.wool-compare-table tr:last-child td { border-bottom: none; }
+.wool-compare-table .wool-col { color: var(--text); }
+.wool-compare-table .wool-col::before { content: '✓ '; color: var(--accent); }
+.wool-compare-table .poly-col::before { content: '✕ '; opacity: 0.5; }
+
+.wool-cta-row {
+  margin: 2.5rem 0;
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 768px) {
+  .wool-points-grid { grid-template-columns: repeat(2, 1fr); }
+  .wool-compare-table { display: block; overflow-x: auto; }
+}
 
 .why-grid {
   display: grid;
@@ -765,6 +908,130 @@ label {
   color: var(--text);
 }
 
+/* ── WEDDING PARTY BUILDER — the step after "Group Created" that
+   actually lets the organizer build out the party, not just a
+   dead-end confirmation message. ── */
+.party-builder { padding-top: 0.5rem; }
+
+.party-share-row,
+.party-color-picker,
+.party-members-section {
+  margin-top: 1.5rem;
+}
+.party-share-row label,
+.party-color-picker label,
+.party-members-section label {
+  display: block;
+  color: var(--text);
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 0.5rem;
+}
+
+.party-link-row {
+  display: flex;
+  gap: 0.5rem;
+}
+.party-link-row input {
+  flex: 1;
+  padding: 0.7rem 1rem;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--panel);
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.party-color-swatches {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+.party-color-swatch {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  cursor: pointer;
+  padding: 0;
+}
+.party-color-swatch.selected {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px var(--card), 0 0 0 4px var(--accent);
+}
+
+.party-members-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin-bottom: 1rem;
+}
+.party-member-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 0.65rem 0.9rem;
+}
+.party-member-info { display: flex; flex-direction: column; }
+.party-member-name { color: var(--text); font-size: 0.9rem; font-weight: 600; }
+.party-member-role { color: var(--muted); font-size: 0.75rem; text-transform: capitalize; }
+.party-member-status {
+  font-size: 0.7rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+}
+.party-member-status.pending { color: var(--muted); background: rgba(255,255,255,0.06); }
+.party-member-status.submitted { color: #1a6b2e; background: rgba(26,107,46,0.15); }
+.party-member-actions { display: flex; gap: 0.4rem; align-items: center; }
+.party-member-actions button {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  border-radius: 8px;
+  padding: 0.3rem 0.6rem;
+  font-size: 0.7rem;
+  cursor: pointer;
+}
+.party-member-actions button:hover { color: var(--text); border-color: var(--accent); }
+
+.party-add-member-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: 0.5rem;
+}
+.party-add-member-form input,
+.party-add-member-form select {
+  padding: 0.65rem 0.85rem;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--panel);
+  color: var(--text);
+  font-size: 0.85rem;
+}
+
+.party-context-banner {
+  background: var(--card);
+  border: 1px solid var(--accent);
+  border-radius: 14px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 1.5rem;
+  color: var(--text);
+  font-size: 0.9rem;
+}
+.party-context-banner strong { color: var(--accent); }
+
+@media (max-width: 640px) {
+  .party-add-member-form { grid-template-columns: 1fr; }
+}
+
 @media (max-width: 768px) {
   .wedding-options {
     grid-template-columns: 1fr;
@@ -857,25 +1124,29 @@ label {
   margin-top: 2rem;
 }
 
-/*product detail page*/
+/* ── PRODUCT DETAIL — Suitsupply-style scroll-through gallery.
+   Left column is a tall stack of full-width frames the user scrolls
+   past; the buy box on the right stays sticky in view the whole time. ── */
 .product-detail {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1.1fr 0.9fr;
   gap: 3rem;
   align-items: start;
   margin: 2rem 0;
 }
 
 .product-gallery {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1rem;
-  position: sticky;
-  top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
 }
 
-.product-visual-large {
+.gallery-frame {
   border-radius: 20px;
+  overflow: hidden;
+}
+
+.gallery-hero {
   aspect-ratio: 3 / 4;
   display: flex;
   align-items: center;
@@ -883,11 +1154,17 @@ label {
   font-size: 1.1rem;
   font-weight: 700;
   color: white;
-  overflow: hidden;
 }
 
-.gallery-cell.gallery-empty {
-  border-radius: 20px;
+.gallery-hero img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.gallery-cell.gallery-empty,
+.gallery-frame.gallery-empty {
   aspect-ratio: 3 / 4;
   border: 1.5px dashed var(--border);
   background: var(--panel);
@@ -901,11 +1178,64 @@ label {
   padding: 1rem;
 }
 
-.product-visual-large img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+.product-visual-large img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+/* ---- Wool fabric info block — reinforces the wool story on every
+   single product page, inline in the scroll gallery. ---- */
+.product-wool-block {
+  background: var(--card);
+  border: 1px solid var(--border);
+  padding: 2rem;
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  gap: 1.5rem;
+  align-items: center;
+}
+.wool-block-visual {
+  aspect-ratio: 1;
+  border-radius: 14px;
+  background: var(--panel);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.25rem;
+}
+.wool-block-copy .eyebrow {
+  color: var(--accent);
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 0.35rem;
   display: block;
+}
+.wool-block-copy h3 {
+  color: var(--text);
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+}
+.wool-block-copy p {
+  color: var(--muted);
+  font-size: 0.85rem;
+  line-height: 1.6;
+}
+.wool-block-copy a {
+  display: inline-block;
+  margin-top: 0.6rem;
+  color: var(--text);
+  font-size: 0.8rem;
+  text-decoration: underline;
+}
+.wool-block-copy a:hover { color: var(--accent); }
+
+.product-info {
+  position: sticky;
+  top: 6rem;
+}
+
+.fit-finder-btn {
+  display: block;
+  text-align: center;
+  margin-top: 0.75rem;
 }
 
 .product-type {
@@ -1038,16 +1368,25 @@ label {
   .product-detail {
     grid-template-columns: 1fr;
   }
-  .product-gallery {
+  .product-info {
     position: static;
+  }
+  .product-wool-block {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+  .wool-block-visual {
+    margin: 0 auto;
+    width: 80px;
   }
 }
 
 /* ── MEDIA QUERIES ── */
 @media (max-width: 768px) {
   .category-grid { grid-template-columns: 1fr; }
-  .product-grid { grid-template-columns: repeat(2, 1fr); }
+  .product-grid { grid-template-columns: 1fr; }
   .why-grid { grid-template-columns: repeat(2, 1fr); }
+  .category-bar-inner { justify-content: flex-start; overflow-x: auto; }
   .wedding-steps { grid-template-columns: 1fr; }
   .slide h1 { font-size: 2.2rem; }
   .slide h2 { font-size: 1.8rem; }

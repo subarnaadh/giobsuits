@@ -92,9 +92,14 @@ body {
   color: var(--text);
 }
 
+/* ---- Sticky category bar ---- */
+.category-bar {
+  background: rgba(255, 255, 255, 0.92);
+}
+
 /* ---- Product grid + detail pages (suits/tuxedos/product-detail) ---- */
 .product-visual,
-.product-visual-large {
+.gallery-hero {
   color: var(--text);
 }
 

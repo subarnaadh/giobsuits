@@ -71,6 +71,47 @@
   background: linear-gradient(#c9a84c, transparent);
 }
 
+.wool-hero-link {
+  margin-top: 1.1rem;
+  font-family: 'Space Mono', monospace, Arial, sans-serif;
+  font-size: 0.78rem;
+  letter-spacing: 0.05em;
+  color: #171614;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.wool-hero-link:hover { color: #c9a84c; }
+
+/* ---- Wool statement strip, right under the hero ---- */
+.wool-banner {
+  background: #f7f5f0;
+  border-top: 1px solid rgba(23, 22, 20, 0.08);
+  border-bottom: 1px solid rgba(23, 22, 20, 0.08);
+  padding: 1.5rem 2rem;
+}
+.wool-banner-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  text-align: center;
+  flex-wrap: wrap;
+}
+.wool-banner-icon { font-size: 1.5rem; }
+.wool-banner p {
+  color: #55534d;
+  font-size: 0.95rem;
+}
+.wool-banner p strong { color: #171614; }
+.wool-banner a {
+  color: #171614;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.wool-banner a:hover { color: #c9a84c; }
+
 /* When scrolled, fade the big centered logo/copy out of the way
    (the page has already scrolled past it physically — this just
    speeds up its exit so the crossfade with the mini-nav below
@@ -84,7 +125,10 @@ body.scrolled .hero-stage .scroll-hint {
   transform: translateY(-8px);
 }
 
-/* ---- 2. FIXED MINI-NAV (fades in once scrolled) ---- */
+/* ---- 2. FIXED MINI-NAV — visible immediately on load, not just
+   after scrolling. It just picks up a subtle background/shadow once
+   scrolled so it reads on top of the hero rather than floating on
+   blank white. ---- */
 .mini-nav {
   position: fixed;
   top: 0;
@@ -95,16 +139,16 @@ body.scrolled .hero-stage .scroll-hint {
   justify-content: space-between;
   padding: 1.25rem 2rem;
   z-index: 900;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s ease;
-  background: rgba(255, 255, 255, 0.9);
-  backdrop-filter: blur(6px);
+  opacity: 1;
+  pointer-events: auto;
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+  background: transparent;
 }
 
 body.scrolled .mini-nav {
-  opacity: 1;
-  pointer-events: auto;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(6px);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
 }
 
 .mini-logo-btn {
@@ -122,6 +166,12 @@ body.scrolled .mini-nav {
   border-radius: 4px;
 }
 
+.mini-nav-right {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
 .mini-book-btn {
   font-family: 'Space Mono', monospace, Arial, sans-serif;
   font-size: 0.75rem;
@@ -137,6 +187,37 @@ body.scrolled .mini-nav {
 .mini-book-btn:hover {
   background: #c9a84c;
   color: #171614;
+}
+
+/* ---- Hamburger (3-line) icon button — top right, visible on load ---- */
+.mini-hamburger-btn {
+  width: 44px;
+  height: 44px;
+  border: 1px solid rgba(23, 22, 20, 0.15);
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 0;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+.mini-hamburger-btn:hover {
+  background: #171614;
+  border-color: #171614;
+}
+.mini-hamburger-btn span {
+  display: block;
+  width: 20px;
+  height: 2px;
+  background: #171614;
+  transition: background 0.2s ease;
+}
+.mini-hamburger-btn:hover span {
+  background: #ffffff;
 }
 
 /* ---- 3. FULL-SCREEN NAV OVERLAY ---- */
