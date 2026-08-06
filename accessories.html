@@ -37,13 +37,19 @@
 
     <nav class="category-bar" id="categoryBar">
       <div class="category-bar-inner">
+          <div class="category-bar-links">
           <a href="products.html">All Products</a>
           <a href="suits.html">Suits</a>
           <a href="tuxedos.html">Tuxedos</a>
           <a href="shirts.html">Shirts</a>
           <a href="pants.html">Pants</a>
           <a href="accessories.html" class="active">Accessories</a>
-      </div>
+          </div>
+          <div class="category-bar-search">
+            <input type="search" class="category-bar-search-input" placeholder="Search products..." onkeydown="if(event.key==='Enter') handleSiteSearch(this)">
+            <button class="category-bar-search-btn" onclick="handleSiteSearch(this.previousElementSibling)" aria-label="Search">🔍</button>
+          </div>
+        </div>
     </nav>
 
     <main>

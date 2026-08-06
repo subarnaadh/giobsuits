@@ -1030,14 +1030,51 @@ const initStickyCategoryBar = () => {
   if (!header || !bar) return;
 
   const setOffset = () => {
+    // If the header is currently hidden (scrolled down), the category
+    // bar takes over the top spot instead of leaving a gap.
+    if (header.classList.contains('nav-hidden')) {
+      document.documentElement.style.setProperty('--category-bar-top', '12px');
+      return;
+    }
     const headerRect = header.getBoundingClientRect();
-    // header's own sticky offset (top: 1rem ≈ 16px) + its height + a small gap
     const offset = 16 + headerRect.height + 12;
     document.documentElement.style.setProperty('--category-bar-top', `${offset}px`);
   };
 
   setOffset();
   window.addEventListener('resize', setOffset);
+  // Exposed so initHeaderScrollBehavior can re-run it on hide/show.
+  bar.__setCategoryBarOffset = setOffset;
+};
+
+// ─────────────────────────────────────────
+// 6d. HEADER HIDE-ON-SCROLL — the header slides away as soon as you
+// scroll down (past a small threshold so it doesn't twitch on tiny
+// scrolls), and only reappears once you've scrolled back to the very
+// top of the page, not on every upward scroll.
+// ─────────────────────────────────────────
+
+const initHeaderScrollBehavior = () => {
+  const header = document.querySelector('.site-header');
+  if (!header) return;
+
+  const bar = document.getElementById('categoryBar');
+  let lastY = window.scrollY;
+  const HIDE_AFTER = 80;
+  const TOP_THRESHOLD = 10;
+
+  window.addEventListener('scroll', () => {
+    const y = window.scrollY;
+
+    if (y > lastY && y > HIDE_AFTER) {
+      header.classList.add('nav-hidden');
+    } else if (y <= TOP_THRESHOLD) {
+      header.classList.remove('nav-hidden');
+    }
+
+    if (bar && bar.__setCategoryBarOffset) bar.__setCategoryBarOffset();
+    lastY = y;
+  }, { passive: true });
 };
 
 
@@ -1294,6 +1331,7 @@ const initializePage = () => {
   initializeNavigation();
   initMeasurementForm();
   initStickyCategoryBar();
+  initHeaderScrollBehavior();
   initWeddingParty();
 
   slides = Array.from(document.querySelectorAll('.slide'));

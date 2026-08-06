@@ -144,12 +144,12 @@
 
 /* 5. Shirts & Accessories — categorized list layout */
 .accessories-section {
-  padding: 3rem 0 4rem;
+  padding: 1.5rem 0 4rem;
 }
 .accessories-head {
   text-align: center;
   max-width: 46ch;
-  margin: 0 auto 3rem;
+  margin: 0 auto 1.5rem;
 }
 .accessories-head h2 {
   font-family: 'Fraunces', serif;
@@ -573,8 +573,8 @@
    product-listing page ── */
 .shop-layout {
   display: grid;
-  grid-template-columns: 260px 1fr;
-  gap: 2.5rem;
+  grid-template-columns: 220px 1fr;
+  gap: 2rem;
   align-items: start;
 }
 
@@ -585,6 +585,12 @@
   border-radius: 16px;
   padding: 1.5rem;
   background: var(--card);
+}
+
+/* Empty for now — reserved for future filters (per the decision to
+   drop Gender/Fit/Price as standalone sidebar filters). */
+.filter-sidebar-empty {
+  min-height: 160px;
 }
 
 .filter-sidebar-header {
@@ -872,7 +878,7 @@
 /* ── PAGE HERO (Suits / Tuxedos / Products / etc.) —
    was completely unstyled before, just raw bold body text ── */
 .hero.card {
-  padding: 0.5rem 0 2rem;
+  padding: 0.5rem 0 1.25rem;
   margin-top: 0.5rem;
 }
 .hero.card h1 {
@@ -922,6 +928,12 @@
   border: none;
   background: transparent;
   padding: 0 1.5rem 0 0;
+}
+.filter-sidebar-empty {
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--card);
+  padding: 1.5rem;
 }
 .filter-sidebar-header h3 {
   font-family: 'Fraunces', serif;
