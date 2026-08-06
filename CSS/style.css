@@ -100,8 +100,9 @@ main,
   background: var(--card);
 }
 .category-bar a.active {
-  color: #0f1a2e;
-  background: var(--accent);
+  color: #171614;
+  background: #ffffff;
+  border: 1.5px solid #171614;
   font-weight: 600;
 }
 
@@ -408,40 +409,40 @@ main,
   color: var(--text);
 }
 
-/* ── PRODUCT GRID — 2 per row so images are larger and detail
-   actually reads before a customer clicks in (Suitsupply-style) ── */
+/* ── PRODUCT GRID — image-forward, minimal chrome, small gap
+   between cards (reference: tight editorial grid, not a boxed
+   "catalog" look) ── */
 .product-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 2.5rem;
+  gap: 1.5rem 1.25rem;
   margin-top: 1rem;
 }
 
 .product-card {
-  background: var(--card);
-  border-radius: 16px;
-  padding: 0;
-  border: 1px solid var(--border);
-  transition: border-color .25s, transform .25s, box-shadow .25s;
-  overflow: hidden;
+  position: relative;
   display: block;
-  text-decoration: none;
-  color: inherit;
-  cursor: pointer;
+  transition: transform .2s ease;
+}
+.product-card:hover {
+  transform: translateY(-4px);
 }
 
-.product-card:hover {
-  border-color: var(--accent);
-  transform: translateY(-6px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+.product-card-link {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  text-indent: -9999px;
+  overflow: hidden;
 }
 
 .product-visual {
-  border-radius: 10px;
+  position: relative;
+  border-radius: 6px;
   aspect-ratio: 3 / 4;
   display: grid;
   place-items: center;
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.85rem;
   font-weight: 700;
   font-size: 0.85rem;
   color: white;
@@ -454,6 +455,75 @@ main,
   height: 100%;
   object-fit: cover;
   display: block;
+}
+
+/* ---- Like (heart) button — overlaid top-right of the image, above
+   the stretched card link so it stays independently clickable ---- */
+.like-btn {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  z-index: 2;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.85);
+  color: #171614;
+  font-size: 1.1rem;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform .15s ease, background .15s ease;
+}
+.like-btn:hover { transform: scale(1.08); }
+.like-btn.liked { color: #b3243c; }
+
+.product-card-info { padding: 0 0.1rem; }
+
+.product-card h3 {
+  font-family: 'Fraunces', serif;
+  font-weight: 500;
+  color: var(--text);
+  font-size: 0.95rem;
+  line-height: 1.3;
+  margin: 0 0 0.3rem;
+}
+.price {
+  color: var(--text);
+  font-weight: 600;
+  font-size: 0.92rem;
+  margin: 0 0 0.35rem;
+}
+
+/* ---- Static placeholder rating row until a real review system
+   exists — same 4.5 everywhere for now. ---- */
+.product-rating {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.78rem;
+}
+.product-rating .stars {
+  color: var(--accent);
+  letter-spacing: 1px;
+}
+.product-rating .rating-score {
+  color: var(--muted);
+}
+.product-rating .reviews-link {
+  color: var(--muted);
+  text-decoration: underline;
+  position: relative;
+  z-index: 2;
+}
+.product-rating .reviews-link:hover { color: var(--text); }
+
+.product-rating-detail {
+  font-size: 0.9rem;
+  margin: -0.5rem 0 1.25rem;
 }
 
 .navy { background: #1a3a5c; }
@@ -475,25 +545,6 @@ main,
 .light-blue { background: #a8c8e0; color: #333; }
 .pink { background: #e8a9b8; color: #333; }
 .lavender { background: #b8a8d8; color: #333; }
-
-.product-card h3 {
-  font-family: 'Fraunces', serif;
-  font-weight: 500;
-  color: var(--text);
-  font-size: 1.08rem;
-  margin: 1.25rem 1.25rem 0.4rem;
-}
-.price {
-  color: var(--accent);
-  font-weight: 600;
-  font-size: 1.05rem;
-  margin: 0 1.25rem 0.35rem;
-}
-.product-card p:not(.price) {
-  color: var(--muted);
-  font-size: 0.82rem;
-  margin: 0 1.25rem 1.1rem;
-}
 
 /* ── FILTER BUTTONS ── */
 .filter-buttons {

@@ -134,21 +134,63 @@ const formatProductName = (product) => {
 
 // ─────────────────────────────────────────
 // 1d. PRODUCT CARD — single source of truth for every listing grid
-// (All Products, Suits, Tuxedos, Shirts, Pants, Accessories). The
-// WHOLE card is one <a> — image, name, price, everything — so a
-// customer can click anywhere on it, not just a "View Product" link.
-// Hover-lift is handled by .product-card:hover in CSS.
+// (All Products, Suits, Tuxedos, Shirts, Pants, Accessories).
+//
+// Uses the "stretched link" pattern: the whole card is clickable via
+// an absolutely-positioned <a> covering it, which lets the like
+// button sit on top and stay independently clickable without illegal
+// nested <a><button></a> markup.
 // ─────────────────────────────────────────
 
-const productCardHTML = (product) => `
-  <a href="product-detail.html?id=${product.id}" class="product-card">
-    <div class="product-visual ${product.color}">${productVisualHTML(product)}</div>
-    <h3>${formatProductName(product)}</h3>
-    <p class="price">$${product.price}</p>
-    ${product.fit ? `<p>${product.fit.join(' & ')} fit available</p>` : ''}
-    <span class="btn secondary">View Product</span>
-  </a>
+const LIKED_KEY = 'giobLikedProducts';
+
+const getLikedIds = () => {
+  try {
+    return JSON.parse(localStorage.getItem(LIKED_KEY)) || [];
+  } catch (e) {
+    return [];
+  }
+};
+
+const toggleLike = (e, id) => {
+  e.preventDefault();
+  e.stopPropagation();
+  const liked = getLikedIds();
+  const idx = liked.indexOf(id);
+  if (idx > -1) liked.splice(idx, 1); else liked.push(id);
+  localStorage.setItem(LIKED_KEY, JSON.stringify(liked));
+  const btn = e.currentTarget;
+  btn.classList.toggle('liked', idx === -1);
+  btn.textContent = idx === -1 ? '♥' : '♡';
+};
+
+// Static placeholder rating until a real review system exists —
+// same value everywhere for now, per Gio/Subarna's call.
+const ratingHTML = () => `
+  <div class="product-rating">
+    <span class="stars" aria-hidden="true">★★★★☆</span>
+    <span class="rating-score">4.5</span>
+    <a href="#" class="reviews-link" onclick="event.preventDefault(); event.stopPropagation();">Reviews</a>
+  </div>
 `;
+
+const productCardHTML = (product) => {
+  const liked = getLikedIds().includes(product.id);
+  return `
+  <article class="product-card">
+    <div class="product-visual ${product.color}">
+      ${productVisualHTML(product)}
+      <button type="button" class="like-btn ${liked ? 'liked' : ''}" onclick="toggleLike(event, ${product.id})" aria-label="Save this item">${liked ? '♥' : '♡'}</button>
+    </div>
+    <div class="product-card-info">
+      <h3>${formatProductName(product)}</h3>
+      <p class="price">$${product.price}</p>
+      ${ratingHTML()}
+    </div>
+    <a href="product-detail.html?id=${product.id}" class="product-card-link" aria-label="View ${formatProductName(product)}"></a>
+  </article>
+`;
+};
 
 
 // ─────────────────────────────────────────
@@ -477,7 +519,7 @@ const renderByType = (gridId, type) => {
   const byType = products.filter(p => p.type === type);
   const items = applySidebarFilters(byType);
 
-  grid.innerHTML = filtered.map(productCardHTML).join('');
+  grid.innerHTML = items.map(productCardHTML).join('');
 };
 
 const openGroupModal = () => {
@@ -1232,6 +1274,7 @@ window.addPartyMember = addPartyMember;
 window.removePartyMember = removePartyMember;
 window.copyMemberLink = copyMemberLink;
 window.copyPartyLink = copyPartyLink;
+window.toggleLike = toggleLike;
 
 
 // ─────────────────────────────────────────

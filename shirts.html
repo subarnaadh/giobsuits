@@ -59,39 +59,6 @@
               <input type="search" class="sidebar-search-input" placeholder="Search products..." onkeydown="if(event.key==='Enter') handleSiteSearch(this)">
               <button class="sidebar-search-btn" onclick="handleSiteSearch(this.previousElementSibling)">Go</button>
             </div>
-            <div class="filter-sidebar-header">
-              <h3>Filters (<span class="filter-count">0</span>)</h3>
-              <button class="filter-clear-all" onclick="clearAllFilters()">Clear All</button>
-            </div>
-            <div class="active-filter-tags"></div>
-
-            <div class="filter-section">
-              <h4>Gender</h4>
-              <label class="filter-checkbox-row"><input type="checkbox" checked disabled> Men's</label>
-              <p class="filter-note">All GioB Suits products are currently menswear.</p>
-            </div>
-
-            <div class="filter-section">
-              <h4>Fit</h4>
-              <label class="filter-checkbox-row"><input type="checkbox" class="fit-filter-checkbox" data-fit="Slim" onchange="toggleFitFilter('Slim', this.checked)"> Slim</label>
-              <label class="filter-checkbox-row"><input type="checkbox" class="fit-filter-checkbox" data-fit="Modern" onchange="toggleFitFilter('Modern', this.checked)"> Modern</label>
-            </div>
-
-            <div class="filter-section">
-              <h4>Price</h4>
-              <div class="price-preset-grid">
-                <button class="price-preset-btn" onclick="setPricePreset(0, 100, this)">Under $100</button>
-                <button class="price-preset-btn" onclick="setPricePreset(100, 300, this)">$100–$300</button>
-                <button class="price-preset-btn" onclick="setPricePreset(300, 600, this)">$300–$600</button>
-                <button class="price-preset-btn" onclick="setPricePreset(600, 1000, this)">$600–$1,000</button>
-              </div>
-              <div class="price-range-inputs">
-                <input type="number" class="price-min-input" placeholder="Min">
-                <span>–</span>
-                <input type="number" class="price-max-input" placeholder="Max">
-                <button class="price-apply-btn" onclick="applyPriceRange(this)">Apply</button>
-              </div>
-            </div>
           </aside>
 
           <div class="shop-main">
