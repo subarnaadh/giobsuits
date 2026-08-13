@@ -21,7 +21,7 @@
 }
 
 .hero-stage-logo {
-  width: 220px;
+  width: 320px;
   height: auto;
   margin-bottom: 2rem;
   transition: opacity 0.3s ease, transform 0.3s ease;
@@ -156,21 +156,6 @@ body.scrolled .mini-nav {
   gap: 0.85rem;
 }
 
-.mini-logo-btn {
-  border: none;
-  background: transparent;
-  cursor: pointer;
-  padding: 0;
-  display: flex;
-  align-items: center;
-}
-
-.mini-logo-btn img {
-  height: 42px;
-  width: auto;
-  border-radius: 4px;
-}
-
 /* ---- Hamburger (3-line) icon button — top left, visible on load ---- */
 .mini-hamburger-btn {
   width: 44px;
@@ -288,7 +273,7 @@ body.scrolled .mini-nav {
 }
 
 @media (max-width: 640px) {
-  .hero-stage-logo { width: 160px; }
+  .hero-stage-logo { width: 240px; }
   .mini-nav { padding: 1rem 1.25rem; }
   .nav-overlay { padding: 1.5rem; }
 }

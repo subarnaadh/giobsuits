@@ -142,7 +142,7 @@ const formatProductName = (product) => {
 // nested <a><button></a> markup.
 // ─────────────────────────────────────────
 
-const LIKED_KEY = 'giobLikedProducts';
+const LIKED_KEY = 'suitStandardLikedProducts';
 
 const getLikedIds = () => {
   try {
@@ -547,7 +547,7 @@ const closeGroupModal = (e) => {
 // discussion with the seller dashboard.
 // ─────────────────────────────────────────
 
-const WEDDING_PARTY_KEY = 'giobWeddingParties';
+const WEDDING_PARTY_KEY = 'suitStandardWeddingParties';
 const PARTY_COLORS = [
   { key: 'navy', label: 'Navy' }, { key: 'black', label: 'Black' },
   { key: 'charcoal', label: 'Charcoal Grey' }, { key: 'medium-grey', label: 'Medium Grey' },
@@ -832,7 +832,7 @@ const updateSummary = () => {
 // different sizes creates two separate lines, not one merged line.
 // ─────────────────────────────────────────
 
-const CART_KEY = 'giobCart';
+const CART_KEY = 'suitStandardCart';
 
 const getCart = () => {
   try {
