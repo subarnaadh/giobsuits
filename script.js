@@ -10,7 +10,7 @@ const products = [
   // as a plain color swatch until real photography exists.
   { id: 1, name: "Navy Super 150's Wool Suit", color: "navy", price: 850, type: "suit", fit: ["Slim", "Modern"], image: "suit-navy.png" },
   { id: 2, name: "Black Suit", color: "black", price: 850, type: "suit", fit: ["Slim", "Modern"], image: "suit-black.png" },
-  { id: 3, name: "Charcoal Grey Super 150's Wool Suit", color: "charcoal", price: 850, type: "suit", fit: ["Slim", "Modern"], image: "suit-charcoal.png" },
+  { id: 3, name: "Charcoal Grey Super 150's Wool Suit", color: "charcoal", price: 850, type: "suit", fit: ["Slim", "Modern"], image: "suit-charcoal.png", images: ["suit-charcoal-front-full.webp", "suit-charcoal-back.webp", "suit-charcoal-profile.webp", "suit-charcoal-hand-pocket.webp", "suit-charcoal-dynamic.webp", "suit-charcoal-cropped-lower.webp"] },
   { id: 4, name: "Royal Blue Super 150's Wool", color: "royal-blue", price: 850, type: "suit", fit: ["Slim", "Modern"], image: "suit-royal-blue.png" },
   { id: 5, name: "Medium Grey Super 150's Wool Suit", color: "medium-grey", price: 850, type: "suit", fit: ["Slim", "Modern"] },
   { id: 6, name: "Light Grey Super 150's Wool Suit", color: "light-grey", price: 850, type: "suit", fit: ["Slim", "Modern"] },
@@ -370,8 +370,41 @@ const renderProductDetail = () => {
   currentSelections = {};
   currentFit = null;
 
+  const gallery = document.getElementById('productGallery');
+  if (gallery) {
+    // Products with a real multi-photo shoot use `images`; everything
+    // else falls back to the single `image` field, or a color swatch.
+    const photos = (product.images && product.images.length)
+      ? product.images
+      : (product.image ? [product.image] : []);
+
+    const heroFrame = photos.length
+      ? `<div class="gallery-frame gallery-hero ${product.color}" id="productVisual"><img src="images/${photos[0]}" alt="${product.name}" loading="lazy"></div>`
+      : `<div class="gallery-frame gallery-hero ${product.color}" id="productVisual">${product.name}</div>`;
+
+    const extraPhotoFrames = photos.slice(1).map((img) =>
+      `<div class="gallery-frame gallery-photo ${product.color}"><img src="images/${img}" alt="${product.name}" loading="lazy"></div>`
+    ).join('');
+
+    const woolBlockFrame = `<div class="gallery-frame product-wool-block" id="productWoolBlock"></div>`;
+
+    // Keep a minimum of 4 frames total for visual consistency on
+    // single-photo products — but don't pad further once a real
+    // photoshoot already fills the gallery out.
+    const framesSoFar = 1 + photos.slice(1).length + 1; // hero + extras + wool block
+    const placeholdersNeeded = Math.max(0, 4 - framesSoFar);
+    const placeholderLabels = ['Detail shot', 'On-body shot', 'Fit close-up', 'Fabric detail'];
+    const placeholderFrames = Array.from({ length: placeholdersNeeded }, (_, i) =>
+      `<div class="gallery-frame gallery-empty">${placeholderLabels[i] || 'Photo'}<br>coming soon</div>`
+    ).join('');
+
+    gallery.innerHTML = heroFrame + extraPhotoFrames + woolBlockFrame + placeholderFrames;
+  }
+
   const visual = document.getElementById('productVisual');
-  if (visual) {
+  if (visual && !gallery) {
+    // Fallback path if the static gallery markup is present instead
+    // of the dynamic container (kept for safety, shouldn't normally hit).
     visual.className = `gallery-frame gallery-hero ${product.color}`;
     visual.innerHTML = product.image
       ? `<img src="images/${product.image}" alt="${product.name}" loading="lazy">`

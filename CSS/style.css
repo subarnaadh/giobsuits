@@ -1260,6 +1260,12 @@ label {
   display: block;
 }
 
+.gallery-photo img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
 .gallery-cell.gallery-empty,
 .gallery-frame.gallery-empty {
   aspect-ratio: 3 / 4;
