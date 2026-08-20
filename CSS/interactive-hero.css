@@ -9,7 +9,9 @@
 /* ---- 1. THE BIG CENTERED HERO STAGE (white background) ---- */
 .hero-stage {
   min-height: 100vh;
-  background: #ffffff;
+  background-image: linear-gradient(rgba(10,10,10,0.55), rgba(10,10,10,0.55)), url('../images/hero-background.webp');
+  background-size: cover;
+  background-position: center;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -32,7 +34,7 @@
   font-size: 0.75rem;
   letter-spacing: 0.25em;
   text-transform: uppercase;
-  color: #8a8a85;
+  color: #ffffff;
   margin-bottom: 1rem;
 }
 
@@ -40,14 +42,14 @@
   font-family: 'Fraunces', serif;
   font-weight: 400;
   font-size: clamp(2rem, 4.5vw, 3.2rem);
-  color: #171614;
+  color: #ffffff;
   max-width: 18ch;
   line-height: 1.15;
 }
 
 .hero-stage p.lede {
   margin-top: 1.25rem;
-  color: #55534d;
+  color: rgba(255,255,255,0.85);
   font-size: 1.05rem;
   max-width: 40ch;
 }
@@ -58,7 +60,7 @@
   font-size: 0.7rem;
   letter-spacing: 0.15em;
   text-transform: uppercase;
-  color: #a8a8a0;
+  color: rgba(255,255,255,0.7);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -76,7 +78,7 @@
   font-family: 'Space Mono', monospace, Arial, sans-serif;
   font-size: 0.78rem;
   letter-spacing: 0.05em;
-  color: #171614;
+  color: #ffffff;
   text-decoration: underline;
   text-underline-offset: 3px;
 }
@@ -180,11 +182,17 @@ body.scrolled .mini-nav {
   display: block;
   width: 20px;
   height: 2px;
-  background: #171614;
+  background: #ffffff;
   transition: background 0.2s ease;
 }
 .mini-hamburger-btn:hover span {
-  background: #ffffff;
+  background: rgba(255,255,255,0.7);
+}
+body.scrolled .mini-hamburger-btn span {
+  background: #171614;
+}
+body.scrolled .mini-hamburger-btn:hover span {
+  background: #555;
 }
 
 /* ---- 3. FULL-SCREEN NAV OVERLAY ---- */
