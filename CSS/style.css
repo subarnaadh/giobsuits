@@ -240,7 +240,7 @@ main,
   display: flex;
 }
 .slide:first-child {
-  background-image: url('images/Logo.png');
+  background-image: url('../images/Logo.png');
   background-repeat: no-repeat;
   background-position: center right;
   background-size: 400px;
@@ -662,10 +662,10 @@ main,
   margin: 2.5rem calc(-50vw + 50%) 3rem;
   width: 100vw;
   background-image:
-    url('images/wool-montage-tailor.webp'),
-    url('images/wool-montage-sheep.webp'),
-    url('images/wool-montage-shearing.webp'),
-    url('images/wool-montage-roll.webp');
+    url('../images/wool-montage-tailor.webp'),
+    url('../images/wool-montage-sheep.webp'),
+    url('../images/wool-montage-shearing.webp'),
+    url('../images/wool-montage-roll.webp');
   background-position: top left, top right, bottom left, bottom right;
   background-size: 50% 50%;
   background-repeat: no-repeat;
@@ -703,7 +703,7 @@ main,
 }
 @media (max-width: 480px) {
   .wool-montage-hero {
-    background-image: url('images/wool-montage-tailor.webp');
+    background-image: url('../images/wool-montage-tailor.webp');
     background-position: center;
     background-size: cover;
   }
