@@ -635,17 +635,19 @@ main,
 .wool-hero .eyebrow { color: var(--accent); }
 .wool-hero h1 {
   color: var(--text);
-  font-weight: 700;
-  letter-spacing: -0.01em;
-  font-size: clamp(2rem, 4vw, 3rem);
+  font-family: 'Bebas Neue', Arial, sans-serif;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  font-size: clamp(2.6rem, 5.5vw, 4.2rem);
   margin: 0.5rem 0 1.25rem;
-  line-height: 1.15;
+  line-height: 1.05;
 }
 .wool-hero h2 {
   color: var(--text);
-  font-weight: 700;
-  letter-spacing: -0.005em;
-  font-size: clamp(1.3rem, 2.4vw, 1.7rem);
+  font-family: 'Bebas Neue', Arial, sans-serif;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  font-size: clamp(1.8rem, 3.4vw, 2.6rem);
   margin: 0 0 1.1rem;
 }
 .wool-hero p {
@@ -654,33 +656,57 @@ main,
   line-height: 1.75;
 }
 
-.wool-montage {
+.wool-montage-hero {
+  position: relative;
+  min-height: 60vh;
+  margin: 2.5rem calc(-50vw + 50%) 3rem;
+  width: 100vw;
+  background-image:
+    url('images/wool-montage-tailor.webp'),
+    url('images/wool-montage-sheep.webp'),
+    url('images/wool-montage-shearing.webp'),
+    url('images/wool-montage-roll.webp');
+  background-position: top left, top right, bottom left, bottom right;
+  background-size: 50% 50%;
+  background-repeat: no-repeat;
   display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-  margin: 2.5rem 0 3rem;
+  align-items: center;
+  justify-content: center;
 }
-.wool-montage-main {
-  aspect-ratio: 16 / 7;
-  overflow: hidden;
+.wool-montage-scrim {
+  position: absolute;
+  inset: 0;
+  background: rgba(10, 10, 10, 0.5);
 }
-.wool-montage-row {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 0.75rem;
+.wool-montage-hero-text {
+  position: relative;
+  text-align: center;
+  padding: 0 1.5rem;
 }
-.wool-montage-row > img {
-  aspect-ratio: 4 / 3;
+.wool-montage-hero-text .eyebrow {
+  color: #ffffff;
 }
-.wool-montage img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  border: 1px solid var(--border);
+.wool-montage-hero-text h2 {
+  color: #ffffff;
+  font-family: 'Bebas Neue', Arial, sans-serif;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  margin: 0;
+  font-size: clamp(2.4rem, 6vw, 4.5rem);
+  line-height: 1.05;
 }
 @media (max-width: 700px) {
-  .wool-montage-row { grid-template-columns: 1fr; }
+  .wool-montage-hero {
+    min-height: 45vh;
+    background-size: 50% 50%;
+  }
+}
+@media (max-width: 480px) {
+  .wool-montage-hero {
+    background-image: url('images/wool-montage-tailor.webp');
+    background-position: center;
+    background-size: cover;
+  }
 }
 
 .wool-points-grid-wrap {
@@ -690,9 +716,10 @@ main,
 }
 .wool-section-heading {
   color: var(--text);
-  font-weight: 700;
-  letter-spacing: -0.005em;
-  font-size: clamp(1.3rem, 2.4vw, 1.7rem);
+  font-family: 'Bebas Neue', Arial, sans-serif;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  font-size: clamp(1.8rem, 3.4vw, 2.6rem);
   margin-bottom: 1.25rem;
 }
 
@@ -703,10 +730,11 @@ main,
 }
 .wool-tagline {
   margin-top: 1.5rem;
-  font-weight: 700;
+  font-family: 'Bebas Neue', Arial, sans-serif;
+  font-weight: 400;
+  letter-spacing: 0.02em;
   text-transform: uppercase;
-  letter-spacing: 0.04em;
-  font-size: 1.2rem;
+  font-size: 1.6rem;
   color: var(--text);
 }
 .wool-tagline em {
@@ -737,8 +765,10 @@ main,
 }
 .wool-compare-section h2 {
   color: var(--text);
-  font-weight: 700;
-  letter-spacing: -0.005em;
+  font-family: 'Bebas Neue', Arial, sans-serif;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  font-size: clamp(1.8rem, 3.4vw, 2.6rem);
   margin-bottom: 0.5rem;
 }
 .wool-compare-section > p { color: var(--muted); margin-bottom: 1.5rem; max-width: 65ch; }
