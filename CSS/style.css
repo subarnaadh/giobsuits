@@ -658,21 +658,18 @@ main,
 
 .wool-montage-hero {
   position: relative;
-  min-height: 60vh;
   margin: 2.5rem calc(-50vw + 50%) 3rem;
   width: 100vw;
-  background-image:
-    url('../images/wool-montage-tailor.webp'),
-    url('../images/wool-montage-sheep.webp'),
-    url('../images/wool-montage-shearing.webp'),
-    url('../images/wool-montage-roll.webp');
-  background-position: top left, top right, bottom left, bottom right;
-  background-size: 50% 50%;
+  background-image: url('../images/wool-montage-tailor.webp');
+  background-position: center;
+  background-size: cover;
   background-repeat: no-repeat;
   display: flex;
   align-items: center;
   justify-content: center;
 }
+.wool-band-tall { min-height: 55vh; }
+
 .wool-montage-scrim {
   position: absolute;
   inset: 0;
@@ -695,18 +692,48 @@ main,
   font-size: clamp(2.4rem, 6vw, 4.5rem);
   line-height: 1.05;
 }
-@media (max-width: 700px) {
-  .wool-montage-hero {
-    min-height: 45vh;
-    background-size: 50% 50%;
-  }
+
+/* ── Full-bleed accent bands — sheep (medium) and wool roll (short),
+   each a distinct size so the page doesn't repeat the same shape ── */
+.wool-band {
+  margin: 2.5rem calc(-50vw + 50%) 2.5rem;
+  width: 100vw;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
 }
-@media (max-width: 480px) {
-  .wool-montage-hero {
-    background-image: url('../images/wool-montage-tailor.webp');
-    background-position: center;
-    background-size: cover;
-  }
+.wool-band-medium {
+  min-height: 32vh;
+}
+.wool-band-short {
+  min-height: 16vh;
+}
+.wool-band-sheep {
+  background-image: url('../images/wool-montage-sheep.webp');
+}
+.wool-band-roll {
+  background-image: url('../images/wool-montage-roll.webp');
+}
+
+/* ── Contained inline photo — NOT full-bleed, sits inside the normal
+   content column like an inserted photograph rather than a banner ── */
+.wool-inline-photo {
+  max-width: 700px;
+  height: 340px;
+  margin: 2.5rem 0;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  border: 1px solid var(--border);
+}
+.wool-photo-shearing {
+  background-image: url('../images/wool-montage-shearing.webp');
+}
+
+@media (max-width: 700px) {
+  .wool-band-tall { min-height: 40vh; }
+  .wool-band-medium { min-height: 24vh; }
+  .wool-inline-photo { height: 220px; }
 }
 
 .wool-points-grid-wrap {
