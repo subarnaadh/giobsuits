@@ -10,7 +10,7 @@ const products = [
   // as a plain color swatch until real photography exists.
   { id: 1, name: "Navy Super 150's Wool Suit", color: "navy", price: 850, type: "suit", fit: ["Slim", "Modern"], image: "suit-navy.png" },
   { id: 2, name: "Black Suit", color: "black", price: 850, type: "suit", fit: ["Slim", "Modern"], image: "suit-black.png" },
-  { id: 3, name: "Charcoal Grey Super 150's Wool Suit", color: "charcoal", price: 850, type: "suit", fit: ["Slim", "Modern"], image: "suit-charcoal.png", images: ["suit-charcoal-front-full.webp", "suit-charcoal-back.webp", "suit-charcoal-profile.webp", "suit-charcoal-hand-pocket.webp", "suit-charcoal-dynamic.webp", "suit-charcoal-cropped-lower.webp"] },
+  { id: 3, name: "Charcoal Grey Super 150's Wool Suit", color: "charcoal", price: 850, type: "suit", fit: ["Slim", "Modern"], image: "suit-charcoal-front-full.webp", images: ["suit-charcoal-front-full.webp", "suit-charcoal-back.webp", "suit-charcoal-profile.webp", "suit-charcoal-hand-pocket.webp", "suit-charcoal-dynamic.webp", "suit-charcoal-cropped-lower.webp"] },
   { id: 4, name: "Royal Blue Super 150's Wool", color: "royal-blue", price: 850, type: "suit", fit: ["Slim", "Modern"], image: "suit-royal-blue.png" },
   { id: 5, name: "Medium Grey Super 150's Wool Suit", color: "medium-grey", price: 850, type: "suit", fit: ["Slim", "Modern"] },
   { id: 6, name: "Light Grey Super 150's Wool Suit", color: "light-grey", price: 850, type: "suit", fit: ["Slim", "Modern"] },
@@ -348,6 +348,34 @@ const filterProducts = (type) => {
   renderProducts(type);
 };
 
+// ─────────────────────────────────────────
+// PRODUCT GALLERY ZOOM — magnifies whichever photo the cursor is
+// over. Purely hover-driven: nothing happens until the mouse moves
+// onto a `.zoomable` frame, and it resets the instant the cursor
+// leaves. Works on every image in the gallery (hero and stacked
+// photos alike) since it's attached generically to `.zoomable`.
+// ─────────────────────────────────────────
+const initGalleryZoom = (root) => {
+  if (!root) return;
+  root.querySelectorAll('.zoomable').forEach((frame) => {
+    const img = frame.querySelector('img');
+    if (!img) return;
+
+    frame.addEventListener('mousemove', (e) => {
+      const rect = frame.getBoundingClientRect();
+      const x = ((e.clientX - rect.left) / rect.width) * 100;
+      const y = ((e.clientY - rect.top) / rect.height) * 100;
+      img.style.transformOrigin = `${x}% ${y}%`;
+      img.style.transform = 'scale(2)';
+    });
+
+    frame.addEventListener('mouseleave', () => {
+      img.style.transform = 'scale(1)';
+      img.style.transformOrigin = 'center';
+    });
+  });
+};
+
 const renderProductDetail = () => {
   const detailContainer = document.getElementById('productDetail');
   if (!detailContainer) return;
@@ -381,18 +409,22 @@ const renderProductDetail = () => {
     const woolBlockFrame = `<div class="gallery-frame product-wool-block" id="productWoolBlock"></div>`;
 
     if (photos.length > 1) {
-      // Real photoshoot — genuine montage/collage grid, not a single
-      // tall stacked scroll. First photo is the anchor (larger cell),
-      // the rest fill smaller cells alongside it.
-      const montageCells = photos.map((img, i) =>
-        `<div class="montage-cell ${i === 0 ? 'montage-cell-main' : ''}"><img src="images/${img}" alt="${product.name}" loading="lazy"></div>`
+      // Real photoshoot — every photo is a true 3:4 portrait (the actual
+      // shoot ratio), so each frame is shown full-width at that same
+      // ratio instead of being forced into a mismatched grid cell. That's
+      // what made the last montage version crop straight through people's
+      // heads/legs: the anchor cell was ~2:1 landscape, nothing like the
+      // source photos. Stacked full-width frames guarantee every image
+      // fits with zero distortion, and each one is individually zoomable.
+      const stackFrames = photos.map((img) =>
+        `<div class="gallery-frame gallery-photo-frame zoomable"><img src="images/${img}" alt="${product.name}" loading="lazy"></div>`
       ).join('');
 
-      gallery.innerHTML = `<div class="product-visual-montage" id="productVisual">${montageCells}</div>` + woolBlockFrame;
+      gallery.innerHTML = `<div class="product-photo-stack" id="productVisual">${stackFrames}</div>` + woolBlockFrame;
     } else {
       // Single photo (or none) — original hero + placeholder pattern.
       const heroFrame = photos.length
-        ? `<div class="gallery-frame gallery-hero ${product.color}" id="productVisual"><img src="images/${photos[0]}" alt="${product.name}" loading="lazy"></div>`
+        ? `<div class="gallery-frame gallery-hero zoomable ${product.color}" id="productVisual"><img src="images/${photos[0]}" alt="${product.name}" loading="lazy"></div>`
         : `<div class="gallery-frame gallery-hero ${product.color}" id="productVisual">${product.name}</div>`;
 
       const placeholderLabels = ['Detail shot', 'On-body shot', 'Fit close-up'];
@@ -402,16 +434,20 @@ const renderProductDetail = () => {
 
       gallery.innerHTML = heroFrame + woolBlockFrame + placeholderFrames;
     }
+
+    // Hover/mouse-move zoom on every real product photo in the gallery.
+    initGalleryZoom(gallery);
   }
 
   const visual = document.getElementById('productVisual');
   if (visual && !gallery) {
     // Fallback path if the static gallery markup is present instead
     // of the dynamic container (kept for safety, shouldn't normally hit).
-    visual.className = `gallery-frame gallery-hero ${product.color}`;
+    visual.className = `gallery-frame gallery-hero zoomable ${product.color}`;
     visual.innerHTML = product.image
       ? `<img src="images/${product.image}" alt="${product.name}" loading="lazy">`
       : product.name;
+    initGalleryZoom(visual.parentElement || document);
   }
 
   // Wool fabric info block — wool-forward copy for suits/tuxedos/pants
