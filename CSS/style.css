@@ -696,44 +696,43 @@ main,
 /* ── Full-bleed accent bands — sheep (medium) and wool roll (short),
    each a distinct size so the page doesn't repeat the same shape ── */
 .wool-band {
+  position: relative;
   margin: 2.5rem calc(-50vw + 50%) 2.5rem;
   width: 100vw;
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
 }
+.wool-band-scrim {
+  position: absolute;
+  inset: 0;
+  background: rgba(10, 10, 10, 0.45);
+}
 .wool-band-medium {
-  min-height: 32vh;
+  min-height: 42vh;
+}
+.wool-band-medium-tall {
+  min-height: 30vh;
 }
 .wool-band-short {
   min-height: 16vh;
 }
 .wool-band-sheep {
   background-image: url('../images/wool-montage-sheep.webp');
+  background-position: center 30%;
+}
+.wool-band-shearing {
+  background-image: url('../images/wool-montage-shearing.webp');
 }
 .wool-band-roll {
   background-image: url('../images/wool-montage-roll.webp');
 }
 
-/* ── Contained inline photo — NOT full-bleed, sits inside the normal
-   content column like an inserted photograph rather than a banner ── */
-.wool-inline-photo {
-  max-width: 700px;
-  height: 340px;
-  margin: 2.5rem 0;
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
-  border: 1px solid var(--border);
-}
-.wool-photo-shearing {
-  background-image: url('../images/wool-montage-shearing.webp');
-}
-
 @media (max-width: 700px) {
   .wool-band-tall { min-height: 40vh; }
-  .wool-band-medium { min-height: 24vh; }
-  .wool-inline-photo { height: 220px; }
+  .wool-band-medium { min-height: 30vh; }
+  .wool-band-medium-tall { min-height: 24vh; }
+  .wool-band-short { min-height: 14vh; }
 }
 
 .wool-points-grid-wrap {
