@@ -349,30 +349,82 @@ const filterProducts = (type) => {
 };
 
 // ─────────────────────────────────────────
-// PRODUCT GALLERY ZOOM — magnifies whichever photo the cursor is
-// over. Purely hover-driven: nothing happens until the mouse moves
-// onto a `.zoomable` frame, and it resets the instant the cursor
-// leaves. Works on every image in the gallery (hero and stacked
-// photos alike) since it's attached generically to `.zoomable`.
+// PRODUCT GALLERY ZOOM — click-to-zoom lightbox, not hover-triggered.
+// Nothing happens on mouseover; clicking a photo opens it large in an
+// overlay with prev/next through the rest of that product's photos.
+// Scrolling the page is completely unaffected unless the lightbox is
+// open. Quality is capped by the source file — see note in the
+// lightbox itself when the source is under 1600px wide.
 // ─────────────────────────────────────────
+let zoomLightboxPhotos = [];
+let zoomLightboxIndex = 0;
+
+const injectZoomLightbox = () => {
+  if (document.getElementById('zoomLightbox')) return;
+  const wrapper = document.createElement('div');
+  wrapper.innerHTML = `
+    <div class="zoom-lightbox" id="zoomLightbox" onclick="if(event.target===this) closeZoomLightbox()">
+      <button class="zoom-lightbox-close" onclick="closeZoomLightbox()" aria-label="Close">✕</button>
+      <button class="zoom-lightbox-nav zoom-lightbox-prev" onclick="stepZoomLightbox(-1)" aria-label="Previous photo">‹</button>
+      <img class="zoom-lightbox-img" id="zoomLightboxImg" alt="">
+      <button class="zoom-lightbox-nav zoom-lightbox-next" onclick="stepZoomLightbox(1)" aria-label="Next photo">›</button>
+      <p class="zoom-lightbox-counter" id="zoomLightboxCounter"></p>
+    </div>
+  `;
+  document.body.appendChild(wrapper.firstElementChild);
+  document.addEventListener('keydown', (e) => {
+    const lb = document.getElementById('zoomLightbox');
+    if (!lb || !lb.classList.contains('open')) return;
+    if (e.key === 'Escape') closeZoomLightbox();
+    if (e.key === 'ArrowLeft') stepZoomLightbox(-1);
+    if (e.key === 'ArrowRight') stepZoomLightbox(1);
+  });
+};
+
+const renderZoomLightboxImg = () => {
+  const img = document.getElementById('zoomLightboxImg');
+  const counter = document.getElementById('zoomLightboxCounter');
+  if (!img || !zoomLightboxPhotos.length) return;
+  const src = zoomLightboxPhotos[zoomLightboxIndex];
+  img.src = src;
+  counter.textContent = zoomLightboxPhotos.length > 1
+    ? `${zoomLightboxIndex + 1} / ${zoomLightboxPhotos.length}`
+    : '';
+};
+
+const openZoomLightbox = (photos, index) => {
+  injectZoomLightbox();
+  zoomLightboxPhotos = photos;
+  zoomLightboxIndex = index;
+  renderZoomLightboxImg();
+  document.getElementById('zoomLightbox').classList.add('open');
+  document.body.classList.add('no-scroll');
+};
+
+const closeZoomLightbox = () => {
+  const lb = document.getElementById('zoomLightbox');
+  if (lb) lb.classList.remove('open');
+  document.body.classList.remove('no-scroll');
+};
+
+const stepZoomLightbox = (delta) => {
+  if (!zoomLightboxPhotos.length) return;
+  zoomLightboxIndex = (zoomLightboxIndex + delta + zoomLightboxPhotos.length) % zoomLightboxPhotos.length;
+  renderZoomLightboxImg();
+};
+
+// Wires every `.zoomable` frame in `root` to open the click-to-zoom
+// lightbox, sharing the full photo list so prev/next works across
+// all of a product's real photos (not just the one clicked).
 const initGalleryZoom = (root) => {
   if (!root) return;
-  root.querySelectorAll('.zoomable').forEach((frame) => {
+  const frames = Array.from(root.querySelectorAll('.zoomable'));
+  const photoSrcs = frames.map((f) => f.querySelector('img')?.src).filter(Boolean);
+
+  frames.forEach((frame, i) => {
     const img = frame.querySelector('img');
     if (!img) return;
-
-    frame.addEventListener('mousemove', (e) => {
-      const rect = frame.getBoundingClientRect();
-      const x = ((e.clientX - rect.left) / rect.width) * 100;
-      const y = ((e.clientY - rect.top) / rect.height) * 100;
-      img.style.transformOrigin = `${x}% ${y}%`;
-      img.style.transform = 'scale(2)';
-    });
-
-    frame.addEventListener('mouseleave', () => {
-      img.style.transform = 'scale(1)';
-      img.style.transformOrigin = 'center';
-    });
+    frame.addEventListener('click', () => openZoomLightbox(photoSrcs, i));
   });
 };
 
