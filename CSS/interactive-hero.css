@@ -234,7 +234,7 @@ body.scrolled .mini-nav {
   color: #ffffff;
   width: 40px;
   height: 40px;
-  border-radius: 50%;
+  border-radius: 50% !important;
   font-size: 1.1rem;
   cursor: pointer;
   transition: background 0.2s ease;

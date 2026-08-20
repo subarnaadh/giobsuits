@@ -3,26 +3,33 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shirts &amp; Accessories - GioB Suits</title>
+    <title>Accessories - Suit Standard</title>
     <link rel="stylesheet" href="CSS/style.css">
     <link rel="stylesheet" href="CSS/vibe-update.css">
     <link rel="stylesheet" href="CSS/white-theme.css">
     <link rel="stylesheet" href="CSS/interactive-hero.css">
   </head>
   <body>
+  <div class="wool-topbar">100% Australian Wool. Every Suit &amp; Tuxedo. Never Polyester. <a href="why.html">Why Wool →</a></div>
  <header class="site-header">
       <a class="brand" href="index.html">
-      <img src="images/Logo.png" alt="GioB Suits" height="50">
+      <img src="images/SSlogo1-cropped.png" alt="Suit Standard" height="50">
       </a>
       <nav class="primary-navigation">
         <ul>
           <li><a href="index.html">Home</a></li>
           <li><a href="suits.html">Suits</a></li>
           <li><a href="tuxedos.html">Tuxedos</a></li>
-          <li><a href="shirtsaccessories.html">Shirts &amp; Accessories</a></li>
-          <li><a href="why.html">Why GioB Suits</a></li>
-          <li><a href="fitguide.html">Fit Guide & Finder</a></li>
+          <li><a href="shirts.html">Shirts</a></li>
+          <li><a href="pants.html">Pants</a></li>
+          <li><a href="accessories.html">Accessories</a></li>
+          <li><a href="why.html">Why Wool</a></li>
+          <li><a href="fitguide.html">Fit Guide &amp; Finder</a></li>
           <li><a href="wedding.html">Wedding Suits</a></li>
+          <li class="nav-search-item">
+            <input type="search" class="nav-search-input" placeholder="Search..." onkeydown="if(event.key==='Enter') handleSiteSearch(this)">
+            <button class="nav-search-btn" onclick="handleSiteSearch(this.previousElementSibling)" aria-label="Search">🔍</button>
+          </li>
           <li><a href="cart.html" class="cart-icon">🛒 <span class="cart-count">0</span></a></li>
         </ul>
       </nav>
@@ -31,63 +38,9 @@
     <main>
       <section class="accessories-section">
         <div class="accessories-head">
-          <p class="eyebrow">Complete the Look</p>
-          <h2>Shirts &amp; <em>Accessories</em></h2>
-        </div>
-
-        <div class="shop-layout">
-          <aside class="filter-sidebar">
-            <div class="filter-sidebar-header">
-              <h3>Filters (<span class="filter-count">0</span>)</h3>
-              <button class="filter-clear-all" onclick="clearAllFilters()">Clear All</button>
-            </div>
-            <div class="active-filter-tags"></div>
-
-            <div class="filter-section">
-              <h4>Gender</h4>
-              <label class="filter-checkbox-row"><input type="checkbox" checked disabled> Men's</label>
-              <p class="filter-note">All GioB Suits products are currently menswear.</p>
-            </div>
-
-            <div class="filter-section">
-              <h4>Fit</h4>
-              <label class="filter-checkbox-row"><input type="checkbox" class="fit-filter-checkbox" data-fit="Slim" onchange="toggleFitFilter('Slim', this.checked)"> Slim</label>
-              <label class="filter-checkbox-row"><input type="checkbox" class="fit-filter-checkbox" data-fit="Modern" onchange="toggleFitFilter('Modern', this.checked)"> Modern</label>
-            </div>
-
-            <div class="filter-section">
-              <h4>Price</h4>
-              <div class="price-preset-grid">
-                <button class="price-preset-btn" onclick="setPricePreset(0, 100, this)">Under $100</button>
-                <button class="price-preset-btn" onclick="setPricePreset(100, 300, this)">$100–$300</button>
-                <button class="price-preset-btn" onclick="setPricePreset(300, 600, this)">$300–$600</button>
-                <button class="price-preset-btn" onclick="setPricePreset(600, 1000, this)">$600–$1,000</button>
-              </div>
-              <div class="price-range-inputs">
-                <input type="number" class="price-min-input" placeholder="Min">
-                <span>–</span>
-                <input type="number" class="price-max-input" placeholder="Max">
-                <button class="price-apply-btn" onclick="applyPriceRange(this)">Apply</button>
-              </div>
-            </div>
-          </aside>
-
-          <div class="shop-main">
-            <h3 class="section-sub-heading">Shirts</h3>
-            <div class="product-grid" id="shirtGrid"></div>
-
-            <h3 class="section-sub-heading">Pants</h3>
-            <div class="product-grid" id="pantsGrid"></div>
-
-            <h3 class="section-sub-heading">Vests</h3>
-            <div class="product-grid" id="vestGrid"></div>
-          </div>
-        </div>
-
-        <div class="accessories-head coming-soon-head">
           <p class="eyebrow">Coming Soon</p>
-          <h2>More on the <em>Way</em></h2>
-          <p class="coming-soon-note">These categories are set up in our system, but need final pricing before they can go live.</p>
+          <h2>Accessories</h2>
+          <p class="coming-soon-note">These categories are set up in our system, but need final pricing in Shopify before they can go live.</p>
         </div>
 
         <div class="category-columns">
@@ -126,7 +79,7 @@
     
     <div class="footer-brand">
       <a href="index.html">
-        <img src="images/Logo.png" alt="GioB Suits" height="60">
+        <img src="images/SSlogo1-cropped.png" alt="Suit Standard" height="60">
       </a>
       <div class="footer-social">
         <a href="#">📘</a>
@@ -182,27 +135,32 @@
   </div>
 
   <div class="footer-bottom">
-    <p>&copy; 2026 GioB Suits. All rights reserved.</p>
+    <p>&copy; 2026 Suit Standard. All rights reserved.</p>
   </div>
 </footer>
     <script src="script.js"></script>
-      <!-- SUZY CHAT WIDGET (UI only — not wired to a real chatbot yet) -->
+    <!-- SUZY CHAT WIDGET — functional rule-based FAQ assistant -->
     <button class="chat-launcher" onclick="openChatWidget()" aria-label="Open chat">💬</button>
     <div class="chat-panel" id="chatPanel">
       <div class="chat-panel-header">
         <button class="chat-panel-close" onclick="closeChatWidget()" aria-label="Close chat">✕</button>
         <div class="chat-brand">Suzy<span>.</span></div>
-        <h4>How can we help?</h4>
-        <p>This chat is AI-powered for faster assistance.</p>
+        <h4>Talk to Suzy</h4>
+        <p>Our resident suit expert</p>
       </div>
+      <div class="chat-messages" id="chatMessages"></div>
       <div class="chat-quick-replies">
-        <button class="chat-quick-reply">↳ How does mix &amp; match sizing work?</button>
-        <button class="chat-quick-reply">✂ How do I find my fit?</button>
-        <button class="chat-quick-reply">🎉 Plan a wedding party order</button>
-        <button class="chat-quick-reply">🚚 What's your shipping time?</button>
-        <button class="chat-quick-reply">↩ I need to return or exchange</button>
-        <button class="chat-quick-reply">Ⓢ Talk to a stylist</button>
+        <button class="chat-quick-reply" onclick="askSuzy('sizing')">↳ Sizing</button>
+        <button class="chat-quick-reply" onclick="askSuzy('fit')">✂ Find my fit</button>
+        <button class="chat-quick-reply" onclick="askSuzy('wedding')">🎉 Wedding party</button>
+        <button class="chat-quick-reply" onclick="askSuzy('shipping')">🚚 Shipping</button>
+        <button class="chat-quick-reply" onclick="askSuzy('returns')">↩ Returns</button>
+        <button class="chat-quick-reply" onclick="askSuzy('stylist')">Ⓢ Talk to a stylist</button>
+      </div>
+      <div class="chat-input-row">
+        <input type="text" id="chatInput" class="chat-input" placeholder="Ask a question..." onkeydown="if(event.key==='Enter') handleChatInput()">
+        <button class="chat-send-btn" onclick="handleChatInput()">Send</button>
       </div>
     </div>
-  </body>
+</body>
 </html>
