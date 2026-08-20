@@ -378,27 +378,30 @@ const renderProductDetail = () => {
       ? product.images
       : (product.image ? [product.image] : []);
 
-    const heroFrame = photos.length
-      ? `<div class="gallery-frame gallery-hero ${product.color}" id="productVisual"><img src="images/${photos[0]}" alt="${product.name}" loading="lazy"></div>`
-      : `<div class="gallery-frame gallery-hero ${product.color}" id="productVisual">${product.name}</div>`;
-
-    const extraPhotoFrames = photos.slice(1).map((img) =>
-      `<div class="gallery-frame gallery-photo ${product.color}"><img src="images/${img}" alt="${product.name}" loading="lazy"></div>`
-    ).join('');
-
     const woolBlockFrame = `<div class="gallery-frame product-wool-block" id="productWoolBlock"></div>`;
 
-    // Keep a minimum of 4 frames total for visual consistency on
-    // single-photo products — but don't pad further once a real
-    // photoshoot already fills the gallery out.
-    const framesSoFar = 1 + photos.slice(1).length + 1; // hero + extras + wool block
-    const placeholdersNeeded = Math.max(0, 4 - framesSoFar);
-    const placeholderLabels = ['Detail shot', 'On-body shot', 'Fit close-up', 'Fabric detail'];
-    const placeholderFrames = Array.from({ length: placeholdersNeeded }, (_, i) =>
-      `<div class="gallery-frame gallery-empty">${placeholderLabels[i] || 'Photo'}<br>coming soon</div>`
-    ).join('');
+    if (photos.length > 1) {
+      // Real photoshoot — genuine montage/collage grid, not a single
+      // tall stacked scroll. First photo is the anchor (larger cell),
+      // the rest fill smaller cells alongside it.
+      const montageCells = photos.map((img, i) =>
+        `<div class="montage-cell ${i === 0 ? 'montage-cell-main' : ''}"><img src="images/${img}" alt="${product.name}" loading="lazy"></div>`
+      ).join('');
 
-    gallery.innerHTML = heroFrame + extraPhotoFrames + woolBlockFrame + placeholderFrames;
+      gallery.innerHTML = `<div class="product-visual-montage" id="productVisual">${montageCells}</div>` + woolBlockFrame;
+    } else {
+      // Single photo (or none) — original hero + placeholder pattern.
+      const heroFrame = photos.length
+        ? `<div class="gallery-frame gallery-hero ${product.color}" id="productVisual"><img src="images/${photos[0]}" alt="${product.name}" loading="lazy"></div>`
+        : `<div class="gallery-frame gallery-hero ${product.color}" id="productVisual">${product.name}</div>`;
+
+      const placeholderLabels = ['Detail shot', 'On-body shot', 'Fit close-up'];
+      const placeholderFrames = placeholderLabels.map((label) =>
+        `<div class="gallery-frame gallery-empty">${label}<br>coming soon</div>`
+      ).join('');
+
+      gallery.innerHTML = heroFrame + woolBlockFrame + placeholderFrames;
+    }
   }
 
   const visual = document.getElementById('productVisual');
@@ -886,6 +889,10 @@ const updateCartBadge = () => {
   document.querySelectorAll('.cart-count').forEach((el) => {
     el.textContent = totalQty;
   });
+  const drawer = document.getElementById('cartDrawer');
+  if (drawer && drawer.classList.contains('open')) {
+    renderCartDrawer();
+  }
 };
 
 // A stable string key for a cart line — same product + same exact
@@ -963,6 +970,7 @@ const renderCartPage = () => {
   const container = document.getElementById('cartItems');
   const emptyState = document.getElementById('cartEmpty');
   const summaryEl = document.getElementById('cartSummary');
+  const layoutEl = document.querySelector('.checkout-layout');
   if (!container) return; // not on the cart page
 
   const cart = getCart();
@@ -971,11 +979,13 @@ const renderCartPage = () => {
     container.innerHTML = '';
     if (emptyState) emptyState.style.display = 'block';
     if (summaryEl) summaryEl.style.display = 'none';
+    if (layoutEl) layoutEl.style.display = 'none';
     return;
   }
 
   if (emptyState) emptyState.style.display = 'none';
   if (summaryEl) summaryEl.style.display = 'block';
+  if (layoutEl) layoutEl.style.display = 'grid';
 
   container.innerHTML = cart.map((item) => {
     const selectionsText = Object.entries(item.selections)
@@ -1010,6 +1020,114 @@ const renderCartPage = () => {
   const totalEl = document.getElementById('cartTotal');
   if (subtotalEl) subtotalEl.textContent = `$${subtotal.toFixed(2)}`;
   if (totalEl) totalEl.textContent = `$${subtotal.toFixed(2)}`;
+};
+
+// ─────────────────────────────────────────
+// 4c. CART DRAWER — slide-out panel from the cart icon, so people
+// don't have to leave the page just to glance at their bag. Injected
+// dynamically so every page gets it without duplicating markup.
+// ─────────────────────────────────────────
+
+const injectCartDrawer = () => {
+  if (document.getElementById('cartDrawer')) return; // already injected
+
+  const wrapper = document.createElement('div');
+  wrapper.innerHTML = `
+    <div class="cart-drawer-backdrop" id="cartDrawerBackdrop" onclick="toggleCartDrawer(false)"></div>
+    <div class="cart-drawer" id="cartDrawer">
+      <div class="cart-drawer-header">
+        <h3>Your Bag (<span id="cartDrawerCount">0</span>)</h3>
+        <button class="cart-drawer-close" onclick="toggleCartDrawer(false)" aria-label="Close bag">✕</button>
+      </div>
+      <div class="cart-drawer-items" id="cartDrawerItems"></div>
+      <div class="cart-drawer-empty" id="cartDrawerEmpty">
+        <p>Your bag is empty.</p>
+        <a href="products.html" class="btn secondary">Browse Products</a>
+      </div>
+      <div class="cart-drawer-footer" id="cartDrawerFooter">
+        <div class="cart-drawer-subtotal-row">
+          <span>Subtotal</span>
+          <span id="cartDrawerSubtotal">$0.00</span>
+        </div>
+        <p class="cart-drawer-note">Shipping and tax are calculated at checkout.</p>
+        <a href="cart.html" class="btn secondary cart-drawer-review-btn">Review Order →</a>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(wrapper);
+};
+
+const renderCartDrawer = () => {
+  const itemsEl = document.getElementById('cartDrawerItems');
+  const emptyEl = document.getElementById('cartDrawerEmpty');
+  const footerEl = document.getElementById('cartDrawerFooter');
+  const countEl = document.getElementById('cartDrawerCount');
+  if (!itemsEl) return; // drawer not injected on this page yet
+
+  const cart = getCart();
+  const totalQty = cart.reduce((sum, item) => sum + item.qty, 0);
+  if (countEl) countEl.textContent = totalQty;
+
+  if (cart.length === 0) {
+    itemsEl.innerHTML = '';
+    if (emptyEl) emptyEl.style.display = 'block';
+    if (footerEl) footerEl.style.display = 'none';
+    return;
+  }
+  if (emptyEl) emptyEl.style.display = 'none';
+  if (footerEl) footerEl.style.display = 'block';
+
+  itemsEl.innerHTML = cart.map((item) => {
+    const selectionsText = Object.entries(item.selections)
+      .map(([k, v]) => `${k.charAt(0).toUpperCase() + k.slice(1)}: ${v}`)
+      .join(' · ');
+    const fitText = item.fit ? ` · Fit: ${item.fit}` : '';
+    const visualHTML = item.image
+      ? `<img src="images/${item.image}" alt="${item.name}" loading="lazy">`
+      : '';
+    return `
+      <div class="cart-drawer-item">
+        <div class="cart-drawer-item-visual ${item.color}">${visualHTML}</div>
+        <div class="cart-drawer-item-info">
+          <h4>${item.name}</h4>
+          <p class="cart-drawer-item-options">${selectionsText}${fitText}</p>
+          <div class="cart-drawer-qty-row">
+            <div class="cart-qty-stepper">
+              <button onclick="changeCartQty('${item.key}', -1)" aria-label="Decrease quantity">−</button>
+              <span>${item.qty}</span>
+              <button onclick="changeCartQty('${item.key}', 1)" aria-label="Increase quantity">+</button>
+            </div>
+            <span class="cart-drawer-item-price">$${(item.price * item.qty).toFixed(2)}</span>
+          </div>
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  const subtotal = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+  const subtotalEl = document.getElementById('cartDrawerSubtotal');
+  if (subtotalEl) subtotalEl.textContent = `$${subtotal.toFixed(2)}`;
+};
+
+const toggleCartDrawer = (forceState) => {
+  const drawer = document.getElementById('cartDrawer');
+  const backdrop = document.getElementById('cartDrawerBackdrop');
+  if (!drawer || !backdrop) return;
+
+  const shouldOpen = forceState !== undefined ? forceState : !drawer.classList.contains('open');
+  if (shouldOpen) {
+    renderCartDrawer();
+    drawer.classList.add('open');
+    backdrop.classList.add('open');
+  } else {
+    drawer.classList.remove('open');
+    backdrop.classList.remove('open');
+  }
+};
+
+const openCartDrawer = (e) => {
+  if (e) e.preventDefault();
+  toggleCartDrawer(true);
 };
 
 const handleCheckout = () => {
@@ -1332,6 +1450,8 @@ window.closeChatWidget = closeChatWidget;
 window.removeCartItem = removeCartItem;
 window.changeCartQty = changeCartQty;
 window.handleCheckout = handleCheckout;
+window.toggleCartDrawer = toggleCartDrawer;
+window.openCartDrawer = openCartDrawer;
 window.toggleFitFilter = toggleFitFilter;
 window.setPricePreset = setPricePreset;
 window.applyPriceRange = applyPriceRange;
@@ -1360,6 +1480,7 @@ const initializePage = () => {
   renderByType('pantsGrid', 'pants');
   renderByType('vestGrid', 'vest');
   renderCartPage();
+  injectCartDrawer();
   updateCartBadge();
   initializeNavigation();
   initMeasurementForm();

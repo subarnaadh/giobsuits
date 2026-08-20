@@ -29,38 +29,51 @@
             <input type="search" class="nav-search-input" placeholder="Search..." onkeydown="if(event.key==='Enter') handleSiteSearch(this)">
             <button class="nav-search-btn" onclick="handleSiteSearch(this.previousElementSibling)" aria-label="Search">🔍</button>
           </li>
-          <li><a href="cart.html" class="cart-icon">🛒 <span class="cart-count">0</span></a></li>
+          <li><a href="cart.html" class="cart-icon" onclick="openCartDrawer(event)">🛒 <span class="cart-count">0</span></a></li>
         </ul>
       </nav>
     </header>
 
     <main>
-      <section class="hero card cart-hero">
-        <h1>Your Cart</h1>
-        <p>Review your selected items before checkout.</p>
+      <section class="checkout-header">
+        <h1>Your Bag</h1>
       </section>
 
-      <section class="featured-products card cart-panel">
-        <div id="cartEmpty">
-          <p>Your cart is currently empty. Browse our suits and tuxedos to add premium tailoring options.</p>
-          <a href="products.html" class="btn secondary">Browse Products</a>
+      <div id="cartEmpty" class="checkout-empty">
+        <p>Your cart is currently empty. Browse our suits and tuxedos to add premium tailoring options.</p>
+        <a href="products.html" class="btn secondary">Browse Products</a>
+      </div>
+
+      <div class="checkout-layout">
+        <div class="checkout-items-col">
+          <div id="cartItems"></div>
         </div>
 
-        <div id="cartItems"></div>
-
-        <div id="cartSummary" class="cart-summary-hidden">
-          <div class="cart-summary-row">
-            <span>Subtotal</span>
-            <span id="cartSubtotal">$0.00</span>
+        <aside class="checkout-summary-col">
+          <div id="cartSummary" class="checkout-summary-card cart-summary-hidden">
+            <h3>Order Summary</h3>
+            <div class="cart-summary-row">
+              <span>Subtotal</span>
+              <span id="cartSubtotal">$0.00</span>
+            </div>
+            <div class="cart-summary-row">
+              <span>Shipping</span>
+              <span>--</span>
+            </div>
+            <div class="cart-summary-row">
+              <span>Tax</span>
+              <span>--</span>
+            </div>
+            <div class="cart-summary-row cart-summary-total">
+              <span>Estimated Total</span>
+              <span id="cartTotal">$0.00</span>
+            </div>
+            <p class="cart-summary-note">Shipping, taxes, and discounts calculated at checkout.</p>
+            <button class="btn secondary cart-checkout-btn" onclick="handleCheckout()">Checkout</button>
+            <p class="checkout-disclaimer">Double-check your order — we're not able to modify or cancel orders once they're placed.</p>
           </div>
-          <p class="cart-summary-note">Shipping and tax are calculated at checkout.</p>
-          <div class="cart-summary-row cart-summary-total">
-            <span>Total</span>
-            <span id="cartTotal">$0.00</span>
-          </div>
-          <button class="btn secondary cart-checkout-btn" onclick="handleCheckout()">Proceed to Checkout →</button>
-        </div>
-      </section>
+        </aside>
+      </div>
     </main>
 
     <footer class="site-footer">

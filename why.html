@@ -29,7 +29,7 @@
             <input type="search" class="nav-search-input" placeholder="Search..." onkeydown="if(event.key==='Enter') handleSiteSearch(this)">
             <button class="nav-search-btn" onclick="handleSiteSearch(this.previousElementSibling)" aria-label="Search">🔍</button>
           </li>
-          <li><a href="cart.html" class="cart-icon">🛒 <span class="cart-count">0</span></a></li>
+          <li><a href="cart.html" class="cart-icon" onclick="openCartDrawer(event)">🛒 <span class="cart-count">0</span></a></li>
         </ul>
       </nav>
     </header>
